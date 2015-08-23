@@ -2,11 +2,13 @@
 
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
 <br>
-you will be provided visual assets and a game loop engine; using these tools you must add a number of entities to the game including the player characters and enemies to recreate the classic arcade game Frogger.
+
 
 ----------------------
 
 ### Udacity's instructions:
+
+You will be provided visual assets and a game loop engine; using these tools you must add a number of entities to the game including the player characters and enemies to recreate the classic arcade game Frogger.
 
 1. If you need a refresher on Object Oriented JavaScript, review our course and OOJS Notes; if you'd like a more detailed explanation as to how the game engine works, see our HTML5 Canvas course.
 2. Read the detailed instructions for the project.
