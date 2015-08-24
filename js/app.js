@@ -24,9 +24,27 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function() {
+var player = function(x,y) {
    
+   this.sprite = 'images/char-boy.png';
 }
+
+player.prototype.update = function() {
+    
+}
+
+/*
+Create one player instance from Player Class. (You will see the game scenes get initialised)
+Create multiple enemy instance from Enemy Class.
+Fill in default enemy instance location info.
+Fill in update enemy instance moving function.
+Create player input handle function.
+Create function to detect collision.
+*/
+
+
+
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
