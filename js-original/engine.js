@@ -25,8 +25,7 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    // Cada imatge fa 101 x 171
-    // Aquí creem el tamany del canvas que tindrem
+    // cada imatge fa 101 x 171
     canvas.width = 606;
     canvas.height = 606;
     doc.body.appendChild(canvas);
@@ -117,8 +116,7 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            
-            // Per aquí fem gran o petit el canvas
+            // per aquí fem gran o petit el canvas
             numRows = 6,
             numCols = 6,
             row, col;
@@ -140,6 +138,7 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
+
 
         renderEntities();
     }
@@ -171,8 +170,7 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
-     
-     /* Hem de posar tot el que volem que surti d'imatges aqui! A sacooo */
+     /* Hem de posar tot el que volem que surti d'imatges aqui!*/
     Resources.load([
         'images/stone-block.png',
         'images/stone-block-tall.png',
