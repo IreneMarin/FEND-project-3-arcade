@@ -1,8 +1,10 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    this.x = x;
+    this.y = y;
+    this.speed = Math.floor(Math.random() * 450 + 1);
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -14,6 +16,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt;
 }
 
 // Draw the enemy on the screen, required method for game
@@ -24,14 +27,60 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function(x,y) {
-   
-   this.sprite = 'images/char-boy.png';
+// això és una classe, i per tant va amb majúscules
+var Player = function() {
+    this.x = 202;
+    this.y = 405;
+    this.sprite = 'images/char-boy.png';
 }
 
-player.prototype.update = function() {
-    
+Player.prototype.update = function() {
+    this.x = this.x;
+    this.y = this.y;
 }
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Player.prototype.handleInput = function(keyInput) {
+    switch(keyInput) {
+        case 'up':
+            if(this.y < 10) {
+                return null;
+            }
+            else {
+                this.y -= 83; 
+            }
+            break;
+        case 'down':
+            if(this.y > 400) {
+                return null;
+            }
+            else {
+                this.y += 83; 
+            }
+            break;
+        case 'left':
+            if(this.x < 100) {
+                return null;
+            }
+            else {
+                this.x -= 101; 
+            }
+            break;
+        case 'right':
+            if(this.x > 400) {
+                return null;
+            }
+            else {
+                this.x += 101;
+            }
+            break;
+    }
+}
+
+
 
 /*
 Create one player instance from Player Class. (You will see the game scenes get initialised)
@@ -43,16 +92,18 @@ Create function to detect collision.
 */
 
 
-
-
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [
-    
-];
+var enemy_1 = new Enemy(-200, 63);
+var enemy_2 = new Enemy(-350, 145);
+var enemy_3 = new Enemy(-96, 228);
+var enemy_4 = new Enemy(-96, 63);
+var enemy_5 = new Enemy(-150, 145);
+var enemy_6 = new Enemy(-450, 228);
+var allEnemies = [enemy_1, enemy_2, enemy_3, enemy_4, enemy_5, enemy_6];
 
+var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
