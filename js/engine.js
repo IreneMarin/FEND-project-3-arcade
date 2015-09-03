@@ -27,7 +27,7 @@ var Engine = (function(global) {
 
     // Cada imatge fa 101 x 171
     // Aquí creem el tamany del canvas que tindrem
-    canvas.width = 606;
+    canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
@@ -111,7 +111,7 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
-                'images/water-block.png',   // Row 1 of 3 of stone
+                'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/grass-block.png',   // Row 1 of 2 of grass

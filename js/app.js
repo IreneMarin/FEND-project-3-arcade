@@ -3,19 +3,30 @@
 // Això és una classe en OOP
 // Després l'utilitzarem per crear tantes variables d'enemic com vulguem :D
 var Enemy = function(x, y) {
+    // var Enemy = function(x, y, speed) --> així calculem nivells? idea!
     // Variables applied to each of our instances go here, we've provided one for you to get started
     
     // Inicialitzem l'enemic a una x i una y que li passarem com a paràmetres per la funció
+    // Setting the Enemy initial location
     this.x = x;
     this.y = y;
     
-    // Fem que la velocitat sigui diferent per cada un de forma aleatòria. Com la calculem??
-    this.speed = Math.floor(Math.random() * 450 + 1);
-    
+    // If you assign a speed to each bug in your Enemy definition when you define this.x and
+    // this.y you can set a different speed for each bug at the moment it is defined:
+    // this.speed = Math.floor(Math.random() * 450 + 1); --> Susan
+       
     // Math.random(); // A random number between 0 and 1.
     // Math.floor(Math.random() * X + 1); // Returns a random number between 1 and X
     
+     // Fem que la velocitat sigui diferent per cada un de forma aleatòria, seguint el consell de la Susan, yay
+     // Setting the Enemy speed
+    this.speed = Math.floor(Math.random() * 450 + 1);
+    
+    // però i si volem posar-hi nivells? i fer que cada nivell sigui més xungo?
+    // aleshores no hauriem de posar la velocitat random, no??
+    
     // Aquí fiquem la imatge de l'enemic, utilitzant el "sprite" --> què és?
+    // Loading the image by setting this.sprite to the appropriate image
     this.sprite = 'images/enemy-bug.png';
 }
 
@@ -26,8 +37,27 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter which will ensure the game runs at the same speed for all computers.
     
     // Afegim la posició multiplicant la dt per la velocitat. Què és this.speed?
+    // Updates the Enemy location
+    // In the Enemy update function, you can move the enemy along a little bit --> Susan
     this.x += this.speed * dt;
+    // And if you want them to move a little faster you can add something to the calculation:
+    // this.x += (this.speed + 100) * dt; --> Susan
+    
+    // Handles collision with the Player
+    
+    // si se'n va de la pantalla, torna a començar?
+    if (this.x > 505) {
+        //this.x = Enemy.reset();
+        // o també:
+        // this.x = Math.random() * -850; ???
+    }
 }
+
+// reset de l'enemic?¿?
+/*Enemy.prototype.reset = function() {
+    this.x = -100;
+    this.y = 0;
+}*/
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -37,61 +67,89 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and a handleInput() method.
 // Això és una classe, i per tant va amb majúscules. Igual que el Enemy
+// Implement the Player class
+// The Player function, which initiates the Player by
 var Player = function() {
     // 0,0 és a dalt a l'esquerra de tot
-    this.x = 0;
-    this.y = 0;
+    // Setting the Player initial location
+    this.x = 202;
+    this.y = 415;
+    // Loading the image by setting this.sprite
     this.sprite = 'images/char-boy.png';
 }
 
 // Update per actualitzar la posició de la personeta
+// Update method for the Player
 Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
 }
 
 // Render per dibuixar la personeta
+// Render method for the Player
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 // Això és el control de les fletxes del teclat.
 // Li passem coma paràmetre la tecla, i segons la tecla que sigui farem que es mogui d'una forma o d'una altre!
-Player.prototype.handleInput = function(keyInput) {
-    switch(keyInput) {
+// handleInput method, which should receive user input, allowedKeys (the key which was pressed)
+// and move the player according to that input. In particular:
+Player.prototype.handleInput = function(key) {
+        
+    // la imatge fa 101 x 171 
+    // però en vertical està partida en 2 (cada imatge són 2 quadrats)
+    
+    // per tant, --> i <-- han de fer 101 cap a la dreta o cap a l'esquerra
+    // cap amunt i avall han de fer 85
+    
+    // 101 i 85 són per si volem que salti de bloc en bloc, però per fer una transició smooth....?
+    
+    switch(key) {
+        // left key should move the player to the left
+        // recall that the player cannot move off screen (so you will need to check for that and handle appropriately)
+         case 'left':
+                     
+            // cap a l'esquerra
+            // però si no posem res més, desapareix!
+            if (this.x > 0) {
+                this.x -= 101;
+                break;
+            }           
+            
+            
         case 'up':
-            if(this.y < 10) {
-                return null;
+            
+            // cap a dalt. 83 perquè és el tamany amb què calculem el canvas al engine, per superposar les imatges!
+            if (this.y > 0) {
+                this.y -= 83;
+                break;
             }
-            else {
-                this.y -= 83; 
-            }
-            break;
-        case 'down':
-            if(this.y > 400) {
-                return null;
-            }
-            else {
-                this.y += 83; 
-            }
-            break;
-        case 'left':
-            if(this.x < 100) {
-                return null;
-            }
-            else {
-                this.x -= 101; 
-            }
-            break;
+            
+        
         case 'right':
-            if(this.x > 400) {
-                return null;
-            }
-            else {
+            
+            // cap a la dreta
+            // desapareix!! >.<
+            if (this.x < 404) {
                 this.x += 101;
+                break;
             }
-            break;
+            
+            
+        case 'down':
+            
+            // cap a baix
+            if (this.y < 400) {
+                this.y += 83;
+                break;  
+            }
+             
     }
+    
+    // if the player reaches the water, the game should be reset by moving the player back to
+    // the initial location (you can write a separate reset Player method to handle that)
+    
 }
 
 // Now instantiate your objects.
@@ -99,6 +157,7 @@ Player.prototype.handleInput = function(keyInput) {
 // Place the player object in a variable called player
 
 // Creem tots els enemics que volem tenir en pantalla i li passem les posicions inicials (si posem posicions negatives, fem que surtin a diferents temps)
+// create several new Enemies objects and placing them in an array called allEnemies
 var enemy_1 = new Enemy(-200, 63);
 var enemy_2 = new Enemy(-350, 145);
 var enemy_3 = new Enemy(-96, 228);
@@ -108,12 +167,12 @@ var enemy_6 = new Enemy(-450, 228);  //
 var allEnemies = [enemy_1, enemy_2, enemy_3, enemy_4, enemy_5, enemy_6];  // Array
 
 // Creem el nostre jugador
+// create a new Player object
 var player = new Player();
 
 // Hem de crear la funció per veure si hi ha col·lisió i aleshores resetejar-ho!
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to your Player.handleInput() method
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -124,3 +183,11 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+/* Adding functionality: 
+Player selection: allow the user to select the image for the player.
+Score: you can implement a score for the game. It can increase each time the player reaches the water, and it can reset to 0 when collision occurs
+Collectables: you can add gems to the game, allowing the player to collect them to make the game more interesting. */
+
+
