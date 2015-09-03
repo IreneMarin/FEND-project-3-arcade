@@ -95,7 +95,7 @@ Player.prototype.render = function() {
 // Li passem coma paràmetre la tecla, i segons la tecla que sigui farem que es mogui d'una forma o d'una altre!
 // handleInput method, which should receive user input, allowedKeys (the key which was pressed)
 // and move the player according to that input. In particular:
-Player.prototype.handleInput = function(key) {
+Player.prototype.handleInput = function(allowedKeys) {
         
     // la imatge fa 101 x 171 
     // però en vertical està partida en 2 (cada imatge són 2 quadrats)
@@ -105,7 +105,7 @@ Player.prototype.handleInput = function(key) {
     
     // 101 i 85 són per si volem que salti de bloc en bloc, però per fer una transició smooth....?
     
-    switch(key) {
+    switch(allowedKeys) {
         // left key should move the player to the left
         // recall that the player cannot move off screen (so you will need to check for that and handle appropriately)
          case 'left':
