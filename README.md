@@ -1,8 +1,19 @@
 ## Classic Arcade Game Clone project
 
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
-<br>
+<br> recreation of the classic arcade game Frogger using Object-Oriented JavaScript and HTML5 Canvas. 
 
+-----------------------------------------------
+
+### To run the game
+
+lalala
+
+-----------------------------------------------
+
+### How to play
+
+lalala
 
 ----------------------
 
@@ -18,3 +29,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 6. Identify the various classes you will need to write.
 7. Identify and code the properties each class must have to accomplish its tasks.
 8. Write the functions that provide functionality to each of your class instances.
+
+-------------------------
+
+## TO DO
