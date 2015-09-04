@@ -36,25 +36,23 @@ You will be provided visual assets and a game loop engine; using these tools you
 ## TO DO
 
 ### Basic game 
-
+- hola
 
 ### Menu
-
+- hola
 
 ### Player
-
+- hola
 
 ### Enemies
-
+- hola
 
 ### Background canvas
-
+- hola
 
 ### Lifes and stars
-
+- hola
 
 ### Chests and doors 
-
-
-
+- hola
 
