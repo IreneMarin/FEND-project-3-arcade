@@ -20,7 +20,9 @@ var Enemy = function(x, y) {
     
      // Fem que la velocitat sigui diferent per cada un de forma aleatòria, seguint el consell de la Susan, yay
      // Setting the Enemy speed
-    this.speed = Math.floor(Math.random() * 450 + 1);
+     //450 és molt ràpid... però ara hi ha alguns que es queden clavats?
+    this.speed = Math.floor(Math.random() * 350 + 1);
+    console.log(Math.floor(Math.random() * 350 +1));
     
     // però i si volem posar-hi nivells? i fer que cada nivell sigui més xungo?
     // aleshores no hauriem de posar la velocitat random, no??
@@ -47,17 +49,14 @@ Enemy.prototype.update = function(dt) {
     
     // si se'n va de la pantalla, torna a començar?
     if (this.x > 505) {
-        //this.x = Enemy.reset();
-        // o també:
-        // this.x = Math.random() * -850; ???
+       // fem que torni a començar a les quimbambes a l'esquerra
+       // fem que la velocitat tb sigui random :D
+        this.x = Math.random() * -600;
+        this.speed = Math.floor(Math.random() * 350 + 1);
+        console.log(Math.random() * -600);
     }
 }
 
-// reset de l'enemic?¿?
-/*Enemy.prototype.reset = function() {
-    this.x = -100;
-    this.y = 0;
-}*/
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -72,6 +71,7 @@ Enemy.prototype.render = function() {
 var Player = function() {
     // 0,0 és a dalt a l'esquerra de tot
     // Setting the Player initial location
+    // aquest és el punt mig a sota de la pantalla (sempre el punt és a dalt a la esquerra!)
     this.x = 202;
     this.y = 415;
     // Loading the image by setting this.sprite
@@ -120,7 +120,7 @@ Player.prototype.handleInput = function(allowedKeys) {
             
         case 'up':
             
-            // cap a dalt. 83 perquè és el tamany amb què calculem el canvas al engine, per superposar les imatges!
+            // cap a dalt. 83 perquè és el tamany amb què calculem el canvas al engine, per superposar les imatges
             if (this.y > 0) {
                 this.y -= 83;
                 break;
@@ -130,7 +130,7 @@ Player.prototype.handleInput = function(allowedKeys) {
         case 'right':
             
             // cap a la dreta
-            // desapareix!! >.<
+            // per què 404?
             if (this.x < 404) {
                 this.x += 101;
                 break;
@@ -149,6 +149,9 @@ Player.prototype.handleInput = function(allowedKeys) {
     
     // if the player reaches the water, the game should be reset by moving the player back to
     // the initial location (you can write a separate reset Player method to handle that)
+    if (this.y < 83) {  //això és aigua
+        
+    }
     
 }
 
