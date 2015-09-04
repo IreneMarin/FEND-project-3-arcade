@@ -31,5 +31,30 @@ You will be provided visual assets and a game loop engine; using these tools you
 8. Write the functions that provide functionality to each of your class instances.
 
 -------------------------
+----------------------------
 
 ## TO DO
+
+### Basic game 
+
+
+### Menu
+
+
+### Player
+
+
+### Enemies
+
+
+### Background canvas
+
+
+### Lifes and stars
+
+
+### Chests and doors 
+
+
+
+
