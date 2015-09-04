@@ -3,11 +3,11 @@
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
 <br> recreating the classic arcade game Frogger using Object-Oriented JavaScript and HTML5 Canvas. 
 
-### Installation
+### How to launch the game
 
 lalala
 
-### How to play
+### How to play the game
 
 lalala
 
