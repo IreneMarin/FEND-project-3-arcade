@@ -1,7 +1,7 @@
 ## Classic Arcade Game Clone project
 
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
-<br> recreation of the classic arcade game Frogger using Object-Oriented JavaScript and HTML5 Canvas. 
+<br> recreating the classic arcade game Frogger using Object-Oriented JavaScript and HTML5 Canvas. 
 
 -----------------------------------------------
 
