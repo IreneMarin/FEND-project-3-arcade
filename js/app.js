@@ -27,7 +27,6 @@ var Enemy = function(x, y) {
     // però i si volem posar-hi nivells? i fer que cada nivell sigui més xungo?
     // aleshores no hauriem de posar la velocitat random, no??
     
-    // Aquí fiquem la imatge de l'enemic, utilitzant el "sprite" --> què és?
     // Loading the image by setting this.sprite to the appropriate image
     this.sprite = 'images/enemy-bug.png';
 }
@@ -50,7 +49,7 @@ Enemy.prototype.update = function(dt) {
     // si se'n va de la pantalla, torna a començar?
     if (this.x > 505) {
        // fem que torni a començar a les quimbambes a l'esquerra
-       // fem que la velocitat tb sigui random :D
+       // fem que la velocitat tb sigui random :D --> comprovar què estem fent amb la velocitat...
         this.x = Math.random() * -600;
         this.speed = Math.floor(Math.random() * 350 + 1);
         console.log(Math.random() * -600);
@@ -92,7 +91,7 @@ Player.prototype.render = function() {
 }
 
 // Això és el control de les fletxes del teclat.
-// Li passem coma paràmetre la tecla, i segons la tecla que sigui farem que es mogui d'una forma o d'una altre!
+// Li passem coma paràmetre la tecla, i segons la tecla que sigui farem que es mogui d'una forma o d'una altre
 // handleInput method, which should receive user input, allowedKeys (the key which was pressed)
 // and move the player according to that input. In particular:
 Player.prototype.handleInput = function(allowedKeys) {
@@ -167,13 +166,20 @@ Player.prototype.reset = function() {
 
 // Creem tots els enemics que volem tenir en pantalla i li passem les posicions inicials (si posem posicions negatives, fem que surtin a diferents temps)
 // create several new Enemies objects and placing them in an array called allEnemies
-var enemy_1 = new Enemy(-200, 63);
-var enemy_2 = new Enemy(-350, 145);
-var enemy_3 = new Enemy(-96, 228);
-var enemy_4 = new Enemy(-96, 63);
-var enemy_5 = new Enemy(-150, 145);
-var enemy_6 = new Enemy(-450, 228);  // 
-var allEnemies = [enemy_1, enemy_2, enemy_3, enemy_4, enemy_5, enemy_6];  // Array
+
+var allEnemies = [];
+
+for (var i = 0; i < 6; i++) {
+    if (i % 3 === 0) {  // row 1
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 63);
+    } else if (i % 3 === 1) {  // row 2
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 146);
+    } else {  // row 3
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 229);
+    }
+    allEnemies[i] = enemyRandom;
+}
+
 
 // Creem el nostre jugador
 // create a new Player object
