@@ -31,34 +31,55 @@ You will be provided visual assets and a game loop engine; using these tools you
 ## TO DO
 
 ### Basic game 
-- Implement Enemy function: 
+- ~~Implement Enemy function:~~ 
   - ~~set initial location and speed~~
-  - update method: updates position and handles collision
-- Implement Player function: 
+  - ~~update method: updates position and handles collision~~
+- ~~Implement Player function:~~
   - ~~set initial location and sprite image~~
   - ~~update & render method~~
-  - handleInput method: 
+  - ~~handleInput method:~~
     - ~~receive user input and move Player accordingly~~
     - ~~Player cannot move off screen~~
-    - if the Player reaches water, the game should reset
+    - ~~if the Player reaches water, the game should reset~~
 - ~~Create a new Player object~~
 - ~~Create several new Enemy objects and place them in allEnemies array~~
 
-### Menu
-- hola
-
-### Player
-- hola
-
-### Enemies
-- hola
+### Start page
+- Create the story
+- Selector to choose the hero
+- Selector to choose the difficulty: easy, normal, nightmare? 
 
 ### Background canvas
-- hola
+- Create big canvas
+- Put trees, stones, paths, doors
+- Create top menu for: hearts, keys, gems, level
+- Create bottom menu for: restart game, change hero/difficulty
 
-### Lifes and stars
-- hola
-
-### Chests and doors 
-- hola
-
+### Extras
+- Hearts: 
+  - start with 5 lifes
+  - each collision subtracts a life
+  - each heart adds a life
+  - when 0 lifes --> game over
+- Keys: 
+  - use key to open doors (to pass the level) and chests (to have extras)
+  - keys in the grass or water (not trees, stones, etc)
+- Gems:
+  - 1 blue gem: to walk underwater 
+  - 1 green gem: ??
+  - 1 yellow gem: ??
+- Stars:
+  - if the hero takes a star, it becomes immune for the next collision 
+- Level: 
+  - 3-5 levels? 
+  - each level changes the background
+  - we increment difficulty? 
+- Chests: 
+  - open chest with a key
+  - inside there is a gem 
+- Doors:
+  - open door to pass level
+  - open door to greet a neighboor? 
+- Animation & sound:
+  - when collision --> animation
+  - when collision --> sound 
