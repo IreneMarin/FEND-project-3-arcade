@@ -31,7 +31,18 @@ You will be provided visual assets and a game loop engine; using these tools you
 ## TO DO
 
 ### Basic game 
-- hola
+- Implement Enemy function: 
+  - set initial location and speed
+  - update method: updates position and handles collision
+- Implement Player function: 
+  - set initial location and sprite image
+  - update & render method
+  - handleInput method: 
+    - receive user input and move Player accordingly
+    - Player cannot move off screen
+    - if the Player reaches water, the game should reset
+- Create a new Player object
+- Create several new Enemy objects and place them in allEnemies array
 
 ### Menu
 - hola
