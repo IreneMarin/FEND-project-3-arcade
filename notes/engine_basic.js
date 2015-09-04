@@ -25,11 +25,8 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-<<<<<<< HEAD:notes/engine_basic.js
     // Cada imatge fa 101 x 171
     // Aquí creem el tamany del canvas que tindrem
-=======
->>>>>>> origin/master:js-original/engine.js
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
@@ -62,7 +59,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    }
+    };
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -120,13 +117,10 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-<<<<<<< HEAD:notes/engine_basic.js
             
             // Per aquí fem gran o petit el canvas
-=======
->>>>>>> origin/master:js-original/engine.js
             numRows = 6,
-            numCols = 5,
+            numCols = 6,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -142,6 +136,7 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
+                 // aquí fem que es posin per sobre les rows
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
@@ -176,17 +171,64 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
-<<<<<<< HEAD:notes/engine_basic.js
      
      /* Hem de posar tot el que volem que surti d'imatges aqui! A sacooo */
-=======
->>>>>>> origin/master:js-original/engine.js
     Resources.load([
         'images/stone-block.png',
+        'images/stone-block-tall.png',
         'images/water-block.png',
         'images/grass-block.png',
+        'images/wood-block.png',
+        'images/brown-block.png',
+        'images/plain-block.png',
+        'images/dirt-block.png',
+        'images/wall-block.png',
+        'images/wall-block-tall.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/gem-blue.png',
+        'images/gem-green.png',
+        'images/gem-orange.png',
+        'images/heart.png',
+        'images/key.png',
+        'images/rock.png',
+        'images/selector.png',
+        'images/star.png',
+        'images/speechbubble.png',
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/chest-closed.png',
+        'images/chest-lid.png',
+        'images/chest-open.png',
+        'images/door-tall-closed.png',
+        'images/door-tall-open.png',
+        'images/ramp-east.png',
+        'images/ramp-north.png',
+        'images/ramp-south.png',
+        'images/ramp-west.png',
+        'images/roof-east.png',
+        'images/roof-north.png',
+        'images/roof-north-east.png',
+        'images/roof-north-west.png',
+        'images/roof-south.png',
+        'images/roof-south-east.png',
+        'images/roof-south-west.png',
+        'images/roof-west.png',
+        'images/window-tall.png',
+        'images/tree-short.png',
+        'images/tree-tall.png',
+        'images/tree-ugly.png',
+        'images/shadow-east.png',
+        'images/shadow-north.png',
+        'images/shadow-north-east.png',
+        'images/shadow-north-west.png',
+        'images/shadow-side-west.png',
+        'images/shadow-south.png',
+        'images/shadow-south-east.png',
+        'images/shadow-south-west.png',
+        'images/shadow-west.png'
     ]);
     Resources.onReady(init);
 
