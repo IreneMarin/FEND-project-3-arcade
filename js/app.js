@@ -150,9 +150,15 @@ Player.prototype.handleInput = function(allowedKeys) {
     // if the player reaches the water, the game should be reset by moving the player back to
     // the initial location (you can write a separate reset Player method to handle that)
     if (this.y < 83) {  //això és aigua
-        
+        player.reset();
     }
     
+}
+
+// hem de fer que s'esperi un segon a l'aigua, i després resetegi
+Player.prototype.reset = function() {
+    this.x = 202;
+    this.y = 415;
 }
 
 // Now instantiate your objects.
@@ -194,3 +200,30 @@ Score: you can implement a score for the game. It can increase each time the pla
 Collectables: you can add gems to the game, allowing the player to collect them to make the game more interesting. */
 
 
+/* Collission forum
+https://discussions.udacity.com/t/trying-to-identify-collisions-but-how-do-i-compare-enemy-x-with-player-x/29930
+https://discussions.udacity.com/t/sure-i-would-love-some-collisioncheck-help/29801
+https://discussions.udacity.com/t/player-bug-collision-problem/15068
+https://discussions.udacity.com/t/problems-with-checkcollisions-function/30228 */
+
+
+/* Links del forum útils pels nous canvis:
+https://discussions.udacity.com/t/bug-drawn-behind-gem-on-canvas/23201
+https://discussions.udacity.com/t/adding-sprites-to-canvas-background/28880
+https://discussions.udacity.com/t/project-3-add-scores/20978
+https://discussions.udacity.com/t/creating-multiple-enemy-instances/29406
+https://discussions.udacity.com/t/finite-state-machine-to-model-game-states/21955
+https://discussions.udacity.com/t/start-end-the-game/21441
+*/
+
+/* Links d'altres llocs útils: 
+https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub 
+http://jlongster.com/Making-Sprite-based-Games-with-Canvas
+https://docs.google.com/document/d/1sYjy4Swrppc6OreRy6zWQFKNnJhu1pJ9uikZPSD0HMc/pub
+http://opengameart.org/
+http://www.freesound.org/
+http://gamedevelopment.tutsplus.com/tutorials/finite-state-machines-theory-and-implementation--gamedev-11867
+http://www.williammalone.com/articles/create-html5-canvas-javascript-sprite-animation/
+http://www.html5gamedevelopment.com/html5-game-tutorials/2013-06-5-part-html5-game-tutorial-galaxian-shooter
+http://eloquentjavascript.net/04_data.html
+*/
