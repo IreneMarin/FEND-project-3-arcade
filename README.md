@@ -3,13 +3,9 @@
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
 <br> recreating the classic arcade game Frogger using Object-Oriented JavaScript and HTML5 Canvas. 
 
------------------------------------------------
-
 ### To run the game
 
 lalala
-
------------------------------------------------
 
 ### How to play
 
@@ -30,7 +26,6 @@ You will be provided visual assets and a game loop engine; using these tools you
 7. Identify and code the properties each class must have to accomplish its tasks.
 8. Write the functions that provide functionality to each of your class instances.
 
--------------------------
 ----------------------------
 
 ## TO DO
