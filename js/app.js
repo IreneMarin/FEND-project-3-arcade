@@ -232,4 +232,7 @@ http://gamedevelopment.tutsplus.com/tutorials/finite-state-machines-theory-and-i
 http://www.williammalone.com/articles/create-html5-canvas-javascript-sprite-animation/
 http://www.html5gamedevelopment.com/html5-game-tutorials/2013-06-5-part-html5-game-tutorial-galaxian-shooter
 http://eloquentjavascript.net/04_data.html
+http://hashrocket.com/blog/posts/using-tiled-and-canvas-to-render-game-screens
+http://www.mapeditor.org/
 */
+
