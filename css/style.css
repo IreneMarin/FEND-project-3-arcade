@@ -3,29 +3,38 @@ body {
     margin: 0 auto;
     background: #6cccfe;
 }
-
 .menu {
-    width: 707px;
+    width: 909px;
     height: 90px;
     margin: 30px auto 0;
     text-align: left;
     font-family: 'Share Tech Mono', sans-serif;
     font-size: 50px;
 }
-
 .menu img {
     height: 40px;
     margin-right: 10px;
 }
-
-.collectives {
+.lifes {
     float: left;
-    width: 25%;
+    width: 16%;
 }
-
+.keys {
+    float: left;
+    width: 16%;
+}
+.gems {
+    float: left;
+    width: 20%;
+}
 .level {
+    float: left;
+    width: 20%;
+    letter-spacing: -5px;
+}
+.start {
     float: right;
-    width: 25%;
+    width: 20%;
     text-align: right;
-    letter-spacing: -4px;
+    letter-spacing: -5px;
 }

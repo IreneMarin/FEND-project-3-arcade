@@ -26,7 +26,7 @@ var Engine = (function(global) {
         lastTime;
 
     // Create the size of the canvas
-    canvas.width = 707;
+    canvas.width = 909;
     canvas.height = 760;
     doc.body.appendChild(canvas);
 
@@ -113,15 +113,15 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Top row is water
                 'images/grass-block.png',   // Row 1 of 6 of stone
                 'images/grass-block.png',   // Row 2 of 6 of stone
-                'images/grass-block.png',   // Row 3 of 6 of stone
-                'images/grass-block.png',   // Row 4 of 6 of stone
-                'images/grass-block.png',   // Row 5 of 6 of stone                
+                'images/grass-block.png',   // Row 3 of 6 of stone               
+                'images/grass-block.png',   // Row 5 of 6 of stone      
+                'images/grass-block.png',   // Row 5 of 6 of stone             
                 'images/stone-block.png',   // Row 1 of 1 of grass                
             ],
             
             // Create the number of rows and columns on the screen
             numRows = 8,
-            numCols = 7,
+            numCols = 9,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -158,12 +158,8 @@ var Engine = (function(global) {
            nature.render(); 
         });
         
-        allWalls.forEach(function(wall){
-           wall.render(); 
-        });
-        
-        allRoofs.forEach(function(roof){
-           roof.render(); 
+        allHouse.forEach(function(house){
+           house.render(); 
         });
         
         key.render();

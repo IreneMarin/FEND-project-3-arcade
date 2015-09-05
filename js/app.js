@@ -1,8 +1,8 @@
 var currentLifes = 5;
 var currentKeys = 0;
 var hasBlueGem = true;
-var hasGreenGem = false;
-var hasOrangeGem = false;
+var hasGreenGem = true;
+var hasOrangeGem = true;
 var currentLevel = 1;
 
 document.getElementById('numberLifes').innerHTML = currentLifes;
@@ -52,17 +52,13 @@ Items.prototype.render = function() {
 }
 
 // Construct the house
-var allWalls = [];
-allWalls[0] = new House(202,45,'window-tall');
-allWalls[1] = new House(303,45,'door-tall-closed');
-allWalls[4] = new House(404,45,'window-tall');
-
-
-var allRoofs = [];
-allRoofs[3] = new House(202,-46,'roof-south-west');
-allRoofs[4] = new House(303,-46,'roof-south');
-allRoofs[5] = new House(404,-46,'roof-south-east');
-
+var allHouse = [];
+allHouse[0] = new House(303,45,'window-tall');
+allHouse[1] = new House(404,60,'door-tall-closed');
+allHouse[2] = new House(505,45,'window-tall');
+allHouse[3] = new House(303,-40,'roof-south-west');
+allHouse[4] = new House(404,-40,'roof-south');
+allHouse[5] = new House(505,-40,'roof-south-east');
 
 var allNature = [];
 allNature[0] = new Nature(101,295,'tree-ugly');
@@ -70,8 +66,10 @@ allNature[1] = new Nature(404,460,'rock');
 allNature[2] = new Nature(505,215,'tree-ugly');
 allNature[3] = new Nature(0,-25,'tree-short');
 allNature[4] = new Nature(101,-25,'tree-short');
-allNature[5]= new Nature(505,-25,'tree-short');
-allNature[6]= new Nature(606,-25,'tree-short');
+allNature[5] = new Nature(202,-25,'tree-short');
+allNature[6] = new Nature(606,-25,'tree-short');
+allNature[7] = new Nature(707,-25,'tree-short');
+allNature[8] = new Nature(808,-25,'tree-short');
 
 var key = new Items(505,120,'key-small');
 var heart = new Items(0,464,'heart-small');
@@ -131,7 +129,7 @@ Enemy.prototype.render = function() {
 var Player = function() {
     // Setting the Player initial location
     // at the bottom center of the screen
-    this.x = 303;
+    this.x = 404;
     this.y = 575;
     
     // Loading the image by setting this.sprite
