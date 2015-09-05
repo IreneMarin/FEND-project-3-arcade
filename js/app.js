@@ -35,11 +35,11 @@ Enemy.prototype.update = function(dt) {
     
     // If the Enemy goes off screen, we reset the position to start again
     // This way there are always bugs coming the way
-    if (this.x > 909) {
-        this.x = Math.random() * -1200;
+    if (this.x > 707) {
+        this.x = Math.random() * -1000;
         // The speed is random again
         this.speed = Math.floor(Math.random() * 350 + 1);
-        console.log(Math.random() * -1200);
+        console.log(Math.random() * -1000);
     }
 }
 
@@ -52,8 +52,8 @@ Enemy.prototype.render = function() {
 var Player = function() {
     // Setting the Player initial location
     // at the bottom center of the screen
-    this.x = 404;
-    this.y = 660;
+    this.x = 303;
+    this.y = 575;
     
     // Loading the image by setting this.sprite
     this.sprite = 'images/char-boy.png';
@@ -97,7 +97,7 @@ Player.prototype.handleInput = function(allowedKeys) {
         // right key moves player to the east
         case 'right':
             // we check to avoid player moving off-screen
-            if (this.x < 808) {
+            if (this.x < 606) {
                 this.x += 101;
                 break;
             }
@@ -105,7 +105,7 @@ Player.prototype.handleInput = function(allowedKeys) {
         // down key moves player to the south
         case 'down':
             // we check to avoid player moving off-screen
-            if (this.y < 800) {
+            if (this.y < 575) {
                 this.y += 83;
                 break;
             }
@@ -114,32 +114,88 @@ Player.prototype.handleInput = function(allowedKeys) {
 
 // reset method to reset the player's position and start again
 Player.prototype.reset = function() {
-    this.x = 404;
-    this.y = 415;
+    this.x = 303;
+    this.y = 575;
 }
 
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
-// Create 12 enemies, 2 for each row, with a random initial location
-for (var i = 0; i < 12; i++) {
-    if (i % 6 === 0) {  // row 1
-        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 63);
-    } else if (i % 6 === 1) {  // row 2
-        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 146);
-    } else if (i % 6 === 2) {  // row 3
-        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 229);
-    } else if (i % 6 === 3) {  // row 4
-        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 312);
-    } else if (i % 6 === 4) {  // row 5
-        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 395);
-    } else {  // row 6
-        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 478);
+// Create 10 enemies, 2 for each row, with a random initial location
+for (var i = 0; i < 10; i++) {
+    if (i % 5 === 0) {
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 146);   // row 1
+    } else if (i % 5 === 1) {
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 229);   // row 2
+    } else if (i % 5 === 2) {
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 312);   // row 3
+    } else if (i % 5 === 3) {
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 395);   // row 4
+    } else {
+        var enemyRandom = new Enemy(-(Math.floor(Math.random() * 400 + 100)), 478);   // row 5
     }
     allEnemies[i] = enemyRandom;
 }
 
 // Place the player object in a variable called player
 var player = new Player();
+
+// Implement the House class, which is the objective
+var House = function(x,y,sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/' + sprite + '.png';
+}
+// Draw the House on the screen
+House.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Construct the house
+var allWalls = [];
+allWalls[0] = new House(0,45,'brown-block');
+allWalls[1] = new House(101,45,'window-tall');
+allWalls[2] = new House(202,45,'brown-block');
+allWalls[3] = new House(303,45,'door-tall-closed');
+allWalls[4] = new House(404,45,'brown-block');
+allWalls[5] = new House(505,45,'window-tall');
+allWalls[6] = new House(606,45,'brown-block');
+
+var allRoofs = [];
+allRoofs[0] = new House(0,-40,'roof-south');
+allRoofs[1] = new House(101,-40,'roof-south');
+allRoofs[2] = new House(202,-40,'roof-south');
+allRoofs[3] = new House(303,-40,'roof-south');
+allRoofs[4] = new House(404,-40,'roof-south');
+allRoofs[5] = new House(505,-40,'roof-south');
+allRoofs[6] = new House(606,-40,'roof-south');
+
+// Implement the Nature class, which will be obstacles
+var Nature = function(x,y, sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/' + sprite + '.png'
+}
+// Draw the nature on the screen
+Nature.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+var allNature = [];
+allNature[0] = new Nature(101,295,'tree-ugly');
+allNature[1] = new Nature(404,460,'rock');
+allNature[2] = new Nature(505,215,'tree-ugly');
+
+// Implement the Items class, which will be different collective items
+var Items = function(x,y,sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/' + sprite + '.png'
+}
+// Draw the items on the screen
+Items.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+var key = new Items(505,120,'key-small');
+var heart = new Items(0,464,'heart-small');
 
 // This listens for key presses and sends the keys to your Player.handleInput() method
 document.addEventListener('keyup', function(e) {

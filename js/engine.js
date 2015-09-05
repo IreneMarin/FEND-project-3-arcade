@@ -26,8 +26,8 @@ var Engine = (function(global) {
         lastTime;
 
     // Create the size of the canvas
-    canvas.width = 909;
-    canvas.height = 909;
+    canvas.width = 707;
+    canvas.height = 760;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -109,20 +109,19 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
+                'images/stone-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 6 of stone
-                'images/stone-block.png',   // Row 2 of 6 of stone
-                'images/stone-block.png',   // Row 3 of 6 of stone
-                'images/stone-block.png',   // Row 4 of 6 of stone
-                'images/stone-block.png',   // Row 5 of 6 of stone
-                'images/stone-block.png',   // Row 6 of 6 of grass
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/grass-block.png',   // Row 2 of 6 of stone
+                'images/grass-block.png',   // Row 3 of 6 of stone
+                'images/grass-block.png',   // Row 4 of 6 of stone
+                'images/grass-block.png',   // Row 5 of 6 of stone
+                'images/grass-block.png',   // Row 6 of 6 of grass
+                'images/stone-block.png',   // Row 1 of 1 of grass                
             ],
             
             // Create the number of rows and columns on the screen
-            numRows = 9,
-            numCols = 9,
+            numRows = 8,
+            numCols = 7,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -159,6 +158,21 @@ var Engine = (function(global) {
         });
 
         player.render();
+        
+        allNature.forEach(function(nature){
+           nature.render(); 
+        });
+        
+        allWalls.forEach(function(wall){
+           wall.render(); 
+        });
+        
+        allRoofs.forEach(function(roof){
+           roof.render(); 
+        });
+        
+        key.render();
+        heart.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -191,7 +205,9 @@ var Engine = (function(global) {
         'images/gem-green.png',
         'images/gem-orange.png',
         'images/heart.png',
+        'images/heart-small.png',
         'images/key.png',
+        'images/key-small.png',
         'images/rock.png',
         'images/selector.png',
         'images/star.png',
