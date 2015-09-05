@@ -1,6 +1,31 @@
 body {
     text-align: center;
-    margin: 0;
-    padding-top: 100px;
+    margin: 0 auto;
     background: #6cccfe;
+}
+
+.menu {
+    width: 707px;
+    height: 90px;
+    margin: 30px auto 0;
+    text-align: left;
+    font-family: 'Share Tech Mono', sans-serif;
+    font-size: 50px;
+}
+
+.menu img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.collectives {
+    float: left;
+    width: 25%;
+}
+
+.level {
+    float: right;
+    width: 25%;
+    text-align: right;
+    letter-spacing: -4px;
 }
