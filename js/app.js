@@ -84,8 +84,8 @@ var Enemy = function(x, y) {
     this.y = y;
     
     // Setting the speed, random and different for each bug.
-    this.speed = Math.floor(Math.random() * 350 + 1);
-    console.log(Math.floor(Math.random() * 350 +1));
+    this.speed = Math.floor(Math.random() * 450 + 1);
+    console.log(Math.floor(Math.random() * 450 +1));
     
     // Loading the image by setting this.sprite to the appropriate image
     this.sprite = 'images/enemy-bug.png';
@@ -112,11 +112,11 @@ Enemy.prototype.update = function(dt) {
     
     // If the Enemy goes off screen, we reset the position to start again
     // This way there are always bugs coming the way
-    if (this.x > 707) {
-        this.x = Math.random() * -1000;
+    if (this.x > 909) {
+        this.x = Math.random() * -1200;
         // The speed is random again
-        this.speed = Math.floor(Math.random() * 350 + 1);
-        console.log(Math.random() * -1000);
+        this.speed = Math.floor(Math.random() * 450 + 1);
+        console.log(Math.random() * -1200);
     }
 }
 
@@ -193,7 +193,7 @@ Player.prototype.handleInput = function(allowedKeys) {
 Player.prototype.reset = function() {
     currentLifes = currentLifes - 1;
     document.getElementById('numberLifes').innerHTML = currentLifes;
-    this.x = 303;
+    this.x = 404;
     this.y = 575;
 }
 
