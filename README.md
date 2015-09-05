@@ -2,7 +2,15 @@
 
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
 <br>
+recreating the classic arcade game Frogger with Object-Oriented JavaScript and HTML5 Canvas.
 
+### How to run the game
+
+lalala
+
+### How to play the game
+
+lalala
 
 ----------------------
 
@@ -18,3 +26,56 @@ You will be provided visual assets and a game loop engine; using these tools you
 6. Identify the various classes you will need to write.
 7. Identify and code the properties each class must have to accomplish its tasks.
 8. Write the functions that provide functionality to each of your class instances.
+ 
+-----------------------------------
+
+## TO DO
+ 
+### Basic game 
+- ~~Implement Enemy function:~~ 
+  - ~~set initial location and speed~~
+  - ~~update method: updates position and handles collision~~
+- ~~Implement Player function:~~
+  - ~~handleInput method:~~
+  - ~~receive user input and move Player accordingly~~
+  - ~~Player cannot move off screen~~
+  - ~~if the Player reaches water, the game should reset~~
+ - ~~Create a new Player object~~
+ - ~~Create several new Enemy objects and place them in allEnemies array~~
+ 
+### Start page
+- Create the story
+- Selector to choose the hero
+- Selector to choose the difficulty: easy, normal, nightmare? 
+ 
+### Canvas
+- ~~Create big canvas~~
+- ~~Put trees, stones, paths, doors~~
+- Create top menu for: hearts, keys, gems, level
+- Create bottom menu for: restart game, change hero/difficulty
+
+### Extras
+- Hearts: 
+  - start with 5 lifes
+  - each collision subtracts a life
+  - each heart adds a life
+  - when 0 lifes --> game over
+- Keys: 
+  - use key to open doors (to pass the level) and chests (to have extras)
+  - keys in the grass or water (not trees, stones, etc)
+- Gems:
+  - 1 blue gem: to walk underwater 
+  - 1 green gem: ??
+  - 1 yellow gem: ??
+- Level: 
+  - 3-5 levels? 
+  - each level changes the background
+- Chests: 
+  - open chest with a key
+  - inside there is a gem 
+- Doors:
+  - open door to pass level
+  - open door to greet a neighboor? 
+- Animation & sound:
+  - when collision --> animation
+  - when collision --> sound 
