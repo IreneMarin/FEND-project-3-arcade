@@ -1,3 +1,82 @@
+var currentLifes = 5;
+var currentKeys = 0;
+var hasBlueGem = true;
+var hasGreenGem = false;
+var hasOrangeGem = false;
+var currentLevel = 1;
+
+document.getElementById('numberLifes').innerHTML = currentLifes;
+document.getElementById('numberKeys').innerHTML = currentKeys;
+document.getElementById('numberLevel').innerHTML = currentLevel;
+if (hasBlueGem) {
+    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-blue.png'>";
+}
+if (hasGreenGem) {
+    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-green.png'>";
+}
+if (hasOrangeGem) {
+    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-orange.png'>";
+}
+
+// Implement the House class, which is the objective
+var House = function(x,y,sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/' + sprite + '.png';
+}
+// Draw the House on the screen
+House.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Implement the Nature class, which will be obstacles
+var Nature = function(x,y, sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/' + sprite + '.png'
+}
+// Draw the nature on the screen
+Nature.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Implement the Items class, which will be different collective items
+var Items = function(x,y,sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = 'images/' + sprite + '.png'
+}
+// Draw the items on the screen
+Items.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Construct the house
+var allWalls = [];
+allWalls[0] = new House(202,45,'window-tall');
+allWalls[1] = new House(303,45,'door-tall-closed');
+allWalls[4] = new House(404,45,'window-tall');
+
+
+var allRoofs = [];
+allRoofs[3] = new House(202,-46,'roof-south-west');
+allRoofs[4] = new House(303,-46,'roof-south');
+allRoofs[5] = new House(404,-46,'roof-south-east');
+
+
+var allNature = [];
+allNature[0] = new Nature(101,295,'tree-ugly');
+allNature[1] = new Nature(404,460,'rock');
+allNature[2] = new Nature(505,215,'tree-ugly');
+allNature[3] = new Nature(0,-25,'tree-short');
+allNature[4] = new Nature(101,-25,'tree-short');
+allNature[5]= new Nature(505,-25,'tree-short');
+allNature[6]= new Nature(606,-25,'tree-short');
+
+var key = new Items(505,120,'key-small');
+var heart = new Items(0,464,'heart-small');
+
+
 // Enemies our player must avoid
 var Enemy = function(x, y) {
     // Variables applied to each of our instances go here
@@ -114,6 +193,8 @@ Player.prototype.handleInput = function(allowedKeys) {
 
 // reset method to reset the player's position and start again
 Player.prototype.reset = function() {
+    currentLifes = currentLifes - 1;
+    document.getElementById('numberLifes').innerHTML = currentLifes;
     this.x = 303;
     this.y = 575;
 }
@@ -138,64 +219,6 @@ for (var i = 0; i < 10; i++) {
 
 // Place the player object in a variable called player
 var player = new Player();
-
-// Implement the House class, which is the objective
-var House = function(x,y,sprite) {
-    this.x = x;
-    this.y = y;
-    this.sprite = 'images/' + sprite + '.png';
-}
-// Draw the House on the screen
-House.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-
-// Construct the house
-var allWalls = [];
-allWalls[0] = new House(0,45,'brown-block');
-allWalls[1] = new House(101,45,'window-tall');
-allWalls[2] = new House(202,45,'brown-block');
-allWalls[3] = new House(303,45,'door-tall-closed');
-allWalls[4] = new House(404,45,'brown-block');
-allWalls[5] = new House(505,45,'window-tall');
-allWalls[6] = new House(606,45,'brown-block');
-
-var allRoofs = [];
-allRoofs[0] = new House(0,-40,'roof-south');
-allRoofs[1] = new House(101,-40,'roof-south');
-allRoofs[2] = new House(202,-40,'roof-south');
-allRoofs[3] = new House(303,-40,'roof-south');
-allRoofs[4] = new House(404,-40,'roof-south');
-allRoofs[5] = new House(505,-40,'roof-south');
-allRoofs[6] = new House(606,-40,'roof-south');
-
-// Implement the Nature class, which will be obstacles
-var Nature = function(x,y, sprite) {
-    this.x = x;
-    this.y = y;
-    this.sprite = 'images/' + sprite + '.png'
-}
-// Draw the nature on the screen
-Nature.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-var allNature = [];
-allNature[0] = new Nature(101,295,'tree-ugly');
-allNature[1] = new Nature(404,460,'rock');
-allNature[2] = new Nature(505,215,'tree-ugly');
-
-// Implement the Items class, which will be different collective items
-var Items = function(x,y,sprite) {
-    this.x = x;
-    this.y = y;
-    this.sprite = 'images/' + sprite + '.png'
-}
-// Draw the items on the screen
-Items.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-var key = new Items(505,120,'key-small');
-var heart = new Items(0,464,'heart-small');
 
 // This listens for key presses and sends the keys to your Player.handleInput() method
 document.addEventListener('keyup', function(e) {

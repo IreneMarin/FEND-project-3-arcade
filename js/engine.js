@@ -110,12 +110,12 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/stone-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 6 of stone
+                'images/stone-block.png',   // Top row is water
+                'images/grass-block.png',   // Row 1 of 6 of stone
                 'images/grass-block.png',   // Row 2 of 6 of stone
                 'images/grass-block.png',   // Row 3 of 6 of stone
                 'images/grass-block.png',   // Row 4 of 6 of stone
-                'images/grass-block.png',   // Row 5 of 6 of stone
-                'images/grass-block.png',   // Row 6 of 6 of grass
+                'images/grass-block.png',   // Row 5 of 6 of stone                
                 'images/stone-block.png',   // Row 1 of 1 of grass                
             ],
             
@@ -153,12 +153,7 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
-
-        player.render();
-        
+         // aquí decidim l'ordre dels layers
         allNature.forEach(function(nature){
            nature.render(); 
         });
@@ -173,6 +168,13 @@ var Engine = (function(global) {
         
         key.render();
         heart.render();
+        
+        allEnemies.forEach(function(enemy) {
+            enemy.render();
+        });
+
+        player.render();        
+       
     }
 
     /* This function does nothing but it could have been a good place to
@@ -231,6 +233,7 @@ var Engine = (function(global) {
         'images/roof-north-east.png',
         'images/roof-north-west.png',
         'images/roof-south.png',
+        'images/roof-middle.png',
         'images/roof-south-east.png',
         'images/roof-south-west.png',
         'images/roof-west.png',
