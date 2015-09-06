@@ -5,6 +5,8 @@ var CURRENT_KEYS = 0;       // number of current keys
 var HAS_BLUE_GEM = true;    // has picked the blue gem
 var HAS_GREEN_GEM = true;   // has picked the green gem
 var CURRENT_LEVEL = 1;      // level of the screen
+var HERO = "char-boy";      // choosen hero
+var DIFFICULTY = 0;         // choosen level of difficulty
 
 // Put the variables on screen in the menu
 document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
@@ -33,40 +35,7 @@ Items.prototype.render = function() {
 }
 
 
-if (CURRENT_LEVEL === 1) {
-
-    /* --------- LEVEL 1 CANVAS ------------ */
-    
-    // Build the house, put the trees and the rocks
-    var allObstacles = [];
-    allObstacles[0] = new Items(303, 45, 'window-tall', 'house');
-    allObstacles[1] = new Items(404, 60, 'door-tall-closed', 'door');
-    allObstacles[2] = new Items(505, 45, 'window-tall', 'house');
-    allObstacles[3] = new Items(303, -40, 'roof-south-west', 'house');
-    allObstacles[4] = new Items(404, -40, 'roof-south', 'house');
-    allObstacles[5] = new Items(505, -40, 'roof-south-east', 'house');
-
-    allObstacles[6] = new Items(101, 224, 'tree-ugly', 'house');
-    allObstacles[7] = new Items(303, 307, 'tree-ugly', 'house');
-    allObstacles[8] = new Items(606, 141, 'tree-ugly', 'house');
-    allObstacles[9] = new Items(606, 224, 'tree-ugly', 'house');
-    allObstacles[10] = new Items(0, -25, 'tree-short', 'house');
-    allObstacles[11] = new Items(101, -25, 'tree-short', 'house');
-    allObstacles[12] = new Items(202, -25, 'tree-short', 'house');
-    allObstacles[13] = new Items(606, -25, 'tree-short', 'house');
-    allObstacles[14] = new Items(707, -25, 'tree-short', 'house');
-    allObstacles[15] = new Items(808, -25, 'tree-short', 'house');
-
-    allObstacles[16] = new Items(505, 470, 'rock', 'house');
-    allObstacles[17] = new Items(707, 224, 'rock', 'house');
-
-    // Create the items
-    var allItems = [];
-    allItems[0] = new Items(707, 131, 'key', 'key');
-    allItems[1] = new Items(101, 131, 'key', 'key');
-    allItems[2] = new Items(0, 465, 'heart', 'life');
-
-} else if (CURRENT_LEVEL === 2) {
+if (CURRENT_LEVEL === 2) {
     
     /* --------- LEVEL 2 CANVAS ------------ */
     
@@ -100,6 +69,43 @@ if (CURRENT_LEVEL === 1) {
     allItems[2] = new Items(606, 48, 'heart', 'life');
     allItems[3] = new Items(202, 465, 'chest-closed', 'chest');
 
+} else if (CURRENT_LEVEL === 3) {
+    
+} else if (CURRENT_LEVEL === 4) {
+    
+} else {
+    
+    /* --------- LEVEL 1 CANVAS ------------ */
+    
+    // Build the house, put the trees and the rocks
+    var allObstacles = [];
+    allObstacles[0] = new Items(303, 45, 'window-tall', 'house');
+    allObstacles[1] = new Items(404, 60, 'door-tall-closed', 'door');
+    allObstacles[2] = new Items(505, 45, 'window-tall', 'house');
+    allObstacles[3] = new Items(303, -40, 'roof-south-west', 'house');
+    allObstacles[4] = new Items(404, -40, 'roof-south', 'house');
+    allObstacles[5] = new Items(505, -40, 'roof-south-east', 'house');
+
+    allObstacles[6] = new Items(101, 224, 'tree-ugly', 'house');
+    allObstacles[7] = new Items(303, 307, 'tree-ugly', 'house');
+    allObstacles[8] = new Items(606, 141, 'tree-ugly', 'house');
+    allObstacles[9] = new Items(606, 224, 'tree-ugly', 'house');
+    allObstacles[10] = new Items(0, -25, 'tree-short', 'house');
+    allObstacles[11] = new Items(101, -25, 'tree-short', 'house');
+    allObstacles[12] = new Items(202, -25, 'tree-short', 'house');
+    allObstacles[13] = new Items(606, -25, 'tree-short', 'house');
+    allObstacles[14] = new Items(707, -25, 'tree-short', 'house');
+    allObstacles[15] = new Items(808, -25, 'tree-short', 'house');
+
+    allObstacles[16] = new Items(505, 470, 'rock', 'house');
+    allObstacles[17] = new Items(707, 224, 'rock', 'house');
+
+    // Create the items
+    var allItems = [];
+    allItems[0] = new Items(707, 131, 'key', 'key');
+    allItems[1] = new Items(101, 131, 'key', 'key');
+    allItems[2] = new Items(0, 465, 'heart', 'life');
+    
 }
 
 
@@ -158,7 +164,7 @@ var Player = function(x,y) {
     this.bottom = this.y + 83;
        
     // Loading the image by setting this.sprite
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/' + HERO + '.png';
 }
 
 // Update the player's position
@@ -358,3 +364,4 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
