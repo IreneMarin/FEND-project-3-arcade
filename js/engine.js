@@ -71,17 +71,10 @@ var Engine = (function(global) {
     }
 
     /* This function is called by main (our game loop) and itself calls all
-     * of the functions which may need to update entity's data. Based on how
-     * you implement your collision detection (when two entities occupy the
-     * same space, for instance when your character should die), you may find
-     * the need to add an additional function call here. For now, we've left
-     * it commented out - you may or may not want to implement this
-     * functionality this way (you could just implement collision detection
-     * on the entities themselves within your app.js file).
+     * of the functions which may need to update entity's data. 
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -109,14 +102,14 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/stone-block.png',   // Top row is water
-                'images/stone-block.png',   // Top row is water
-                'images/grass-block.png',   // Row 1 of 6 of stone
-                'images/grass-block.png',   // Row 2 of 6 of stone
-                'images/grass-block.png',   // Row 3 of 6 of stone               
-                'images/grass-block.png',   // Row 5 of 6 of stone      
-                'images/grass-block.png',   // Row 5 of 6 of stone             
-                'images/stone-block.png',   // Row 1 of 1 of grass                
+                'images/stone-block.png',   // Row 1 of 2 of stone
+                'images/stone-block.png',   // Row 2 of 2 of stone
+                'images/grass-block.png',   // Row 1 of 5 of grass
+                'images/grass-block.png',   // Row 2 of 5 of grass
+                'images/grass-block.png',   // Row 3 of 5 of grass               
+                'images/grass-block.png',   // Row 4 of 5 of grass      
+                'images/grass-block.png',   // Row 5 of 5 of grass             
+                'images/stone-block.png',   // Row 1 of 1 of stone                
             ],
             
             // Create the number of rows and columns on the screen
@@ -137,11 +130,9 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                 // aquí fem que es posin per sobre les rows
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
         renderEntities();
     }
 
@@ -153,24 +144,19 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-         // aquí decidim l'ordre dels layers
-        allNature.forEach(function(nature){
-           nature.render(); 
+        allObstacles.forEach(function(obstacle){
+           obstacle.render(); 
         });
         
-        allHouse.forEach(function(house){
-           house.render(); 
+        allItems.forEach(function(item){
+           item.render(); 
         });
-        
-        key.render();
-        heart.render();
-        
+               
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
-        player.render();        
-       
+        player.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -185,30 +171,22 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
-     
-     /* Hem de posar tot el que volem que surti d'imatges aqui! A sacooo */
+    
     Resources.load([
         'images/stone-block.png',
-        'images/stone-block-tall.png',
         'images/water-block.png',
         'images/grass-block.png',
         'images/wood-block.png',
         'images/brown-block.png',
-        'images/plain-block.png',
         'images/dirt-block.png',
         'images/wall-block.png',
-        'images/wall-block-tall.png',
         'images/enemy-bug.png',
         'images/gem-blue.png',
         'images/gem-green.png',
         'images/gem-orange.png',
         'images/heart.png',
-        'images/heart-small.png',
         'images/key.png',
-        'images/key-small.png',
         'images/rock.png',
-        'images/selector.png',
-        'images/star.png',
         'images/speechbubble.png',
         'images/char-boy.png',
         'images/char-cat-girl.png',
@@ -220,16 +198,11 @@ var Engine = (function(global) {
         'images/chest-open.png',
         'images/door-tall-closed.png',
         'images/door-tall-open.png',
-        'images/ramp-east.png',
-        'images/ramp-north.png',
-        'images/ramp-south.png',
-        'images/ramp-west.png',
         'images/roof-east.png',
         'images/roof-north.png',
         'images/roof-north-east.png',
         'images/roof-north-west.png',
         'images/roof-south.png',
-        'images/roof-middle.png',
         'images/roof-south-east.png',
         'images/roof-south-west.png',
         'images/roof-west.png',
@@ -237,15 +210,7 @@ var Engine = (function(global) {
         'images/tree-short.png',
         'images/tree-tall.png',
         'images/tree-ugly.png',
-        'images/shadow-east.png',
-        'images/shadow-north.png',
-        'images/shadow-north-east.png',
-        'images/shadow-north-west.png',
-        'images/shadow-side-west.png',
-        'images/shadow-south.png',
-        'images/shadow-south-east.png',
-        'images/shadow-south-west.png',
-        'images/shadow-west.png'
+        'images/blanc.png'
     ]);
     Resources.onReady(init);
 
