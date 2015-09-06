@@ -79,7 +79,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 ### Other things
 - Level: 
   - ~~level 1~~
-  - ~~level 2~~
+  - ~~level 2~~ (have to change background!)
   - level 3
   - level 4
 - Game over:
