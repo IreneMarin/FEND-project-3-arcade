@@ -51,31 +51,33 @@ You will be provided visual assets and a game loop engine; using these tools you
 ### Canvas
 - ~~Create big canvas~~
 - ~~Put trees, stones, paths, doors~~
-- Create top menu for: hearts, keys, gems, level
-- Create bottom menu for: restart game, change hero/difficulty
+- ~~Create top menu for: hearts, keys, gems, level and restart~~
 
 ### Extras
 - Hearts: 
-  - start with 5 lifes
-  - each collision subtracts a life
-  - each heart adds a life
+  - ~~start with 5 lifes~~
+  - ~~each collision subtracts a life~~
+  - ~~each heart adds a life~~
   - when 0 lifes --> game over
 - Keys: 
-  - use key to open doors (to pass the level) and chests (to have extras)
-  - keys in the grass or water (not trees, stones, etc)
+  - use key to open doors (to pass the level) 
+  - use key to open chests (to have gems)
 - Gems:
   - 1 blue gem: to walk underwater 
-  - 1 green gem: ??
+  - 1 green gem: to walk through trees
   - 1 yellow gem: ??
 - Level: 
-  - 3-5 levels? 
+  - 4 levels 
   - each level changes the background
 - Chests: 
   - open chest with a key
-  - inside there is a gem 
+  - pick up gem inside 
 - Doors:
   - open door to pass level
-  - open door to greet a neighboor? 
 - Animation & sound:
-  - when collision --> animation
-  - when collision --> sound 
+  - when collision with bug --> animation sprite
+  - when collision with bug --> sound
+  - when collision with nature --> sound
+  - when collision with item --> animation
+  - when collision with item --> sound
+  - when game over --> sound
