@@ -53,7 +53,8 @@ You will be provided visual assets and a game loop engine; using these tools you
 - ~~Put trees, stones, paths, doors~~
 - ~~Create top menu for: hearts, keys, gems, level and restart~~
 
-### Extras
+### Items to pick
+- ~~Interact: go over item --> item dissapears from screen and array --> counter goes up~~
 - Hearts: 
   - ~~start with 5 lifes~~
   - ~~each collision subtracts a life~~
@@ -63,21 +64,31 @@ You will be provided visual assets and a game loop engine; using these tools you
   - use key to open doors (to pass the level) 
   - use key to open chests (to have gems)
 - Gems:
-  - 1 blue gem: to walk underwater 
-  - 1 green gem: to walk through trees
+  - 1 blue gem: to walk underwater (in the checkObstacles)
+  - 1 green gem: to walk through trees (in the checkObstacles)
   - 1 yellow gem: ??
-- Level: 
-  - 4 levels 
-  - each level changes the background
+
+### Items to interact
+- Interact: try to go over door or chest --> checkObstacles --> if key --> do something
 - Chests: 
-  - open chest with a key
-  - pick up gem inside 
+  - open chest with a key (change sprites)
+  - pick up gem inside (a wild gem has appeared!)
 - Doors:
-  - open door to pass level
-- Animation & sound:
-  - when collision with bug --> animation sprite
-  - when collision with bug --> sound
-  - when collision with nature --> sound
-  - when collision with item --> animation
-  - when collision with item --> sound
-  - when game over --> sound
+  - open door to pass level (in the checkObstacles) --> change level
+
+### Other things
+- Level: 
+  - ~~level 1~~
+  - ~~level 2~~
+  - level 3
+  - level 4
+- Game over:
+  - when life = 0, change sprite, everything freezes, restart button
+- Animation:
+  - when collision with bug
+  - when pick up item
+- Sound:
+  - when collision with bug
+  - when collision with nature
+  - when pick up item
+  - when game over
