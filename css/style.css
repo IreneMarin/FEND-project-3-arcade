@@ -17,24 +17,22 @@ body {
 }
 .lifes {
     float: left;
-    width: 16%;
+    padding-right: 70px;
 }
 .keys {
     float: left;
-    width: 16%;
+    padding-right: 70px;
 }
 .gems {
     float: left;
-    width: 20%;
 }
 .level {
     float: left;
-    width: 20%;
+    padding-right: 70px;
     letter-spacing: -5px;
 }
 .start {
     float: right;
-    width: 20%;
     text-align: right;
     letter-spacing: -5px;
 }
