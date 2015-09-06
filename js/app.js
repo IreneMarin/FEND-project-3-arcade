@@ -35,6 +35,7 @@ Items.prototype.render = function() {
 }
 
 
+// Find another way to create the obstacles? More efficient? hola?
 if (CURRENT_LEVEL === 2) {
     
     /* --------- LEVEL 2 CANVAS ------------ */
@@ -48,19 +49,18 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[4] = new Items(101, -40, 'roof-south', 'house');
     allObstacles[5] = new Items(202, -40, 'roof-south-east', 'house');
     
-    allObstacles[6] = new Items(101, 224, 'tree-ugly', 'tree');
-    allObstacles[7] = new Items(101, 307, 'tree-ugly', 'tree');
-    allObstacles[8] = new Items(707, 141, 'tree-ugly', 'tree');
+    allObstacles[6] = new Items(404, 141, 'tree-tall', 'tree');     // row 3
+    allObstacles[7] = new Items(707, 141, 'tree-ugly', 'tree');
+    allObstacles[8] = new Items(101, 224, 'tree-ugly', 'tree');     // row 4
     allObstacles[9] = new Items(707, 224, 'tree-ugly', 'tree');
     allObstacles[10] = new Items(808, 224, 'tree-ugly', 'tree');
-    allObstacles[11] = new Items(303, 470, 'tree-tall', 'tree');
-    allObstacles[12] = new Items(404, 470, 'tree-tall', 'tree');
-    allObstacles[13] = new Items(404, 141, 'tree-tall', 'tree');
-    allObstacles[14] = new Items(404, 556, 'tree-tall', 'tree');
-    allObstacles[15] = new Items(505, 556, 'tree-tall', 'tree');
-    
-    allObstacles[16] = new Items(505, 390, 'rock', 'rock');
-    allObstacles[17] = new Items(303, 556, 'rock', 'rock');
+    allObstacles[11] = new Items(101, 307, 'tree-ugly', 'tree');    // row 5
+    allObstacles[12] = new Items(505, 390, 'rock', 'rock');         // row 6    
+    allObstacles[13] = new Items(303, 470, 'tree-tall', 'tree');    // row 7
+    allObstacles[14] = new Items(404, 470, 'tree-tall', 'tree');
+    allObstacles[15] = new Items(303, 556, 'rock', 'rock');         // row 8
+    allObstacles[16] = new Items(404, 556, 'tree-tall', 'tree');
+    allObstacles[17] = new Items(505, 556, 'tree-tall', 'tree');
     
     // Create the items
     var allItems = [];
@@ -71,7 +71,157 @@ if (CURRENT_LEVEL === 2) {
 
 } else if (CURRENT_LEVEL === 3) {
     
+    // això no pot ser eficient... 
+    
+    /* --------- LEVEL 3 CANVAS ------------ */
+    
+    // Build the house, put the trees and the rocks
+    var allObstacles = [];
+    allObstacles[0] = new Items(707, 224, 'window-tall', 'house');
+    allObstacles[1] = new Items(808, 234, 'door-tall-closed', 'door');
+    allObstacles[2] = new Items(707, 58, 'roof-north-west', 'house');
+    allObstacles[3] = new Items(808, 58, 'roof-north-east', 'house');
+    allObstacles[4] = new Items(707, 141, 'roof-south-west', 'house');
+    allObstacles[5] = new Items(808, 141, 'roof-south-east', 'house');
+    
+    // row 1
+    allObstacles[6] = new Items(101, -25, 'tree-tall', 'tree');
+    allObstacles[7] = new Items(202, -25, 'tree-ugly', 'tree');
+    allObstacles[8] = new Items(303, -25, 'tree-ugly', 'tree');
+    allObstacles[9] = new Items(404, -25, 'tree-ugly', 'tree');
+    allObstacles[10] = new Items(505, -25, 'rock', 'rock');
+    
+    // row 2
+    allObstacles[11] = new Items(101, 58, 'tree-tall', 'tree');
+    allObstacles[12] = new Items(202, 58, 'tree-tall', 'tree');
+    allObstacles[13] = new Items(505, 58, 'tree-ugly', 'tree');
+    allObstacles[14] = new Items(606, 58, 'tree-ugly', 'tree');
+    
+    
+    // row 3
+    allObstacles[15] = new Items(0, 141, 'rock', 'rock');
+    allObstacles[16] = new Items(101, 141, 'rock', 'rock');    
+    allObstacles[17] = new Items(202, 141, 'tree-ugly', 'tree');
+    allObstacles[18] = new Items(404, 141, 'rock', 'rock');
+    allObstacles[19] = new Items(505, 141, 'tree-tall', 'tree');
+    allObstacles[20] = new Items(606, 141, 'tree-tall', 'tree');
+    
+    // row 4
+    allObstacles[21] = new Items(0, 249, 'water', 'water');
+    allObstacles[22] = new Items(101, 249, 'water', 'water');    
+    allObstacles[23] = new Items(202, 224, 'tree-ugly', 'tree');
+    allObstacles[24] = new Items(404, 224, 'tree-tall', 'tree');
+    allObstacles[25] = new Items(505, 224, 'tree-tall', 'tree');
+    allObstacles[26] = new Items(606, 224, 'tree-tall', 'tree');
+   
+    // row 5
+    allObstacles[27] = new Items(0, 332, 'water', 'water');
+    allObstacles[28] = new Items(101, 332, 'water', 'water');    
+    allObstacles[29] = new Items(404, 307, 'tree-tall', 'tree');
+    allObstacles[30] = new Items(606, 307, 'tree-ugly', 'tree');
+    allObstacles[31] = new Items(707, 307, 'tree-ugly', 'tree');
+    
+    // row 6
+    allObstacles[32] = new Items(0, 415, 'water', 'water');
+    allObstacles[33] = new Items(101, 415, 'water', 'water');    
+    allObstacles[34] = new Items(606, 390, 'tree-ugly', 'tree');
+    allObstacles[35] = new Items(707, 390, 'tree-ugly', 'tree');
+    
+    // row 7
+    allObstacles[36] = new Items(303, 470, 'tree-ugly', 'tree');
+    allObstacles[37] = new Items(404, 470, 'tree-ugly', 'tree');
+    
+    // row 8
+    allObstacles[38] = new Items(303, 556, 'tree-ugly', 'tree');
+    allObstacles[39] = new Items(404, 556, 'tree-tall', 'tree');
+    allObstacles[40] = new Items(606, 556, 'rock', 'rock');
+    allObstacles[41] = new Items(707, 556, 'tree-tall', 'tree');
+    allObstacles[42] = new Items(808, 556, 'tree-tall', 'tree');
+    
+    // Create the items
+    var allItems = [];
+    allItems[0] = new Items(505, 546, 'key', 'key');
+    allItems[1] = new Items(808, -35, 'heart', 'life');
+    allItems[2] = new Items(0, -35, 'chest-closed', 'chest');
+    
 } else if (CURRENT_LEVEL === 4) {
+    
+    /* --------- LEVEL 4 CANVAS ------------ */
+    
+    // Build the house, put the trees and the rocks
+    var allObstacles = [];
+    allObstacles[0] = new Items(505, 470, 'window-tall', 'house');
+    allObstacles[1] = new Items(606, 480, 'door-tall-closed', 'door');
+    allObstacles[2] = new Items(707, 470, 'window-tall', 'house');
+    allObstacles[3] = new Items(505, 307, 'roof-north-west', 'house');
+    allObstacles[4] = new Items(606, 307, 'roof-north', 'house');
+    allObstacles[5] = new Items(707, 307, 'roof-north-east', 'house');
+    allObstacles[6] = new Items(505, 390, 'roof-south-west', 'house');
+    allObstacles[7] = new Items(606, 390, 'roof-south', 'house');
+    allObstacles[8] = new Items(707, 390, 'roof-south-east', 'house');
+    
+    // row 1
+    allObstacles[9] = new Items(0, 0, 'water', 'water');
+    allObstacles[10] = new Items(101, 0, 'water', 'water');
+    allObstacles[11] = new Items(202, 0, 'water', 'water');
+    allObstacles[12] = new Items(303, 0, 'water', 'water');
+    allObstacles[13] = new Items(404, 0, 'water', 'water');
+    
+    // row 2
+    allObstacles[14] = new Items(0, 83, 'water', 'water');
+    allObstacles[15] = new Items(101, 83, 'water', 'water');
+    allObstacles[16] = new Items(808, 58, 'rock', 'rock');
+    
+    // row 3
+    allObstacles[17] = new Items(0, 166, 'water', 'water');
+    allObstacles[18] = new Items(101, 166, 'water', 'water');
+    allObstacles[19] = new Items(303, 166, 'water', 'water');
+    allObstacles[20] = new Items(404, 166, 'water', 'water');
+    allObstacles[21] = new Items(505, 166, 'water', 'water');
+    allObstacles[22] = new Items(606, 166, 'water', 'water');
+    allObstacles[23] = new Items(707, 166, 'water', 'water');
+    allObstacles[24] = new Items(808, 141, 'rock', 'rock');
+    
+    // row 4
+    allObstacles[25] = new Items(0, 249, 'water', 'water');
+    allObstacles[26] = new Items(101, 249, 'water', 'water');
+    allObstacles[27] = new Items(303, 249, 'water', 'water');
+    allObstacles[28] = new Items(404, 249, 'water', 'water');
+    allObstacles[29] = new Items(505, 249, 'water', 'water');
+    allObstacles[30] = new Items(606, 249, 'water', 'water');
+    allObstacles[31] = new Items(707, 249, 'water', 'water');
+    allObstacles[32] = new Items(808, 249, 'water', 'water');
+    
+    // row 5
+    allObstacles[33] = new Items(0, 307, 'rock', 'rock');
+    allObstacles[34] = new Items(404, 332, 'water', 'water');
+    allObstacles[35] = new Items(808, 332, 'water', 'water');
+    
+    // row 6
+    allObstacles[36] = new Items(0, 390, 'tree-ugly', 'tree');
+    allObstacles[37] = new Items(101, 390, 'tree-ugly', 'tree');
+    allObstacles[38] = new Items(202, 390, 'tree-ugly', 'tree');
+    allObstacles[39] = new Items(808, 415, 'water', 'water');
+    
+    // row 7
+    allObstacles[40] = new Items(0, 498, 'water', 'water');
+    allObstacles[41] = new Items(101, 498, 'water', 'water');
+    allObstacles[42] = new Items(202, 498, 'water', 'water');
+    allObstacles[43] = new Items(303, 498, 'water', 'water');
+    allObstacles[44] = new Items(808, 498, 'water', 'water');
+    
+    // row 8
+    allObstacles[45] = new Items(0, 581, 'water-block', 'water');
+    allObstacles[46] = new Items(101, 581, 'water-block', 'water');
+    allObstacles[47] = new Items(202, 581, 'water-block', 'water');
+    allObstacles[48] = new Items(303, 581, 'water-block', 'water');
+    allObstacles[49] = new Items(707, 581, 'water-block', 'water');
+    allObstacles[50] = new Items(808, 581, 'water-block', 'water');
+    
+    // Create the items
+    var allItems = [];
+    allItems[0] = new Items(101, 297, 'key', 'key');
+    allItems[1] = new Items(505, 214, 'heart', 'life');
     
 } else {
     
@@ -85,21 +235,20 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[3] = new Items(303, -40, 'roof-south-west', 'house');
     allObstacles[4] = new Items(404, -40, 'roof-south', 'house');
     allObstacles[5] = new Items(505, -40, 'roof-south-east', 'house');
-
-    allObstacles[6] = new Items(101, 224, 'tree-ugly', 'house');
-    allObstacles[7] = new Items(303, 307, 'tree-ugly', 'house');
-    allObstacles[8] = new Items(606, 141, 'tree-ugly', 'house');
-    allObstacles[9] = new Items(606, 224, 'tree-ugly', 'house');
-    allObstacles[10] = new Items(0, -25, 'tree-short', 'house');
-    allObstacles[11] = new Items(101, -25, 'tree-short', 'house');
-    allObstacles[12] = new Items(202, -25, 'tree-short', 'house');
-    allObstacles[13] = new Items(606, -25, 'tree-short', 'house');
-    allObstacles[14] = new Items(707, -25, 'tree-short', 'house');
-    allObstacles[15] = new Items(808, -25, 'tree-short', 'house');
-
-    allObstacles[16] = new Items(505, 470, 'rock', 'house');
-    allObstacles[17] = new Items(707, 224, 'rock', 'house');
-
+    
+    allObstacles[6] = new Items(0, -25, 'tree-short', 'tree');         // row 1
+    allObstacles[7] = new Items(101, -25, 'tree-short', 'tree');
+    allObstacles[8] = new Items(202, -25, 'tree-short', 'tree');
+    allObstacles[9] = new Items(606, -25, 'tree-short', 'tree');
+    allObstacles[10] = new Items(707, -25, 'tree-short', 'tree');
+    allObstacles[11] = new Items(808, -25, 'tree-short', 'tree');
+    allObstacles[12] = new Items(606, 141, 'tree-ugly', 'tree');         // row 3
+    allObstacles[13] = new Items(101, 224, 'tree-ugly', 'tree');         // row 4
+    allObstacles[14] = new Items(606, 224, 'tree-ugly', 'tree');
+    allObstacles[15] = new Items(707, 224, 'rock', 'rock');
+    allObstacles[16] = new Items(303, 307, 'tree-ugly', 'tree');         // row 5
+    allObstacles[17] = new Items(505, 470, 'rock', 'rock');             // row 7
+        
     // Create the items
     var allItems = [];
     allItems[0] = new Items(707, 131, 'key', 'key');
@@ -228,6 +377,12 @@ Player.prototype.reset = function() {
     if (CURRENT_LEVEL === 2) {  // I should put this in variables... 
         this.x = 808;
         this.y = 575;
+    } else if (CURRENT_LEVEL === 3 ) {
+        this.x = 0;
+        this.y = 575;
+    } else if (CURRENT_LEVEL === 4 ) {
+        this.x = 606;
+        this.y = -25;
     } else {
         this.x = 404;
         this.y = 575;
@@ -238,6 +393,10 @@ Player.prototype.reset = function() {
 var player;
 if (CURRENT_LEVEL === 2) {  // put this in variables...
     player = new Player(808,575);
+} else if (CURRENT_LEVEL === 3 ) {
+    player = new Player(0,575);
+} else if (CURRENT_LEVEL === 4 ) {
+    player = new Player(606,-25);
 } else {
     player = new Player(404,575);
 }

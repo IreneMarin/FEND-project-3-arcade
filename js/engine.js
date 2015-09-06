@@ -210,6 +210,7 @@ var Engine = (function(global) {
         'images/tree-short.png',
         'images/tree-tall.png',
         'images/tree-ugly.png',
+        'images/water.png',
         'images/blanc.png'
     ]);
     Resources.onReady(init);
