@@ -253,8 +253,8 @@ var Engine = (function(global) {
                     [d,w,w,d,w,w,w,w,d], // row 3
                     [d,w,w,d,w,w,w,w,w], // row 4
                     [d,d,d,d,w,w,w,w,w], // row 5
-                    [d,d,d,d,d,s,s,s,w], // row 6
-                    [w,w,w,w,d,s,s,s,w], // row 7
+                    [d,d,d,d,d,f,f,f,w], // row 6
+                    [w,w,w,w,d,f,f,f,w], // row 7
                     [w,w,w,w,d,d,d,w,w]  // row 8
                 ];
                 
@@ -343,6 +343,7 @@ var Engine = (function(global) {
         'images/chest-open-blue.png',
         'images/door-tall-closed.png',
         'images/door-tall-open.png',
+        'images/door-tall-final.png',
         'images/roof-east.png',
         'images/roof-north.png',
         'images/roof-north-east.png',

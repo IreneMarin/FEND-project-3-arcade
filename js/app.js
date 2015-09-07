@@ -4,7 +4,7 @@ var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
 var HAS_BLUE_GEM = false;   // has picked the blue gem
 var HAS_GREEN_GEM = false;  // has picked the green gem
-var CURRENT_LEVEL = 2;      // level of the screen
+var CURRENT_LEVEL = 4;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
 var PREVIOUS_X = 0;         // set previous X each time we update
@@ -203,8 +203,8 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[26] = new Items(808, 249, 'blanc', 'water');
     // row 5
     allObstacles[27] = new Items(202, 307, 'tree-ugly', 'tree');
-    allObstacles[28] = new Items(404, 332, 'blanc', 'water');
-    allObstacles[29] = new Items(808, 332, 'blanc', 'water');
+    allObstacles[28] = new Items(404, 307, 'blanc', 'water');
+    allObstacles[29] = new Items(808, 307, 'blanc', 'water');
     // row 6
     allObstacles[30] = new Items(0, 390, 'rock', 'rock');
     allObstacles[31] = new Items(101, 390, 'rock', 'rock');
@@ -272,10 +272,13 @@ if (CURRENT_LEVEL === 2) {
 /* -------------- ENEMY ---------------- */
 
 // Enemies our player must avoid
-var Enemy = function(x, y) {
+var Enemy = function(x, y, moveRight, startMove, endMove) {
     // Setting the Enemy initial location and speed
     this.x = x;
     this.y = y;
+    this.startMove = startMove;
+    this.endMove = endMove;
+    this.moveRight = moveRight;
     
     if (CURRENT_LEVEL === 2) {
         this.speed = 200;
@@ -303,23 +306,34 @@ Enemy.prototype.update = function(dt) {
             }
             break;
         
-        case 2:
-            if (enemyMoveRight) {
+        case 2:        
+            if (this.moveRight) {
                 this.x += this.speed * dt;
                 this.sprite = 'images/enemy-bug.png'
-                if (this.x > 808) {
+                if (this.x > this.endMove) {
                     this.x -= this.speed * dt;
-                    enemyMoveRight = false;            
+                    this.moveRight = false;            
                 }        
             } else {
                 this.x -= this.speed * dt;
                 this.sprite = 'images/enemy-bug-left.png'
-                if (this.x < 0) {
+                if (this.x < this.startMove) {
                     this.x += this.speed * dt;
-                    enemyMoveRight = true;
+                    this.moveRight = true;
                 }
             }
             break;
+        
+        case 3:
+            // Updates the Enemy location
+            this.x += this.speed * dt;
+    
+            // If the Enemy goes off screen, we reset the position to start again
+            if (this.x > 909) {
+                this.x = Math.random() * -1200;        
+            }
+            break;     
+            
     }
     
 }
@@ -339,21 +353,24 @@ switch (CURRENT_LEVEL) {
     case 1:
         // Create 10 enemies, 2 for each row, with a random initial location and a random speed
         for (var i = 0; i < 10; i++) {
-            allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5]));
+            allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
         }
         break;
     
     case 2:
-        allEnemies.push(new Enemy(303, 63));
-        allEnemies.push(new Enemy(0, 146));
-        allEnemies.push(new Enemy(202, 229));
-        allEnemies.push(new Enemy(0, 312));
-        allEnemies.push(new Enemy(0, 395));
-        allEnemies.push(new Enemy(606, 395));
-        allEnemies.push(new Enemy(303, 478));
+        allEnemies.push(new Enemy(404, 63, true, 404, 808));
+        allEnemies.push(new Enemy(0, 146, true, 0, 303));
+        allEnemies.push(new Enemy(202, 229, true, 202, 606));
+        allEnemies.push(new Enemy(202, 312, true, 202, 808));
+        allEnemies.push(new Enemy(0, 395, true, 0, 404));
+        allEnemies.push(new Enemy(606, 395, true, 606, 808));
+        allEnemies.push(new Enemy(404, 478, true, 404, 606));
         break;
     
     case 3:
+        for (var i = 0; i < 10; i++) {
+            allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
+        }
         break;
     
     case 4:
@@ -599,8 +616,14 @@ var checkCollisions = function() {
                     if (CURRENT_KEYS > 0) {
                         player.stop();
                         // opens door
-                        allObstacles[i].item = 'door-open';
-                        allObstacles[i].sprite = 'images/door-tall-open.png';
+                        if (CURRENT_LEVEL === 4) {
+                            // final game!
+                            allObstacles[i].item = 'door-final';
+                            allObstacles[i].sprite = 'images/door-tall-final.png';
+                        } else {
+                            allObstacles[i].item = 'door-open';
+                            allObstacles[i].sprite = 'images/door-tall-open.png';
+                        }
                         break;
                         
                     } else {
