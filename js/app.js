@@ -4,7 +4,7 @@ var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
 var HAS_BLUE_GEM = false;   // has picked the blue gem
 var HAS_GREEN_GEM = false;  // has picked the green gem
-var CURRENT_LEVEL = 0;      // level of the screen
+var CURRENT_LEVEL = 2;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
 var PREVIOUS_X = 0;         // set previous X each time we update
@@ -180,8 +180,8 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[8] = new Items(707, 390, 'roof-south-east', 'house');
     
     // row 1
-    allObstacles[9] = new Items(303, 0, 'blanc', 'water');
-    allObstacles[10] = new Items(404, 0, 'blanc', 'water');
+    allObstacles[9] = new Items(303, -25, 'blanc', 'water');
+    allObstacles[10] = new Items(404, -25, 'blanc', 'water');
     // row 2
     allObstacles[11] = new Items(101, 83, 'blanc', 'water');
     allObstacles[12] = new Items(808, 58, 'rock', 'rock');
@@ -272,11 +272,16 @@ if (CURRENT_LEVEL === 2) {
 /* -------------- ENEMY ---------------- */
 
 // Enemies our player must avoid
-var Enemy = function(x, y, speed) {
+var Enemy = function(x, y) {
     // Setting the Enemy initial location and speed
     this.x = x;
     this.y = y;
-    this.speed = speed;
+    
+    if (CURRENT_LEVEL === 2) {
+        this.speed = 200;
+    } else {
+        this.speed = Math.floor(Math.random() * 450 + 1);;
+    }    
     
     // Loading the image by setting this.sprite to the appropriate image
     this.sprite = 'images/enemy-bug.png';
@@ -327,22 +332,25 @@ Enemy.prototype.render = function() {
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
 var enemyHeight = [146,229,312,395,478];
-var enemySpeed = 200;
-
 
 // Create the enemies differently for each level, to try different things
 switch (CURRENT_LEVEL) {
     
     case 1:
         // Create 10 enemies, 2 for each row, with a random initial location and a random speed
-        enemySpeed = Math.floor(Math.random() * 450 + 1);
         for (var i = 0; i < 10; i++) {
-            allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], enemySpeed));
+            allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5]));
         }
         break;
     
     case 2:
-        allEnemies.push(new Enemy(0, 312, 200));
+        allEnemies.push(new Enemy(303, 63));
+        allEnemies.push(new Enemy(0, 146));
+        allEnemies.push(new Enemy(202, 229));
+        allEnemies.push(new Enemy(0, 312));
+        allEnemies.push(new Enemy(0, 395));
+        allEnemies.push(new Enemy(606, 395));
+        allEnemies.push(new Enemy(303, 478));
         break;
     
     case 3:
@@ -421,10 +429,13 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
             
-        case 'enter':
+        //case 'enter':
             //nextLevel();
-            CURRENT_LEVEL = CURRENT_LEVEL + 1;
-            break;
+            //CURRENT_LEVEL = CURRENT_LEVEL + 1;
+            //break;
+        
+        //default:
+          //alert("Please only use the arrow keys.");
     }
 }
 

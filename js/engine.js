@@ -74,11 +74,11 @@ var Engine = (function(global) {
      * of the functions which may need to update entity's data. 
      */
     function update(dt) {
-        if (CURRENT_LIFES === 0) {
+        //if (CURRENT_LIFES === 0) {
             // lost all the lifes --> game over
-            reset();
+            //reset();
             
-        } else {
+        //} else {
             switch(CURRENT_LEVEL) {
                 case 0:
                 break;
@@ -99,7 +99,7 @@ var Engine = (function(global) {
                 updateEntities(dt);
                 break;
             }
-        }
+        //}
     }
 
     /* This is called by the update function  and loops through all of the
@@ -308,8 +308,9 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        CURRENT_LEVEL = 0;
-        player.reset();
+        //CURRENT_LEVEL = 0;
+        //alert("Game over! You hit an asteroid.");
+        //player.reset();
     }
     
     /* Go ahead and load all of the images we know we're going to need to
