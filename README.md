@@ -44,7 +44,7 @@ You will be provided visual assets and a game loop engine; using these tools you
  - ~~Create several new Enemy objects and place them in allEnemies array~~
  
 ### Start page
-- Create the story
+- ~~Create the story~~ (change it XD)
 - Selector to choose the hero
 - Selector to choose the difficulty: easy, normal, nightmare? 
  
@@ -52,7 +52,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 - ~~Create big canvas~~
 - ~~Put trees, stones, paths, doors~~
 - ~~Create top menu for: hearts, keys, gems, level and restart~~
-- Fix checkObstacles function
+- ~~Fix checkObstacles function~~
 
 ### Items to pick
 - ~~Interact: go over item --> item dissapears from screen and array --> counter goes up~~
@@ -62,27 +62,27 @@ You will be provided visual assets and a game loop engine; using these tools you
   - ~~each heart adds a life~~
   - when 0 lifes --> game over
 - Keys: 
-  - use key to open doors (to pass the level) 
-  - use key to open chests (to have gems)
+  - ~~use key to open doors (to pass the level)~~
+  - ~~use key to open chests (to have gems)~~
 - Gems:
   - 1 blue gem: to walk underwater (in the checkObstacles)
   - 1 green gem: to walk through trees (in the checkObstacles)
   - 1 yellow gem: ??
 
 ### Items to interact
-- Interact: try to go over door or chest --> checkObstacles --> if key --> do something
-- Chests: 
-  - open chest with a key (change sprites)
-  - pick up gem inside (a wild gem has appeared!)
+- ~~Interact: try to go over door or chest --> checkObstacles --> if key --> do something~~
+- ~~Chests:~~
+  - ~~open chest with a key (change sprites)~~
+  - ~~pick up gem inside (a wild gem has appeared!)~~
 - Doors:
   - open door to pass level (in the checkObstacles) --> change level
 
 ### Other things
 - Level: 
   - ~~level 1~~
-  - ~~level 2~~ (have to change background!)
-  - ~~level 3~~ (change background)
-  - ~~level 4~~ (change background)
+  - ~~level 2~~ 
+  - ~~level 3~~ 
+  - ~~level 4~~ 
 - Game over:
   - when life = 0, change sprite, everything freezes, restart button
 - Animation:
