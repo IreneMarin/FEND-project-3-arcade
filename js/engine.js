@@ -74,7 +74,27 @@ var Engine = (function(global) {
      * of the functions which may need to update entity's data. 
      */
     function update(dt) {
-        updateEntities(dt);
+        switch(CURRENT_LEVEL) {
+            case 0:
+                break;
+            
+            case 1:
+                updateEntities(dt);
+                break;
+                
+            case 2:
+                updateEntities(dt);
+                break;
+                
+            case 3:
+                updateEntities(dt);
+                break;
+                
+            case 4:
+                updateEntities(dt);
+                break;
+        }
+        
     }
 
     /* This is called by the update function  and loops through all of the
@@ -101,39 +121,155 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                'images/stone-block.png',   // Row 1 of 2 of stone
-                'images/stone-block.png',   // Row 2 of 2 of stone
-                'images/grass-block.png',   // Row 1 of 5 of grass
-                'images/grass-block.png',   // Row 2 of 5 of grass
-                'images/grass-block.png',   // Row 3 of 5 of grass               
-                'images/grass-block.png',   // Row 4 of 5 of grass      
-                'images/grass-block.png',   // Row 5 of 5 of grass             
-                'images/stone-block.png',   // Row 1 of 1 of stone                
-            ],
+        var s = 'images/stone-block.png';
+        var g = 'images/grass-block.png';
+        var w = 'images/water-block.png';
+        var d = 'images/dirt-block.png';
+        var f = 'images/wood-block.png';
+        var rowMatrix;
+         
+        // TODO: find a better way to store the matrix for background level and access it
+        
+        switch(CURRENT_LEVEL)
+        {
+            case 0:
+                document.getElementById('menu').hidden = true;
+                break;
+                
+            case 1:
+                document.getElementById('opening').hidden = true;
+                rowMatrix = [
+                    [s,s,s,f,f,f,s,s,s], // row 1
+                    [s,s,s,f,f,f,s,s,s], // row 2
+                    [g,g,g,g,g,g,g,g,g], // row 3
+                    [g,g,g,g,g,g,g,g,g], // row 4
+                    [g,g,g,g,g,g,g,g,g], // row 5
+                    [g,g,g,g,g,g,g,g,g], // row 6
+                    [g,g,g,g,g,g,g,g,g], // row 7
+                    [s,s,s,s,s,s,s,s,s]  // row 8
+                ];
+                
+                /* Loop through the number of rows and columns we've defined above
+                * and, using the rowImages array, draw the correct image for that
+                * portion of the "grid"
+                */
+                for (var row = 0; row < 8; row++) {
+                    for (var col = 0; col < 9; col++) {
+                        /* The drawImage function of the canvas' context element
+                        * requires 3 parameters: the image to draw, the x coordinate
+                        * to start drawing and the y coordinate to start drawing.
+                        * We're using our Resources helpers to refer to our images
+                        * so that we get the benefits of caching these images, since
+                        * we're using them over and over.
+                        */
+                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
+                        //console.log(rowMatriu[row][col]);
+                    }
+                }
+                renderEntities();
+                break;
             
-            // Create the number of rows and columns on the screen
-            numRows = 8,
-            numCols = 9,
-            row, col;
-
-        /* Loop through the number of rows and columns we've defined above
-         * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
-         */
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                /* The drawImage function of the canvas' context element
-                 * requires 3 parameters: the image to draw, the x coordinate
-                 * to start drawing and the y coordinate to start drawing.
-                 * We're using our Resources helpers to refer to our images
-                 * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
-                 */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
-            }
+            case 2:
+                document.getElementById('opening').hidden = true;
+                rowMatrix = [
+                    [f,f,f,w,w,w,w,w,w], // row 1
+                    [f,f,f,g,g,g,g,g,g], // row 2
+                    [g,g,g,g,g,g,g,g,g], // row 3
+                    [g,g,g,g,g,g,g,g,g], // row 4
+                    [g,g,g,g,g,g,g,g,g], // row 5
+                    [g,g,g,g,g,g,g,g,g], // row 6
+                    [d,d,d,g,g,g,g,s,s], // row 7
+                    [d,d,d,d,g,g,g,s,s]  // row 8
+                ];
+                
+                /* Loop through the number of rows and columns we've defined above
+                * and, using the rowImages array, draw the correct image for that
+                * portion of the "grid"
+                */
+                for (var row = 0; row < 8; row++) {
+                    for (var col = 0; col < 9; col++) {
+                        /* The drawImage function of the canvas' context element
+                        * requires 3 parameters: the image to draw, the x coordinate
+                        * to start drawing and the y coordinate to start drawing.
+                        * We're using our Resources helpers to refer to our images
+                        * so that we get the benefits of caching these images, since
+                        * we're using them over and over.
+                        */
+                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
+                        //console.log(rowMatriu[row][col]);
+                    }
+                }
+                renderEntities();
+                break;
+            
+            case 3:
+                document.getElementById('opening').hidden = true;
+                rowMatrix = [
+                    [d,g,g,g,g,d,d,d,d], // row 1
+                    [d,g,g,d,d,g,g,s,s], // row 2
+                    [d,d,g,d,d,g,g,f,f], // row 3
+                    [w,w,g,d,g,g,g,f,f], // row 4
+                    [w,w,d,d,g,g,g,g,g], // row 5
+                    [w,w,d,d,g,g,g,g,g], // row 6
+                    [s,s,d,g,g,g,g,g,g], // row 7
+                    [s,s,d,g,g,g,g,g,g]  // row 8
+                ];
+                
+                /* Loop through the number of rows and columns we've defined above
+                * and, using the rowImages array, draw the correct image for that
+                * portion of the "grid"
+                */
+                for (var row = 0; row < 8; row++) {
+                    for (var col = 0; col < 9; col++) {
+                        /* The drawImage function of the canvas' context element
+                        * requires 3 parameters: the image to draw, the x coordinate
+                        * to start drawing and the y coordinate to start drawing.
+                        * We're using our Resources helpers to refer to our images
+                        * so that we get the benefits of caching these images, since
+                        * we're using them over and over.
+                        */
+                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
+                        //console.log(rowMatriu[row][col]);
+                    }
+                }
+                renderEntities();
+                break;
+                        
+            case 4:
+                document.getElementById('opening').hidden = true;
+                rowMatrix = [
+                    [d,d,d,w,w,s,s,s,s], // row 1
+                    [d,w,d,d,d,d,d,d,d], // row 2
+                    [d,w,w,d,w,w,w,w,d], // row 3
+                    [d,w,w,d,w,w,w,w,w], // row 4
+                    [d,d,d,d,w,w,w,w,w], // row 5
+                    [d,d,d,d,d,s,s,s,w], // row 6
+                    [w,w,w,w,d,s,s,s,w], // row 7
+                    [w,w,w,w,d,d,d,w,w]  // row 8
+                ];
+                
+                /* Loop through the number of rows and columns we've defined above
+                * and, using the rowImages array, draw the correct image for that
+                * portion of the "grid"
+                */
+                for (var row = 0; row < 8; row++) {
+                    for (var col = 0; col < 9; col++) {
+                        /* The drawImage function of the canvas' context element
+                        * requires 3 parameters: the image to draw, the x coordinate
+                        * to start drawing and the y coordinate to start drawing.
+                        * We're using our Resources helpers to refer to our images
+                        * so that we get the benefits of caching these images, since
+                        * we're using them over and over.
+                        */
+                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
+                        //console.log(rowMatriu[row][col]);
+                    }
+                }
+                renderEntities();
+                break;
         }
-        renderEntities();
+
+        
     }
 
     /* This function is called by the render function and is called on each game
@@ -211,7 +347,13 @@ var Engine = (function(global) {
         'images/tree-tall.png',
         'images/tree-ugly.png',
         'images/water.png',
-        'images/blanc.png'
+        'images/blanc.png',
+        'images/char-boy-prova2.png',
+        'images/tree-ugly-prova2.png',
+        'images/rock-prova.png',
+        'images/chest-open-green.png',
+        'images/chest-open-blue.png',
+        'images/char-horn-girl-sad.png'
     ]);
     Resources.onReady(init);
 

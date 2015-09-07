@@ -2,11 +2,13 @@
 
 var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
-var HAS_BLUE_GEM = true;    // has picked the blue gem
+var HAS_BLUE_GEM = false;    // has picked the blue gem
 var HAS_GREEN_GEM = true;   // has picked the green gem
-var CURRENT_LEVEL = 1;      // level of the screen
-var HERO = "char-boy";      // choosen hero
+var CURRENT_LEVEL = 0;      // level of the screen
+var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
+var PREVIOUS_X = 0;         // set previous X each time we update
+var PREVIOUS_Y = 0;         // set previous y each time we update
 
 // Put the variables on screen in the menu
 document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
@@ -49,25 +51,35 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[4] = new Items(101, -40, 'roof-south', 'house');
     allObstacles[5] = new Items(202, -40, 'roof-south-east', 'house');
     
-    allObstacles[6] = new Items(404, 141, 'tree-tall', 'tree');     // row 3
-    allObstacles[7] = new Items(707, 141, 'tree-ugly', 'tree');
-    allObstacles[8] = new Items(101, 224, 'tree-ugly', 'tree');     // row 4
-    allObstacles[9] = new Items(707, 224, 'tree-ugly', 'tree');
-    allObstacles[10] = new Items(808, 224, 'tree-ugly', 'tree');
-    allObstacles[11] = new Items(101, 307, 'tree-ugly', 'tree');    // row 5
-    allObstacles[12] = new Items(505, 390, 'rock', 'rock');         // row 6    
-    allObstacles[13] = new Items(303, 470, 'tree-tall', 'tree');    // row 7
-    allObstacles[14] = new Items(404, 470, 'tree-tall', 'tree');
-    allObstacles[15] = new Items(303, 556, 'rock', 'rock');         // row 8
-    allObstacles[16] = new Items(404, 556, 'tree-tall', 'tree');
-    allObstacles[17] = new Items(505, 556, 'tree-tall', 'tree');
+    allObstacles[6] = new Items(303, -25, 'blanc', 'water');
+    allObstacles[7] = new Items(404, -25, 'blanc', 'water');
+    allObstacles[8] = new Items(505, -25, 'blanc', 'water');
+    allObstacles[9] = new Items(606, -25, 'blanc', 'water');
+    allObstacles[10] = new Items(707, -25, 'blanc', 'water');
+    allObstacles[11] = new Items(808, -25, 'blanc', 'water');
+    allObstacles[12] = new Items(303, 58, 'tree-ugly', 'tree');     // row 2
+    allObstacles[13] = new Items(404, 141, 'tree-tall', 'tree');     // row 3
+    allObstacles[14] = new Items(707, 141, 'tree-ugly', 'tree');
+    allObstacles[15] = new Items(101, 224, 'tree-ugly', 'tree');     // row 4
+    allObstacles[16] = new Items(707, 224, 'tree-ugly', 'tree');
+    allObstacles[17] = new Items(808, 224, 'tree-ugly', 'tree');
+    allObstacles[18] = new Items(101, 307, 'tree-ugly', 'tree');    // row 5
+    allObstacles[19] = new Items(505, 390, 'rock', 'rock');         // row 6    
+    allObstacles[20] = new Items(303, 470, 'tree-tall', 'tree');    // row 7
+    allObstacles[21] = new Items(0, 470, 'rock', 'rock');
+    allObstacles[22] = new Items(303, 556, 'rock', 'rock');         // row 8
+    allObstacles[23] = new Items(404, 556, 'tree-tall', 'tree');
+    allObstacles[24] = new Items(505, 556, 'tree-tall', 'tree');
     
     // Create the items
     var allItems = [];
     allItems[0] = new Items(808, 131, 'key', 'key');
     allItems[1] = new Items(0, 297, 'key', 'key');
     allItems[2] = new Items(606, 48, 'heart', 'life');
-    allItems[3] = new Items(202, 465, 'chest-closed', 'chest');
+    allItems[3] = new Items(202, 465, 'chest-closed', 'chest-green');
+    allItems[4] = new Items(202, 400, 'blanc', 'chest-lid');
+    
+    
 
 } else if (CURRENT_LEVEL === 3) {
     
@@ -142,7 +154,8 @@ if (CURRENT_LEVEL === 2) {
     var allItems = [];
     allItems[0] = new Items(505, 546, 'key', 'key');
     allItems[1] = new Items(808, -35, 'heart', 'life');
-    allItems[2] = new Items(0, -35, 'chest-closed', 'chest');
+    allItems[2] = new Items(0, -35, 'chest-closed', 'chest-blue');
+    allItems[3] = new Items(0, -100, 'blanc', 'chest-lid');
     
 } else if (CURRENT_LEVEL === 4) {
     
@@ -161,62 +174,56 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[8] = new Items(707, 390, 'roof-south-east', 'house');
     
     // row 1
-    allObstacles[9] = new Items(0, 0, 'water', 'water');
-    allObstacles[10] = new Items(101, 0, 'water', 'water');
-    allObstacles[11] = new Items(202, 0, 'water', 'water');
-    allObstacles[12] = new Items(303, 0, 'water', 'water');
-    allObstacles[13] = new Items(404, 0, 'water', 'water');
+    allObstacles[9] = new Items(303, 0, 'blanc', 'water');
+    allObstacles[10] = new Items(404, 0, 'blanc', 'water');
     
     // row 2
-    allObstacles[14] = new Items(0, 83, 'water', 'water');
-    allObstacles[15] = new Items(101, 83, 'water', 'water');
-    allObstacles[16] = new Items(808, 58, 'rock', 'rock');
+    allObstacles[11] = new Items(101, 83, 'blanc', 'water');
+    allObstacles[12] = new Items(808, 58, 'rock', 'rock');
     
     // row 3
-    allObstacles[17] = new Items(0, 166, 'water', 'water');
-    allObstacles[18] = new Items(101, 166, 'water', 'water');
-    allObstacles[19] = new Items(303, 166, 'water', 'water');
-    allObstacles[20] = new Items(404, 166, 'water', 'water');
-    allObstacles[21] = new Items(505, 166, 'water', 'water');
-    allObstacles[22] = new Items(606, 166, 'water', 'water');
-    allObstacles[23] = new Items(707, 166, 'water', 'water');
-    allObstacles[24] = new Items(808, 141, 'rock', 'rock');
+    allObstacles[13] = new Items(101, 166, 'blanc', 'water');
+    allObstacles[14] = new Items(202, 166, 'blanc', 'water');
+    allObstacles[15] = new Items(404, 166, 'blanc', 'water');
+    allObstacles[16] = new Items(505, 166, 'blanc', 'water');
+    allObstacles[17] = new Items(606, 166, 'blanc', 'water');
+    allObstacles[18] = new Items(707, 166, 'blanc', 'water');
+    allObstacles[19] = new Items(808, 141, 'rock', 'rock');
     
     // row 4
-    allObstacles[25] = new Items(0, 249, 'water', 'water');
-    allObstacles[26] = new Items(101, 249, 'water', 'water');
-    allObstacles[27] = new Items(303, 249, 'water', 'water');
-    allObstacles[28] = new Items(404, 249, 'water', 'water');
-    allObstacles[29] = new Items(505, 249, 'water', 'water');
-    allObstacles[30] = new Items(606, 249, 'water', 'water');
-    allObstacles[31] = new Items(707, 249, 'water', 'water');
-    allObstacles[32] = new Items(808, 249, 'water', 'water');
+    allObstacles[20] = new Items(101, 249, 'blanc', 'water');
+    allObstacles[21] = new Items(202, 249, 'blanc', 'water');
+    allObstacles[22] = new Items(404, 249, 'blanc', 'water');
+    allObstacles[23] = new Items(505, 249, 'blanc', 'water');
+    allObstacles[24] = new Items(606, 249, 'blanc', 'water');
+    allObstacles[25] = new Items(707, 249, 'blanc', 'water');
+    allObstacles[26] = new Items(808, 249, 'blanc', 'water');
     
     // row 5
-    allObstacles[33] = new Items(0, 307, 'rock', 'rock');
-    allObstacles[34] = new Items(404, 332, 'water', 'water');
-    allObstacles[35] = new Items(808, 332, 'water', 'water');
+    allObstacles[27] = new Items(202, 307, 'tree-ugly', 'tree');
+    allObstacles[28] = new Items(404, 332, 'blanc', 'water');
+    allObstacles[29] = new Items(808, 332, 'blanc', 'water');
     
     // row 6
-    allObstacles[36] = new Items(0, 390, 'tree-ugly', 'tree');
-    allObstacles[37] = new Items(101, 390, 'tree-ugly', 'tree');
-    allObstacles[38] = new Items(202, 390, 'tree-ugly', 'tree');
-    allObstacles[39] = new Items(808, 415, 'water', 'water');
+    allObstacles[30] = new Items(0, 390, 'rock', 'rock');
+    allObstacles[31] = new Items(101, 390, 'rock', 'rock');
+    allObstacles[32] = new Items(202, 390, 'tree-ugly', 'tree');
+    allObstacles[33] = new Items(808, 415, 'blanc', 'water');
     
     // row 7
-    allObstacles[40] = new Items(0, 498, 'water', 'water');
-    allObstacles[41] = new Items(101, 498, 'water', 'water');
-    allObstacles[42] = new Items(202, 498, 'water', 'water');
-    allObstacles[43] = new Items(303, 498, 'water', 'water');
-    allObstacles[44] = new Items(808, 498, 'water', 'water');
+    allObstacles[34] = new Items(0, 498, 'blanc', 'water');
+    allObstacles[35] = new Items(101, 498, 'blanc', 'water');
+    allObstacles[36] = new Items(202, 498, 'blanc', 'water');
+    allObstacles[37] = new Items(303, 498, 'blanc', 'water');
+    allObstacles[38] = new Items(808, 498, 'blanc', 'water');
     
     // row 8
-    allObstacles[45] = new Items(0, 581, 'water-block', 'water');
-    allObstacles[46] = new Items(101, 581, 'water-block', 'water');
-    allObstacles[47] = new Items(202, 581, 'water-block', 'water');
-    allObstacles[48] = new Items(303, 581, 'water-block', 'water');
-    allObstacles[49] = new Items(707, 581, 'water-block', 'water');
-    allObstacles[50] = new Items(808, 581, 'water-block', 'water');
+    allObstacles[39] = new Items(0, 581, 'blanc', 'water');
+    allObstacles[40] = new Items(101, 581, 'blanc', 'water');
+    allObstacles[41] = new Items(202, 581, 'blanc', 'water');
+    allObstacles[42] = new Items(303, 581, 'blanc', 'water');
+    allObstacles[43] = new Items(707, 581, 'blanc', 'water');
+    allObstacles[44] = new Items(808, 581, 'blanc', 'water');
     
     // Create the items
     var allItems = [];
@@ -265,12 +272,10 @@ var Enemy = function(x, y) {
     // Setting the Enemy initial location
     this.x = x;
     this.y = y;
-    this.right = this.x + 101;
-    this.bottom = this.y + 83;
-        
+    
     // Setting the speed, random and different for each bug.
     this.speed = Math.floor(Math.random() * 450 + 1);
-    console.log(Math.floor(Math.random() * 450 +1));
+    //console.log(Math.floor(Math.random() * 450 +1));
     
     // Loading the image by setting this.sprite to the appropriate image
     this.sprite = 'images/enemy-bug.png';
@@ -298,7 +303,7 @@ var allEnemies = [];
 var enemyHeight = [146,229,312,395,478];
 // Create 10 enemies, 2 for each row, with a random initial location
 for (var i = 0; i < 10; i++) {
-    allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5]));
+    //allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5]));
 }
 
 
@@ -309,19 +314,19 @@ var Player = function(x,y) {
     // Setting the Player initial location
     this.x = x;
     this.y = y;
-    this.right = this.x + 101;
-    this.bottom = this.y + 83;
-       
+    PREVIOUS_X = x;
+    PREVIOUS_Y = y;
+           
     // Loading the image by setting this.sprite
     this.sprite = 'images/' + HERO + '.png';
 }
 
 // Update the player's position
-Player.prototype.update = function() {
+Player.prototype.update = function() {   
     this.x = this.x;
     this.y = this.y;
+    //console.log("previous: " + PREVIOUS_X + "," + PREVIOUS_Y + "; this: " + this.x + "," + this.y)
     checkCollisions(this.x, this.y);
-    checkObstacles(this.x, this.y);
 }
 
 // Draw the player on the screen
@@ -336,37 +341,43 @@ Player.prototype.handleInput = function(allowedKeys) {
         
         // left key moves player to the west
         case 'left':
-            // we check to avoid player moving off-screen
+            // we check to avoid player moving off-screen and update previous_x
             if (this.x > 0) {
+                PREVIOUS_X = this.x;
                 this.x -= 101;
                 break;
             }
         
         // up key moves player to the north
         case 'up':
-            //we check to avoid player moving off-screen
+            //we check to avoid player moving off-screen and update previous_y
             if (this.y > 0) {
+                PREVIOUS_Y = this.y;
                 this.y -= 83;
                 break;
-            } else { // if player is in the water, we reset the game
-                player.reset();
             }
         
         // right key moves player to the east
         case 'right':
-            // we check to avoid player moving off-screen
+            // we check to avoid player moving off-screen and update previous_x
             if (this.x < 808) {
+                PREVIOUS_X = this.x;
                 this.x += 101;
                 break;
             }
         
         // down key moves player to the south
         case 'down':
-            // we check to avoid player moving off-screen
-            if (this.y < 575) {
+            // we check to avoid player moving off-screen and update previous_y
+            if (this.y < 556) {
+                PREVIOUS_Y = this.y;
                 this.y += 83;
                 break;
             }
+            
+        case 'enter':
+            CURRENT_LEVEL = CURRENT_LEVEL + 1;
+            break;
     }
 }
 
@@ -376,29 +387,34 @@ Player.prototype.reset = function() {
     document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
     if (CURRENT_LEVEL === 2) {  // I should put this in variables... 
         this.x = 808;
-        this.y = 575;
+        this.y = 556;
     } else if (CURRENT_LEVEL === 3 ) {
         this.x = 0;
-        this.y = 575;
+        this.y = 556;
     } else if (CURRENT_LEVEL === 4 ) {
         this.x = 606;
         this.y = -25;
     } else {
         this.x = 404;
-        this.y = 575;
+        this.y = 556;
     }    
+}
+
+Player.prototype.stop = function() {
+    this.x = PREVIOUS_X;
+    this.y = PREVIOUS_Y;
 }
 
 // Place the player object in a variable called player
 var player;
 if (CURRENT_LEVEL === 2) {  // put this in variables...
-    player = new Player(808,575);
+    player = new Player(808,556);
 } else if (CURRENT_LEVEL === 3 ) {
-    player = new Player(0,575);
+    player = new Player(0,556);
 } else if (CURRENT_LEVEL === 4 ) {
     player = new Player(606,-25);
 } else {
-    player = new Player(404,575);
+    player = new Player(404,556);
 }
 
 
@@ -431,7 +447,7 @@ var checkCollisions = function(playerX, playerY) {
         }
     }
     
-    // Check collision with items, to it pick up
+    // Check collision with items, to pick it up
     for (var i = 0; i < allItems.length; i++) {
         var itemRectangle = new Rectangle(allItems[i].x, allItems[i].y);
         if (checkCollision(playerRectangle, itemRectangle)) {
@@ -448,65 +464,113 @@ var checkCollisions = function(playerX, playerY) {
                     document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
                     allItems.splice(i,1);
                     break;
+                
+                case 'chest-green':
+                    if (CURRENT_KEYS > 0) {                        
+                        // opens chest
+                        allItems[i].item = 'gem-green';
+                        allItems[i].sprite = 'images/chest-open-green.png';
+                        allItems[i + 1].item = 'chest-open';
+                        allItems[i + 1].sprite = 'images/chest-lid.png';
+                        player.stop();
+                        break;
+                        
+                    } else {
+                        player.stop();    
+                        break;
+                    }
+                    
+               case 'chest-blue':
+                    if (CURRENT_KEYS > 0) {
+                        // opens chest
+                        allItems[i].item = 'gem-blue';
+                        allItems[i].sprite = 'images/chest-open-blue.png';
+                        allItems[i + 1].item = 'chest-open';
+                        allItems[i + 1].sprite = 'images/chest-lid.png';
+                        player.stop();
+                        break;
+                        
+                    } else {
+                        player.stop();    
+                        break;
+                    }
+               
+               case 'gem-green':
+                    HAS_GREEN_GEM = true;
+                    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-green.png'>";
+                    allItems[i].item = 'chest-open';
+                    allItems[i].sprite = 'images/chest-open.png';
+                    player.stop();
+                    break;
+                    
+               case 'gem-blue':
+                    HAS_BLUE_GEM = true;
+                    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-blue.png'>";
+                    allItems[i].item = 'chest-open';
+                    allItems[i].sprite = 'images/chest-open.png';
+                    player.stop();
+                    break;
+               
+               case 'chest-lid':
+                    break;
+                    
+               case 'chest-open':
+                    break;
             }             
         }
-    }    
-}
-
-// Function to check if the player collides with an obstacle, in which case it shouldn't be able to go over?
-var checkObstacles = function (playerX, playerY) {
+    }
     
-    // Calculate the central Rectangle to avoid the blank space
-    var Rectangle = function (left, top) {
-	   this.left = left;
-	   this.top = top;
-	   this.right = this.left + 101;
-	   this.bottom = this.top + 83;
-    };
-    
-    // Check to see if the rectangles overlap
-    function checkCollision(player, obstacle) {
-	   return !(player.left > obstacle.right || player.right < obstacle.left || player.top > obstacle.bottom || player.bottom < obstacle.top);
-    };
-    
-    var playerRectangle = new Rectangle(player.x, player.y);
-        
-    // Check collision with nature (trees and rocks)
+    // Check collision with objects (trees, house, doors, and rocks)
     for (var i = 0; i < allObstacles.length; i++) {
         var obstacleRectangle = new Rectangle(allObstacles[i].x, allObstacles[i].y);
         if (checkCollision(playerRectangle, obstacleRectangle)) {
+            
+            //console.log(allObstacles[i].item + ": " + allObstacles[i].x + "," + allObstacles[i].y)
             
             // Player has found an obstacle that can't be crossed over
             switch(allObstacles[i].item) {
                 case 'tree':
                     if (HAS_GREEN_GEM === false) {
-                        
+                        player.stop();    
                         break;
                     }
                 
                 case 'water':
                     if (HAS_BLUE_GEM === false) {
-                        
+                        player.stop();    
                         break;
                     }
                 
-                case 'rock', 'house':
-                    player.speed = 0;
+                case 'rock':
+                    player.stop();                    
+                    break;
+                    
+                case 'house':                    
+                    player.stop();                    
                     break;
                     
                 case 'door':
                     if (CURRENT_KEYS > 0) {
-                        // opens door and changes level
-                        CURRENT_LEVEL = CURRENT_LEVEL + 1;
+                        player.stop();
+                        // opens door
+                        allObstacles[i].item = 'door-open';
+                        allObstacles[i].sprite = 'images/door-tall-open.png';
                         break;
                         
                     } else {
-                        
+                        player.stop();    
                         break;
-                    }                    
+                    }
+                    
+                case 'door-open':
+                    player.sprite = 'images/' + HERO + '-sad.png';
+                    // change level!
+                    //CURRENT_LEVEL = CURRENT_LEVEL + 1;
+                    break;
             }            
         }
-    }    
+    }   
+    
 }
 
 
@@ -518,7 +582,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        13: 'enter'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
