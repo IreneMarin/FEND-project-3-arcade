@@ -17,3 +17,71 @@ height: 0 - 83
 
 SPEEDS
 
+100 -- too slow
+200 -- slow but ok
+400 -- fast but ok
+500 -- too fast
+
+
+BACKGROUND MATRIX
+
+S - stone
+W - water
+G - grass
+D - dirt
+
+
+LEVEL 1: 
+
+rw/cl	1	2	3	4	5	6	7	8	9
+
+1		S	S	S	S	S	S	S	S	S		
+2		S	S	S	S	S	S	S	S	S
+3		G	G	G	G	G	G	G	G	G	
+4		G	G	G	G	G	G	G	G	G
+5		G	G	G	G	G	G	G	G	G
+6		G	G	G	G	G	G	G	G	G	
+7		G	G	G	G	G	G	G	G	G	
+8		S	S	S	S	S	S	S	S	S
+
+
+LEVEL 2:
+
+rw/cl	1	2	3	4	5	6	7	8	9
+
+1		S	S	S	W	W	W	W	W	W
+2		S	S	S	G	G	G	G	G	G
+3		G	G	G	G	G	G	G	G	G
+4		G	G	G	G	G	G	G	G	G
+5		G	G	G	G	G	G	G	G	G
+6		G	G	G	G	G	G	G	G	G
+7		G	G	G	G	G	G	G	S	S
+8		G	G	G	G	G	G	G	S	S
+
+
+LEVEL 3:
+
+rw/cl	1	2	3	4	5	6	7	8	9
+
+1		D	D	G	G	G	G	D	D	D
+2		D	D	D	D	D	D	D	S	S
+3		D	D	G	D	G	G	G	S	S
+4		W	W	G	D	G	G	G	S	S
+5		W	W	D	D	G	G	G	G	G
+6		W	W	D	D	G	G	G	G	G
+7		S	S	D	G	G	G	G	G	G
+8		S	S	D	G	G	G	G	G	G
+
+
+LEVEL 4:
+
+rw/cl	1	2	3	4	5	6	7	8	9
+
+1		W	W	W	W	W	S	S	S	S
+2		W	W	D	D	D	D	D	D	D
+3		W	W	D	W	W	W	W	W	D
+4		W	W	D	W	W	W	W	W	D
+5		D	D	D	D	W	W	W	W	W
+6		D	D	D	D	D	S	S	S	W
+7		D	W	W	W	D	S	S	S	W
+8		D	W	W	W	D	D	D	W	W
