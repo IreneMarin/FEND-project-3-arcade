@@ -3,7 +3,7 @@ body {
     margin: 0 auto;
     background: #6cccfe;
 }
-.menu {
+#menu {
     width: 909px;
     height: 90px;
     margin: 30px auto 0;
@@ -11,7 +11,7 @@ body {
     font-family: 'Share Tech Mono', sans-serif;
     font-size: 50px;
 }
-.menu img {
+#menu img {
     height: 40px;
     margin-right: 10px;
 }
@@ -35,4 +35,13 @@ body {
     float: right;
     text-align: right;
     letter-spacing: -5px;
+}
+
+#opening {
+    width: 909px;
+    height: 760px;
+    margin: 50px auto 0;
+    text-align: left;
+    font-family: 'Share Tech Mono', sans-serif;
+    font-size: 34px;
 }
