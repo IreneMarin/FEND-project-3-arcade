@@ -52,6 +52,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 - ~~Create big canvas~~
 - ~~Put trees, stones, paths, doors~~
 - ~~Create top menu for: hearts, keys, gems, level and restart~~
+- Fix checkObstacles function
 
 ### Items to pick
 - ~~Interact: go over item --> item dissapears from screen and array --> counter goes up~~
@@ -80,8 +81,8 @@ You will be provided visual assets and a game loop engine; using these tools you
 - Level: 
   - ~~level 1~~
   - ~~level 2~~ (have to change background!)
-  - level 3
-  - level 4
+  - ~~level 3~~ (change background)
+  - ~~level 4~~ (change background)
 - Game over:
   - when life = 0, change sprite, everything freezes, restart button
 - Animation:
