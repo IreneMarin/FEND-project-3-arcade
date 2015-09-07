@@ -74,27 +74,32 @@ var Engine = (function(global) {
      * of the functions which may need to update entity's data. 
      */
     function update(dt) {
-        switch(CURRENT_LEVEL) {
-            case 0:
+        if (CURRENT_LIFES === 0) {
+            // lost all the lifes --> game over
+            reset();
+            
+        } else {
+            switch(CURRENT_LEVEL) {
+                case 0:
                 break;
             
-            case 1:
+                case 1:
                 updateEntities(dt);
                 break;
                 
-            case 2:
+                case 2:
                 updateEntities(dt);
                 break;
                 
-            case 3:
+                case 3:
                 updateEntities(dt);
                 break;
                 
-            case 4:
+                case 4:
                 updateEntities(dt);
                 break;
+            }
         }
-        
     }
 
     /* This is called by the update function  and loops through all of the
@@ -273,8 +278,6 @@ var Engine = (function(global) {
                 renderEntities();
                 break;
         }
-
-        
     }
 
     /* This function is called by the render function and is called on each game
@@ -305,10 +308,10 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        CURRENT_LEVEL = 0;
         player.reset();
     }
-
+    
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -319,13 +322,9 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/wood-block.png',
-        'images/brown-block.png',
         'images/dirt-block.png',
-        'images/wall-block.png',
         'images/enemy-bug.png',
-        'images/gem-blue.png',
-        'images/gem-green.png',
-        'images/gem-orange.png',
+        'images/enemy-bug-left.png',
         'images/heart.png',
         'images/key.png',
         'images/rock.png',
@@ -333,11 +332,14 @@ var Engine = (function(global) {
         'images/char-boy.png',
         'images/char-cat-girl.png',
         'images/char-horn-girl.png',
+        'images/char-horn-girl-sad.png',
         'images/char-pink-girl.png',
         'images/char-princess-girl.png',
         'images/chest-closed.png',
         'images/chest-lid.png',
         'images/chest-open.png',
+        'images/chest-open-green.png',
+        'images/chest-open-blue.png',
         'images/door-tall-closed.png',
         'images/door-tall-open.png',
         'images/roof-east.png',
@@ -352,14 +354,7 @@ var Engine = (function(global) {
         'images/tree-short.png',
         'images/tree-tall.png',
         'images/tree-ugly.png',
-        'images/water.png',
-        'images/blanc.png',
-        'images/char-boy-prova2.png',
-        'images/tree-ugly-prova2.png',
-        'images/rock-prova.png',
-        'images/chest-open-green.png',
-        'images/chest-open-blue.png',
-        'images/char-horn-girl-sad.png'
+        'images/blanc.png'
     ]);
     Resources.onReady(init);
 
