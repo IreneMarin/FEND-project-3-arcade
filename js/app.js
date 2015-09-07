@@ -3,7 +3,7 @@
 var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
 var HAS_BLUE_GEM = false;    // has picked the blue gem
-var HAS_GREEN_GEM = true;   // has picked the green gem
+var HAS_GREEN_GEM = false;   // has picked the green gem
 var CURRENT_LEVEL = 0;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty

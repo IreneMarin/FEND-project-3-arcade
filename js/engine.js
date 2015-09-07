@@ -134,9 +134,11 @@ var Engine = (function(global) {
         {
             case 0:
                 document.getElementById('menu').hidden = true;
+                document.getElementById('opening').hidden = false;
                 break;
                 
             case 1:
+                document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
                 rowMatrix = [
                     [s,s,s,f,f,f,s,s,s], // row 1
@@ -170,6 +172,7 @@ var Engine = (function(global) {
                 break;
             
             case 2:
+                document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
                 rowMatrix = [
                     [f,f,f,w,w,w,w,w,w], // row 1
@@ -203,6 +206,7 @@ var Engine = (function(global) {
                 break;
             
             case 3:
+                document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
                 rowMatrix = [
                     [d,g,g,g,g,d,d,d,d], // row 1
@@ -236,6 +240,7 @@ var Engine = (function(global) {
                 break;
                         
             case 4:
+                document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
                 rowMatrix = [
                     [d,d,d,w,w,s,s,s,s], // row 1
@@ -301,6 +306,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        player.reset();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
