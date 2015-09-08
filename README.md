@@ -71,17 +71,17 @@ You will be provided visual assets and a game loop engine; using these tools you
 - ~~Keys:~~ 
   - ~~use key to open doors (to pass the level)~~
   - ~~use key to open chests (to have gems)~~
-- Gems:
-  - 1 blue gem: to walk underwater (in the checkObstacles)
-  - 1 green gem: to walk through trees (in the checkObstacles)
+- ~~Gems:~~
+  - ~~1 blue gem: to walk underwater (in the checkObstacles)~~
+  - ~~1 green gem: to walk through trees (in the checkObstacles)~~
 
 ### Items to interact
 - ~~Interact: try to go over door or chest --> checkObstacles --> if key --> do something~~
 - ~~Chests:~~
   - ~~open chest with a key (change sprites)~~
   - ~~pick up gem inside (a wild gem has appeared!)~~
-- Doors:
-  - open door to pass level (in the checkObstacles) --> change level
+- ~~Doors:~~
+  - ~~open door to pass level (in the checkObstacles) --> change level~~
 
 ### Other things
 - ~~Level:~~ 
@@ -102,8 +102,8 @@ You will be provided visual assets and a game loop engine; using these tools you
 - Errors:
   - ~~Fix checkObstacles function~~
   - Player.stop: doesn't stop properly, is moving to the previous position
-  - Gems: doesn't give power when has_gem
-  - Change level/state: implement it how?
+  - ~~Gems: doesn't give power when has_gem~~
+  - ~~Change level/state: implement it how?~~
   - Game over: implement it how?
   - Finish level: create layer with text and "next level" button
   - dialog.show() doesn't work in Mozilla: find alternative :(
