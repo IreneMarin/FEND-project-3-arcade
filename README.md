@@ -7,8 +7,6 @@ recreated the classic arcade game Frogger with Object-Oriented JavaScript and HT
 ### How to run the game
 
 Download the zip in your desktop, unzip it and open the "index.html" file in your browser to play the game.
-<br>
-(It doesn't work on mobile devices).
 
 ### How to play the game
 
@@ -69,14 +67,13 @@ You will be provided visual assets and a game loop engine; using these tools you
   - ~~start with 5 lifes~~
   - ~~each collision subtracts a life~~
   - ~~each heart adds a life~~
-  - when 0 lifes --> game over
-- Keys: 
+  - when 0 lifes --> game over --> everything freezes --> restart button
+- ~~Keys:~~ 
   - ~~use key to open doors (to pass the level)~~
   - ~~use key to open chests (to have gems)~~
 - Gems:
   - 1 blue gem: to walk underwater (in the checkObstacles)
   - 1 green gem: to walk through trees (in the checkObstacles)
-  - 1 yellow gem: ??
 
 ### Items to interact
 - ~~Interact: try to go over door or chest --> checkObstacles --> if key --> do something~~
@@ -87,13 +84,11 @@ You will be provided visual assets and a game loop engine; using these tools you
   - open door to pass level (in the checkObstacles) --> change level
 
 ### Other things
-- Level: 
+- ~~Level:~~ 
   - ~~level 1~~
   - ~~level 2~~ 
   - ~~level 3~~ 
   - ~~level 4~~ 
-- Game over:
-  - when life = 0, change sprite, everything freezes, restart button
 - Animation:
   - when collision with bug
   - when pick up item
@@ -102,3 +97,14 @@ You will be provided visual assets and a game loop engine; using these tools you
   - when collision with nature
   - when pick up item
   - when game over
+
+### Code
+- Errors:
+  - Player.stop: doesn't stop properly, is moving to the previous position
+  - Gems: doesn't give power when has_gem
+  - Change level/state: implement it how?
+  - Game over: implement it how?
+  - Finish level: create layer with text and "next level" button
+- Improvements: 
+  - Obstacles in canvas: find a better way to create each level (external json to access?)
+  - Enemy.update: simplify code (too many repeated if's --> put in functions?)
