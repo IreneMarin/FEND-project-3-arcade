@@ -105,6 +105,7 @@ You will be provided visual assets and a game loop engine; using these tools you
   - Change level/state: implement it how?
   - Game over: implement it how?
   - Finish level: create layer with text and "next level" button
+  - dialog.show() doesn't work in Mozilla: find alternative :(
 - Improvements: 
   - Obstacles in canvas: find a better way to create each level (external json to access?)
   - Enemy.update: simplify code (too many repeated if's --> put in functions?)
