@@ -4,6 +4,7 @@
  */
 
 var CURRENT_LIFES = 5;      // number of current lifes
+var GAME_OVER = false;      // boolean to know when we die
 var CURRENT_KEYS = 0;       // number of current keys
 var HAS_BLUE_GEM = false;   // has picked the blue gem
 var HAS_GREEN_GEM = false;  // has picked the green gem
@@ -541,11 +542,15 @@ Player.prototype.handleInput = function(allowedKeys) {
             }
         
             // TODO: use the key 'enter' to change screens/levels?
-        
-            //case 'enter':
+            
+            
+            case 'enter':
+            if (GAME_OVER) {
+                // reset?
+            }
+            break;
             //nextLevel();?
-            //CURRENT_LEVEL = CURRENT_LEVEL + 1;*
-            //break;
+            //CURRENT_LEVEL = CURRENT_LEVEL + 1;
         }
     }
 }
@@ -574,7 +579,7 @@ Player.prototype.stop = function() {
 // When we have 0 lifes, it is game over
 Player.prototype.gameOver = function() {
     console.log("Game Over");
-    CURRENT_LEVEL = 5;
+    GAME_OVER = true;
     allEnemies = [];
     // TODO: do something here to put a screen with a game over message
     // and a restart button

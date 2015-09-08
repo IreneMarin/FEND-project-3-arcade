@@ -58,7 +58,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
          
-        // if level = 5 --> game over --> do something like not put animation?
+        // if game_over --> do something like not put animation?
         win.requestAnimationFrame(main);
         
     };
@@ -141,7 +141,7 @@ var Engine = (function(global) {
         var matrix;
          
         // TODO: find a better way to store and access the matrix for the grounds
-        
+               
         switch(CURRENT_LEVEL)
         {
             case 0:
@@ -282,6 +282,17 @@ var Engine = (function(global) {
                 renderEntities();
                 break;
         }
+        
+        if (GAME_OVER) {
+            document.getElementById('game-over').hidden = false;                        
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.font = 'normal 40pt "Share Tech Mono"';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.fillText('GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to search for your friend again.', canvas.width/2, canvas.height/2);
+        } else {
+            document.getElementById('game-over').hidden = true;
+        }
     }
 
     /* This function is called by the render function and is called on each game
@@ -327,7 +338,7 @@ var Engine = (function(global) {
     // Inside that you want the reset function, and you need to reset the player,
     // the enemies and the graphics. Render everything again.
     function reset() {
-        /* if (level === 5) {
+        /* if (GAME_OVER) {
             CURRENT_LEVEL = 0;
             allObstacles.forEach(function(obstacle){
                 obstacle.reset(); 

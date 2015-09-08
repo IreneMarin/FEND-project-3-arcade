@@ -9,7 +9,8 @@ body {
 #menu {
     width: 909px;
     height: 90px;
-    margin: 30px auto 0;
+    margin: 0 auto;
+    padding-top: 30px;
     text-align: left;
     font-size: 50px;
 }
@@ -58,6 +59,7 @@ body {
     padding: 20px 0 0 0;
 }
 
+/* Dialogs at the end of each level */ 
 #dialog1, #dialog2, #dialog3, #dialog4 {
     background: url("../images/speechbubble2.png") no-repeat;
     border: none;
@@ -84,4 +86,13 @@ body {
 #dialog4 {
     top: 640px;
     left: 580px;
+}
+
+/* Game over screen */
+#game-over {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: rgba(0,0,0,0.8);
 }
