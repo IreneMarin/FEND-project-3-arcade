@@ -5,8 +5,8 @@
 
 var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
-var HAS_BLUE_GEM = true;    // has picked the blue gem
-var HAS_GREEN_GEM = true;   // has picked the green gem
+var HAS_BLUE_GEM = false;   // has picked the blue gem
+var HAS_GREEN_GEM = false;  // has picked the green gem
 var CURRENT_LEVEL = 1;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
@@ -32,7 +32,7 @@ if (HAS_GREEN_GEM) {
 /* Implement the Items class, with 4 parameters: 
  * position of the item, sprite to put the image, and the property "item".
  * With "item" we will be able to differentiate the obstacles, 
- * depending if they are: house, door, tree, rock, gem or gest. 
+ * depending if they are: house, door, tree, rock, gem or chest. 
  * This way, we only need to create 1 function for all the types of items.
  */
 var Items = function(x, y, sprite, item) {
@@ -502,9 +502,13 @@ Player.prototype.render = function() {
 // handleInput method receives the user input with parameter 'allowedKeys'
 // The Player moves accordingly to that input
 Player.prototype.handleInput = function(allowedKeys) {
-    switch(allowedKeys) {
-        
-        case 'left':
+    
+    // If lifes = 0 it means game over, so we can't move anymore
+    if (CURRENT_LIFES > 0) {
+    
+        switch(allowedKeys) {
+                    
+            case 'left':
             // we check to avoid player moving off-screen and update previous_x
             if (this.x > 0) {
                 PREVIOUS_X = this.x;
@@ -512,7 +516,7 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        case 'up':
+            case 'up':
             //we check to avoid player moving off-screen and update previous_y
             if (this.y > 0) {
                 PREVIOUS_Y = this.y;
@@ -520,7 +524,7 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        case 'right':
+            case 'right':
             // we check to avoid player moving off-screen and update previous_x
             if (this.x < 808) {
                 PREVIOUS_X = this.x;
@@ -528,7 +532,7 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        case 'down':
+            case 'down':
             // we check to avoid player moving off-screen and update previous_y
             if (this.y < 556) {
                 PREVIOUS_Y = this.y;
@@ -536,12 +540,13 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        // TODO: use the key 'enter' to change screens/levels?
+            // TODO: use the key 'enter' to change screens/levels?
         
-        //case 'enter':
+            //case 'enter':
             //nextLevel();?
             //CURRENT_LEVEL = CURRENT_LEVEL + 1;*
             //break;
+        }
     }
 }
 
@@ -549,8 +554,14 @@ Player.prototype.handleInput = function(allowedKeys) {
 Player.prototype.reset = function() {
     CURRENT_LIFES = CURRENT_LIFES - 1;
     document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
-    this.x = START_X;
-    this.y = START_Y;
+    
+    // If after the subtraction of life we have 0 lifes --> Game Over
+    if (CURRENT_LIFES === 0) {
+        player.gameOver();        
+    } else {
+        this.x = START_X;
+        this.y = START_Y;
+    }
 }
 
 // Stops de player when it tries to go over an obstacle (tree, rock, house, chest)
@@ -558,6 +569,16 @@ Player.prototype.reset = function() {
 Player.prototype.stop = function() {
     this.x = PREVIOUS_X;
     this.y = PREVIOUS_Y;
+}
+
+// When we have 0 lifes, it is game over
+Player.prototype.gameOver = function() {
+    console.log("Game Over");
+    CURRENT_LEVEL = 5;
+    allEnemies = [];
+    // TODO: do something here to put a screen with a game over message
+    // and a restart button
+    // Do something in engine.js with reset()??
 }
 
 // Place the player object in a variable called player
@@ -689,7 +710,7 @@ var checkCollisions = function() {
                 case 'tree':
                     // TODO: if we have green gem, we should be able to cross trees
                     if (HAS_GREEN_GEM) {
-                        // player can go over the trees
+                        // here player can go over the trees
                     } else {
                         player.stop();    
                         break;
@@ -698,7 +719,7 @@ var checkCollisions = function() {
                 case 'water':
                     // TODO: if we have blue gem, we should be able to cross water
                     if (HAS_BLUE_GEM) {
-                        // player can go over water
+                        // here player can go over water
                     } else {
                         player.stop();    
                         break;

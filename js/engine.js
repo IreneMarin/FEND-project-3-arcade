@@ -57,7 +57,10 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
+         
+        // if level = 5 --> game over --> do something like not put animation?
         win.requestAnimationFrame(main);
+        
     };
 
     /* This function does some initial setup that should only occur once,
@@ -94,6 +97,13 @@ var Engine = (function(global) {
             updateEntities(dt);
             break;
         }
+        
+        /* There is a bug when rendering the game and the Player 
+         * arrives to the top of the screen, the head of the player 
+         * stays rendered behind the tiles.
+         * Thanks to Sebastian in the forums for this fix.
+         */
+        ctx.clearRect(0,0,canvas.width,canvas.height);
     }
 
     /* This is called by the update function  and loops through all of the
@@ -109,6 +119,8 @@ var Engine = (function(global) {
         });
         player.update();
     }
+    
+    // Coaches video --> function updateExtras?
 
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
@@ -294,15 +306,40 @@ var Engine = (function(global) {
 
         player.render();
     }
-
+    
+    /* --------------------------------------------------------- */
+    
+    // Coaches video --> function renderExtras? 
+    
+    // setTimeout --> pause the game for some seconds?
+    
+    // new levels --> function --> argument --> what makes the game go to new level?
+    // how do we render everything again?
+    
+    /* --------------------------------------------------------- */
+    
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
      */
+     
+    // Write a function that takes as a parameter the reason you want to restart
+    // Inside that you want the reset function, and you need to reset the player,
+    // the enemies and the graphics. Render everything again.
     function reset() {
-        //CURRENT_LEVEL = 0;
-        //alert("Game over! You hit an asteroid.");
-        //player.reset();
+        /* if (level === 5) {
+            CURRENT_LEVEL = 0;
+            allObstacles.forEach(function(obstacle){
+                obstacle.reset(); 
+            });
+            allItems.forEach(function(item){
+            item.reset(); 
+            });
+            allEnemies.forEach(function(enemy) {
+                enemy.reset();
+            });
+            player.reset();
+        } */
     }
     
     /* Go ahead and load all of the images we know we're going to need to
