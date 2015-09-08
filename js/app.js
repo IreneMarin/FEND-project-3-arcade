@@ -446,16 +446,11 @@ switch (CURRENT_LEVEL) {
          */
         allEnemies.push(new Enemy(0, -20, true, 0, 404));
         allEnemies.push(new Enemy(808, 63, false, 808, 0));
-        allEnemies.push(new Enemy(808, 63, false, 808, 0));
         allEnemies.push(new Enemy(0, 146, true, 0, 808));
-        allEnemies.push(new Enemy(0, 146, true, 0, 808));
-        allEnemies.push(new Enemy(808, 229, false, 808, 0));
         allEnemies.push(new Enemy(808, 229, false, 808, 0));
         allEnemies.push(new Enemy(0, 312, true, 0, 404));
         allEnemies.push(new Enemy(0, 395, true, 0, 404));
         allEnemies.push(new Enemy(0, 478, true, 0, 404));
-        allEnemies.push(new Enemy(808, 561, false, 808, 0));
-        allEnemies.push(new Enemy(808, 561, false, 808, 0));
         break;
 }
 
@@ -709,6 +704,9 @@ var checkCollisions = function() {
                             // final game!                                                                                  ** Acabar joc
                             allObstacles[i].item = 'door-final';
                             allObstacles[i].sprite = 'images/door-tall-final.png';
+                            var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
+                            dialog.show();
+                            
                         } else {
                             allObstacles[i].item = 'door-open';
                             allObstacles[i].sprite = 'images/door-tall-open.png';
@@ -721,13 +719,17 @@ var checkCollisions = function() {
                     }
                     
                 case 'door-open':
-                    player.sprite = 'images/' + HERO + '-sad.png';                                                          
+                    player.sprite = 'images/' + HERO + '-sad.png';
+                    var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
+                    dialog.show();
                     // change level!                                                                                     ** Canviar nivell
                     //CURRENT_LEVEL = CURRENT_LEVEL + 1;
                     // TODO: make dialog appear
                     break;
                     
                 case 'door-final':
+                    //var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
+                    //dialog.show();
                     // final game!                                                                                      ** Acabar joc
                     break;
             }

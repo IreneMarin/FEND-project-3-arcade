@@ -2,13 +2,13 @@ body {
     text-align: center;
     margin: 0 auto;
     background: #6cccfe;
+    font-family: 'Share Tech Mono', sans-serif;
 }
 #menu {
     width: 909px;
     height: 90px;
     margin: 30px auto 0;
     text-align: left;
-    font-family: 'Share Tech Mono', sans-serif;
     font-size: 50px;
 }
 #menu img {
@@ -42,6 +42,33 @@ body {
     height: 760px;
     margin: 50px auto 0;
     text-align: left;
-    font-family: 'Share Tech Mono', sans-serif;
     font-size: 34px;
+}
+
+#dialog1, #dialog2, #dialog3, #dialog4 {
+    background: url("../images/speechbubble2.png") no-repeat;
+    border: none;
+    padding: 0;
+    width: 101px;
+    height: 109px;
+}
+#dialog1 p, #dialog2 p, #dialog3 p, #dialog4 p {
+    padding: 10px;
+}
+#dialog1 {
+    top: 140px;
+    left: 160px;
+}
+#dialog2 {
+    top: 140px;
+    left: -440px;
+}
+#dialog3 {
+    background: url("../images/speechbubble3.png") no-repeat;
+    top: 320px;
+    left:630px;
+}
+#dialog4 {
+    top: 640px;
+    left: 580px;
 }
