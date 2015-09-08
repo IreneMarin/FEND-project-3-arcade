@@ -74,32 +74,26 @@ var Engine = (function(global) {
      * of the functions which may need to update entity's data. 
      */
     function update(dt) {
-        //if (CURRENT_LIFES === 0) {
-            // lost all the lifes --> game over
-            //reset();
-            
-        //} else {
-            switch(CURRENT_LEVEL) {
-                case 0:
-                break;
-            
-                case 1:
-                updateEntities(dt);
-                break;
-                
-                case 2:
-                updateEntities(dt);
-                break;
-                
-                case 3:
-                updateEntities(dt);
-                break;
-                
-                case 4:
-                updateEntities(dt);
-                break;
-            }
-        //}
+        switch(CURRENT_LEVEL) {
+            case 0:
+            break;
+        
+        case 1:
+            updateEntities(dt);
+            break;
+        
+        case 2:
+            updateEntities(dt);
+            break;
+        
+        case 3:
+            updateEntities(dt);
+            break;
+        
+        case 4:
+            updateEntities(dt);
+            break;
+        }
     }
 
     /* This is called by the update function  and loops through all of the
@@ -123,17 +117,18 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
-        /* This array holds the relative URL to the image used
-         * for that particular row of the game level.
+        /* First we create the variables of the different types of ground we have.
+         * Afterwards we create a matrix for each row/column, where we will put
+         * each type of ground for each spot, that will vary for each level.
          */
         var s = 'images/stone-block.png';
         var g = 'images/grass-block.png';
         var w = 'images/water-block.png';
         var d = 'images/dirt-block.png';
         var f = 'images/wood-block.png';
-        var rowMatrix;
+        var matrix;
          
-        // TODO: find a better way to store the matrix for background level and access it
+        // TODO: find a better way to store and access the matrix for the grounds
         
         switch(CURRENT_LEVEL)
         {
@@ -145,7 +140,7 @@ var Engine = (function(global) {
             case 1:
                 document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
-                rowMatrix = [
+                matrix = [
                     [s,s,s,f,f,f,s,s,s], // row 1
                     [s,s,s,f,f,f,s,s,s], // row 2
                     [g,g,g,g,g,g,g,g,g], // row 3
@@ -157,7 +152,7 @@ var Engine = (function(global) {
                 ];
                 
                 /* Loop through the number of rows and columns we've defined above
-                * and, using the rowImages array, draw the correct image for that
+                * and, using the matrix double array, draw the correct image for that
                 * portion of the "grid"
                 */
                 for (var row = 0; row < 8; row++) {
@@ -169,7 +164,7 @@ var Engine = (function(global) {
                         * so that we get the benefits of caching these images, since
                         * we're using them over and over.
                         */
-                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
+                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
                         //console.log(rowMatriu[row][col]);
                     }
                 }
@@ -179,7 +174,7 @@ var Engine = (function(global) {
             case 2:
                 document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
-                rowMatrix = [
+                matrix = [
                     [f,f,f,w,w,w,w,w,w], // row 1
                     [f,f,f,g,g,g,g,g,g], // row 2
                     [g,g,g,g,g,g,g,g,g], // row 3
@@ -191,7 +186,7 @@ var Engine = (function(global) {
                 ];
                 
                 /* Loop through the number of rows and columns we've defined above
-                * and, using the rowImages array, draw the correct image for that
+                * and, using the matrix double array, draw the correct image for that
                 * portion of the "grid"
                 */
                 for (var row = 0; row < 8; row++) {
@@ -203,8 +198,7 @@ var Engine = (function(global) {
                         * so that we get the benefits of caching these images, since
                         * we're using them over and over.
                         */
-                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
-                        //console.log(rowMatriu[row][col]);
+                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
                     }
                 }
                 renderEntities();
@@ -213,7 +207,7 @@ var Engine = (function(global) {
             case 3:
                 document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
-                rowMatrix = [
+                matrix = [
                     [d,g,g,g,g,d,d,d,d], // row 1
                     [d,g,g,d,d,g,g,s,s], // row 2
                     [d,d,g,d,d,g,g,f,f], // row 3
@@ -225,7 +219,7 @@ var Engine = (function(global) {
                 ];
                 
                 /* Loop through the number of rows and columns we've defined above
-                * and, using the rowImages array, draw the correct image for that
+                * and, using the matrix double array, draw the correct image for that
                 * portion of the "grid"
                 */
                 for (var row = 0; row < 8; row++) {
@@ -237,8 +231,7 @@ var Engine = (function(global) {
                         * so that we get the benefits of caching these images, since
                         * we're using them over and over.
                         */
-                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
-                        //console.log(rowMatriu[row][col]);
+                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
                     }
                 }
                 renderEntities();
@@ -247,7 +240,7 @@ var Engine = (function(global) {
             case 4:
                 document.getElementById('menu').hidden = false;
                 document.getElementById('opening').hidden = true;
-                rowMatrix = [
+                matrix = [
                     [d,d,d,w,w,s,s,s,s], // row 1
                     [d,w,d,d,d,d,d,d,d], // row 2
                     [d,w,w,d,w,w,w,w,d], // row 3
@@ -259,7 +252,7 @@ var Engine = (function(global) {
                 ];
                 
                 /* Loop through the number of rows and columns we've defined above
-                * and, using the rowImages array, draw the correct image for that
+                * and, using the matrix double array, draw the correct image for that
                 * portion of the "grid"
                 */
                 for (var row = 0; row < 8; row++) {
@@ -271,8 +264,7 @@ var Engine = (function(global) {
                         * so that we get the benefits of caching these images, since
                         * we're using them over and over.
                         */
-                        ctx.drawImage(Resources.get(rowMatrix[row][col]), col * 101, row * 83);
-                        //console.log(rowMatriu[row][col]);
+                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
                     }
                 }
                 renderEntities();

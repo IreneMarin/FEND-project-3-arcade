@@ -504,7 +504,6 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(allowedKeys) {
     switch(allowedKeys) {
         
-        // left key moves player to the west
         case 'left':
             // we check to avoid player moving off-screen and update previous_x
             if (this.x > 0) {
@@ -513,7 +512,6 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        // up key moves player to the north
         case 'up':
             //we check to avoid player moving off-screen and update previous_y
             if (this.y > 0) {
@@ -522,7 +520,6 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        // right key moves player to the east
         case 'right':
             // we check to avoid player moving off-screen and update previous_x
             if (this.x < 808) {
@@ -531,7 +528,6 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
         
-        // down key moves player to the south
         case 'down':
             // we check to avoid player moving off-screen and update previous_y
             if (this.y < 556) {
@@ -539,15 +535,17 @@ Player.prototype.handleInput = function(allowedKeys) {
                 this.y += 83;
                 break;
             }
-            
-        //case 'enter':                                                                                                     ** Fix: change level?
-            //nextLevel();
-            //CURRENT_LEVEL = CURRENT_LEVEL + 1;
+        
+        // TODO: use the key 'enter' to change screens/levels?
+        
+        //case 'enter':
+            //nextLevel();?
+            //CURRENT_LEVEL = CURRENT_LEVEL + 1;*
             //break;
     }
 }
 
-// Reset the player's position and lifes when it collides with a bug
+// Reset the player's position when it collides with a bug, and subtract a life
 Player.prototype.reset = function() {
     CURRENT_LIFES = CURRENT_LIFES - 1;
     document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
@@ -555,8 +553,8 @@ Player.prototype.reset = function() {
     this.y = START_Y;
 }
 
-// Stops de player when it tries to go over an obstacle (tree, rock, house, chest)                                          ** Fix: player doesn't stop properly 
-// TODO: it doesn't stop, it goes one position back
+// Stops de player when it tries to go over an obstacle (tree, rock, house, chest)
+// TODO: it doesn't stop properly, it is going one position back
 Player.prototype.stop = function() {
     this.x = PREVIOUS_X;
     this.y = PREVIOUS_Y;
@@ -566,9 +564,9 @@ Player.prototype.stop = function() {
 var player = new Player(START_X, START_Y);
 
 
-/* ------------ COLLISIONS & ITEMS ------------ */
+/* -------------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
 
-// Function to check if the player collides with a bug or an item
+// Function to check if the player collides with something
 var checkCollisions = function() {
     
     // Calculate the central Rectangle to avoid the blank space
@@ -623,7 +621,7 @@ var checkCollisions = function() {
                 // If it collides with closed chest, check for key
                 case 'chest-green':
                     if (CURRENT_KEYS > 0) {                        
-                        // if we have key, open chest
+                        // if we have key, open chest and player stops
                         allItems[i].item = 'gem-green';
                         allItems[i].sprite = 'images/chest-open-green.png';
                         allItems[i + 1].item = 'chest-open';
@@ -640,7 +638,7 @@ var checkCollisions = function() {
                // If it collides with closed chest, check for key
                case 'chest-blue':
                     if (CURRENT_KEYS > 0) {
-                        // if we have key, open chest
+                        // if we have key, open chest and player stops
                         allItems[i].item = 'gem-blue';
                         allItems[i].sprite = 'images/chest-open-blue.png';
                         allItems[i + 1].item = 'chest-open';
@@ -662,7 +660,8 @@ var checkCollisions = function() {
                     allItems[i].sprite = 'images/chest-open.png';
                     player.stop();
                     break;
-                    
+               
+               // If it collides with open chest with gem --> pick up gem
                case 'gem-blue':
                     HAS_BLUE_GEM = true;
                     document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-blue.png'>";
@@ -673,14 +672,14 @@ var checkCollisions = function() {
                
                case 'chest-lid':
                     break;
-                    
+               
                case 'chest-open':
                     break;
             }
         }
     }
     
-    // Check collision with objects (trees, house, doors, and rocks)
+    // Check collision with objects (tree, house, door and rock)
     for (var i = 0; i < allObstacles.length; i++) {
         var obstacleRectangle = new Rectangle(allObstacles[i].x, allObstacles[i].y);
         if (checkCollision(playerRectangle, obstacleRectangle)) {
@@ -688,18 +687,18 @@ var checkCollisions = function() {
             // Player has found an obstacle that can't be crossed over
             switch(allObstacles[i].item) {
                 case 'tree':
-                    // TODO: it doesn't work with true!                                                                         ** Fix
+                    // TODO: if we have green gem, we should be able to cross trees
                     if (HAS_GREEN_GEM) {
-                        // player can go over the trees?
+                        // player can go over the trees
                     } else {
                         player.stop();    
                         break;
                     }
                 
                 case 'water':
-                    // TODO: it doesn't work with true!                                                                         ** Fix
+                    // TODO: if we have blue gem, we should be able to cross water
                     if (HAS_BLUE_GEM) {
-                        // player can go over water?
+                        // player can go over water
                     } else {
                         player.stop();    
                         break;
@@ -716,9 +715,9 @@ var checkCollisions = function() {
                 case 'door':
                     if (CURRENT_KEYS > 0) {
                         player.stop();
-                        // opens door
+                        // if we have key,opens door
                         if (CURRENT_LEVEL === 4) {
-                            // final game!                                                                                      ** Fix: finish game
+                            // TODO: change state and create final game screen!
                             allObstacles[i].item = 'door-final';
                             allObstacles[i].sprite = 'images/door-tall-final.png';
                             var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
@@ -739,9 +738,9 @@ var checkCollisions = function() {
                     player.sprite = 'images/' + HERO + '-sad.png';
                     var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
                     dialog.show();
-                    // change level!                                                                                            ** Fix: change level
+                    // TODO: after dialog appearing, it should appear a screen with text and button to change to next level
+                    // TODO: dialog.show only works on Chrome... find alternative for Mozilla... :(
                     //CURRENT_LEVEL = CURRENT_LEVEL + 1;
-                    // TODO: make dialog appear
                     break;
             }
         }
@@ -749,7 +748,7 @@ var checkCollisions = function() {
 }
 
 
-/* ---------------- KEYBOARD INPUT --------------- */ 
+/* ---------------------- KEYBOARD INPUT ---------------------------- */ 
 
 // This listens for key presses and sends the keys to your Player.handleInput() method
 document.addEventListener('keyup', function(e) {
