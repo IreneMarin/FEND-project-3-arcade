@@ -111,3 +111,4 @@ You will be provided visual assets and a game loop engine; using these tools you
 - Improvements: 
   - Obstacles in canvas: find a better way to create each level (external json to access?)
   - Enemy.update: simplify code (too many repeated if's --> put in functions?)
+  - Put message between levels with instructions to go to next level
