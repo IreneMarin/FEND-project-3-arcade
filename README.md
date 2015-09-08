@@ -12,7 +12,12 @@ Download the zip in your desktop, unzip it and open the "index.html" file in you
 
 ### How to play the game
 
+<img src='images/arrows.png'>
+<br>
 To play the game, use the arrow keys from your keyboard to move up, right, down and left.
+<br>
+<br>
+<img src='images/enter.png'>
 <br>
 Use the key Enter to change level or restart, when the game requires you to do so.
 
