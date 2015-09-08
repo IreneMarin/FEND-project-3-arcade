@@ -105,7 +105,7 @@ You will be provided visual assets and a game loop engine; using these tools you
   - ~~Gems: doesn't give power when has_gem~~
   - ~~Change level/state: implement it how?~~
   - Game over: the Enter key doesn't work (it cannot restart)
-  - Finish level: create last level screen
+  - ~~Finish level: create last level screen~~
   - dialog.show() doesn't work in Mozilla: find alternative? :(
   - dialog.show() doesn't close when changing level
 - Improvements: 
