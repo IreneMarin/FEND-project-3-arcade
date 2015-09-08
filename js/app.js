@@ -39,7 +39,7 @@ Items.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// TODO: find a better way to create the obstacles for each level                                       ** Millora
+// TODO: find a better way to create the obstacles for each level                                                       ** Improvement: simplify code
 // (an external json to access it?). This can't be efficient... nope... 
 
 // Put all the stuff in the canvas (house, door, trees, rocks, hearts, keys, chest)
@@ -296,7 +296,7 @@ var Enemy = function(x, y, moveRight, startMove, endMove) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     
-    // TODO: we are using too many times the same if's,                                                 ** Millora
+    // TODO: we are using too many times the same if's,                                                                 ** Improvement: simplify code
     // there has to be a way to not write them over in each switch
     
     console.log(CURRENT_LEVEL);
@@ -523,7 +523,7 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
             
-        //case 'enter':                                                                                 ** Arreglar
+        //case 'enter':                                                                                                     ** Fix: change level?
             //nextLevel();
             //CURRENT_LEVEL = CURRENT_LEVEL + 1;
             //break;
@@ -538,7 +538,7 @@ Player.prototype.reset = function() {
     this.y = START_Y;
 }
 
-// Stops de player when it tries to go over an obstacle (tree, rock, house, chest)                       ** Arreglar 
+// Stops de player when it tries to go over an obstacle (tree, rock, house, chest)                                          ** Fix: player doesn't stop properly 
 // TODO: it doesn't stop, it goes one position back
 Player.prototype.stop = function() {
     this.x = PREVIOUS_X;
@@ -671,7 +671,7 @@ var checkCollisions = function() {
             // Player has found an obstacle that can't be crossed over
             switch(allObstacles[i].item) {
                 case 'tree':
-                    // TODO: it doesn't work with true!                                                                 ** Arreglar
+                    // TODO: it doesn't work with true!                                                                         ** Fix
                     if (HAS_GREEN_GEM) {
                         // player can go over the trees?
                     } else {
@@ -680,7 +680,7 @@ var checkCollisions = function() {
                     }
                 
                 case 'water':
-                    // TODO: it doesn't work with true!                                                                    ** Arreglar
+                    // TODO: it doesn't work with true!                                                                         ** Fix
                     if (HAS_BLUE_GEM) {
                         // player can go over water?
                     } else {
@@ -701,7 +701,7 @@ var checkCollisions = function() {
                         player.stop();
                         // opens door
                         if (CURRENT_LEVEL === 4) {
-                            // final game!                                                                                  ** Acabar joc
+                            // final game!                                                                                      ** Fix: finish game
                             allObstacles[i].item = 'door-final';
                             allObstacles[i].sprite = 'images/door-tall-final.png';
                             var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
@@ -722,15 +722,9 @@ var checkCollisions = function() {
                     player.sprite = 'images/' + HERO + '-sad.png';
                     var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
                     dialog.show();
-                    // change level!                                                                                     ** Canviar nivell
+                    // change level!                                                                                            ** Fix: change level
                     //CURRENT_LEVEL = CURRENT_LEVEL + 1;
                     // TODO: make dialog appear
-                    break;
-                    
-                case 'door-final':
-                    //var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
-                    //dialog.show();
-                    // final game!                                                                                      ** Acabar joc
                     break;
             }
         }
