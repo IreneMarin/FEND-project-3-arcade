@@ -42,13 +42,14 @@ You will be provided visual assets and a game loop engine; using these tools you
 - ~~Implement Enemy function:~~ 
   - ~~set initial location and speed~~
   - ~~update method: updates position and handles collision~~
+  - ~~Create several new Enemy objects and place them in allEnemies array~~
 - ~~Implement Player function:~~
   - ~~handleInput method:~~
   - ~~receive user input and move Player accordingly~~
   - ~~Player cannot move off screen~~
   - ~~if the Player reaches water, the game should reset~~
- - ~~Create a new Player object~~
- - ~~Create several new Enemy objects and place them in allEnemies array~~
+  - ~~Create a new Player object~~
+ 
  
 ### Start page
 - ~~Create the story~~ (change it XD)
