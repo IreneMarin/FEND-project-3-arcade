@@ -4,6 +4,8 @@ body {
     background: #6cccfe;
     font-family: 'Share Tech Mono', sans-serif;
 }
+
+/* Menu */
 #menu {
     width: 909px;
     height: 90px;
@@ -17,32 +19,43 @@ body {
 }
 .lifes {
     float: left;
-    padding-right: 70px;
+    width: 20%;
 }
 .keys {
     float: left;
-    padding-right: 70px;
+    width: 20%;
 }
 .gems {
     float: left;
+    width: 20%;
 }
 .level {
-    float: left;
-    padding-right: 70px;
-    letter-spacing: -5px;
-}
-.start {
     float: right;
     text-align: right;
+    width: 25%;
     letter-spacing: -5px;
 }
 
+/* Opening screen */
 #opening {
     width: 909px;
     height: 760px;
-    margin: 50px auto 0;
+    margin: 0 auto;
     text-align: left;
     font-size: 34px;
+}
+#opening img {
+    padding: 50px 0;
+}
+.instructions {
+    float: left;
+    width: 34%;
+    font-size: 28px;
+    text-align: center;
+    padding: 0 7%;
+}
+#opening .instructions img {
+    padding: 20px 0 0 0;
 }
 
 #dialog1, #dialog2, #dialog3, #dialog4 {
