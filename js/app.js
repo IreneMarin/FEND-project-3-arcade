@@ -16,6 +16,7 @@ var PREVIOUS_Y = 0;         // set previous y each time we update
 var START_X = 0;            // set starting player position for the level
 var START_Y = 0;            // set starting player position for the level
 var NEXT_LEVEL = true;
+var FINAL = false;
 
 // Put the variables on screen to appear in the menu html
 document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
@@ -531,7 +532,7 @@ Player.prototype.handleInput = function(allowedKeys) {
             case 'enter':
                 if (GAME_OVER) {
                     // reset game
-                    changeLevel(0);
+                    changeLevel(1);
                 }
                 if (NEXT_LEVEL) {
                     // change to the next level
@@ -603,6 +604,11 @@ Player.prototype.gameOver = function() {
     GAME_OVER = true;
     allEnemies = [];
     // TODO: do something here to put a screen with a game over message
+}
+
+Player.prototype.gameFinal = function() {
+    FINAL = true;
+    allEnemies = [];
 }
 
 // Place the player object in a variable called player
@@ -776,6 +782,7 @@ var checkCollisions = function() {
                             allObstacles[i].sprite = 'images/door-tall-final.png';
                             var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
                             dialog.show();
+                            player.gameFinal();
                             
                         } else {
                             allObstacles[i].item = 'door-open';
