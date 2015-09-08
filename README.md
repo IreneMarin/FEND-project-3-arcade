@@ -59,7 +59,6 @@ You will be provided visual assets and a game loop engine; using these tools you
 - ~~Create big canvas~~
 - ~~Put trees, stones, paths, doors~~
 - ~~Create top menu for: hearts, keys, gems, level and restart~~
-- ~~Fix checkObstacles function~~
 
 ### Items to pick
 - ~~Interact: go over item --> item dissapears from screen and array --> counter goes up~~
@@ -100,6 +99,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 
 ### Code
 - Errors:
+  - ~~Fix checkObstacles function~~
   - Player.stop: doesn't stop properly, is moving to the previous position
   - Gems: doesn't give power when has_gem
   - Change level/state: implement it how?
