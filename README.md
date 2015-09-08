@@ -63,11 +63,11 @@ You will be provided visual assets and a game loop engine; using these tools you
 
 ### Items to pick
 - ~~Interact: go over item --> item dissapears from screen and array --> counter goes up~~
-- Hearts: 
+- ~~Hearts:~~ 
   - ~~start with 5 lifes~~
   - ~~each collision subtracts a life~~
   - ~~each heart adds a life~~
-  - when 0 lifes --> game over --> everything freezes --> restart button
+  - ~~when 0 lifes --> game over --> everything freezes --> restart button~~
 - ~~Keys:~~ 
   - ~~use key to open doors (to pass the level)~~
   - ~~use key to open chests (to have gems)~~
@@ -104,9 +104,10 @@ You will be provided visual assets and a game loop engine; using these tools you
   - Player.stop: doesn't stop properly, is moving to the previous position
   - ~~Gems: doesn't give power when has_gem~~
   - ~~Change level/state: implement it how?~~
-  - Game over: implement it how?
-  - Finish level: create layer with text and "next level" button
-  - dialog.show() doesn't work in Mozilla: find alternative :(
+  - Game over: the Enter key doesn't work (it cannot restart)
+  - Finish level: create last level screen
+  - dialog.show() doesn't work in Mozilla: find alternative? :(
+  - dialog.show() doesn't close when changing level
 - Improvements: 
   - Obstacles in canvas: find a better way to create each level (external json to access?)
   - Enemy.update: simplify code (too many repeated if's --> put in functions?)
