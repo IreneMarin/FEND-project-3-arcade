@@ -1,9 +1,12 @@
-/* ----------- GLOBAL VARIABLES --------------- */
+/* ----------------- GLOBAL VARIABLES --------------------- */
+/* We define here the variables that we will be using through app.js and engine.js
+ * for different things. They are used basically for the current stats (hearts, lifes, gems, etc).
+ */
 
 var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
-var HAS_BLUE_GEM = true;   // has picked the blue gem
-var HAS_GREEN_GEM = true;  // has picked the green gem
+var HAS_BLUE_GEM = true;    // has picked the blue gem
+var HAS_GREEN_GEM = true;   // has picked the green gem
 var CURRENT_LEVEL = 1;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
@@ -12,7 +15,7 @@ var PREVIOUS_Y = 0;         // set previous y each time we update
 var START_X = 0;            // set starting player position for the level
 var START_Y = 0;            // set starting player position for the level
 
-// Put the variables on screen in the menu
+// Put the variables on screen to appear in the menu html
 document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
 document.getElementById('numberKeys').innerHTML = CURRENT_KEYS.toString();
 document.getElementById('numberLevel').innerHTML = CURRENT_LEVEL.toString();
@@ -24,9 +27,14 @@ if (HAS_GREEN_GEM) {
 }
 
 
-/* -------------- OBSTACLES & ITEMS ---------------- */
+/* -------------------- OBSTACLES & ITEMS ------------------------- */
 
-// Implement the Items class, with the stuff to pick up or to collide
+/* Implement the Items class, with 4 parameters: 
+ * position of the item, sprite to put the image, and the property "item".
+ * With "item" we will be able to differentiate the obstacles, 
+ * depending if they are: house, door, tree, rock, gem or gest. 
+ * This way, we only need to create 1 function for all the types of items.
+ */
 var Items = function(x, y, sprite, item) {
     this.x = x;
     this.y = y;
@@ -39,10 +47,11 @@ Items.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// TODO: find a better way to create the obstacles for each level                                                       ** Improvement: simplify code
-// (an external json to access it?). This can't be efficient... nope... 
+/* TODO: find a better way to create the obstacles for each level
+ * (an external json to access it?). This can't be efficient... 
+ */
 
-// Put all the stuff in the canvas (house, door, trees, rocks, hearts, keys, chest)
+// Put all the stuff in the canvas, different for each level; and initialize global player variable
 if (CURRENT_LEVEL === 2) {
     
     START_X = 808;
@@ -51,6 +60,7 @@ if (CURRENT_LEVEL === 2) {
     /* --------- LEVEL 2 CANVAS ------------ */
     
     var allObstacles = [];
+    // house
     allObstacles[0] = new Items(0, 45, 'wood-block', 'house');
     allObstacles[1] = new Items(101, 60, 'door-tall-closed', 'door');
     allObstacles[2] = new Items(202, 45, 'wood-block', 'house');
@@ -102,6 +112,7 @@ if (CURRENT_LEVEL === 2) {
     /* --------- LEVEL 3 CANVAS ------------ */
     
     var allObstacles = [];
+    // house
     allObstacles[0] = new Items(707, 224, 'window-tall', 'house');
     allObstacles[1] = new Items(808, 234, 'door-tall-closed', 'door');
     allObstacles[2] = new Items(707, 58, 'roof-north-west', 'house');
@@ -170,6 +181,7 @@ if (CURRENT_LEVEL === 2) {
     /* --------- LEVEL 4 CANVAS ------------ */
     
     var allObstacles = [];
+    // house
     allObstacles[0] = new Items(505, 470, 'window-tall', 'house');
     allObstacles[1] = new Items(606, 480, 'door-tall-closed', 'door');
     allObstacles[2] = new Items(707, 470, 'window-tall', 'house');
@@ -238,6 +250,7 @@ if (CURRENT_LEVEL === 2) {
     /* --------- LEVEL 1 CANVAS ------------ */
     
     var allObstacles = [];
+    // house
     allObstacles[0] = new Items(303, 45, 'window-tall', 'house');
     allObstacles[1] = new Items(404, 60, 'door-tall-closed', 'door');
     allObstacles[2] = new Items(505, 45, 'window-tall', 'house');
@@ -270,11 +283,14 @@ if (CURRENT_LEVEL === 2) {
 }
 
 
-/* -------------- ENEMY ---------------- */
+/* ------------------ ENEMIES ---------------------- */
 
-// Enemies our player must avoid
+/* Implement the Enemiy class, to create the enemies our player must avoid
+ * We have the 2 parameters to initialize the enemy position
+ * and 3 parameters to create different types of movement for the bugs
+ */
 var Enemy = function(x, y, moveRight, startMove, endMove) {
-    // Setting the Enemy initial location and speed
+    // Setting the initial location and speed
     this.x = x;
     this.y = y;
     this.startMove = startMove;
@@ -282,10 +298,10 @@ var Enemy = function(x, y, moveRight, startMove, endMove) {
     this.moveRight = moveRight;
     
     if (CURRENT_LEVEL === 2) {
-        //this.speed = 200;
         this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
     } else {
         this.speed = Math.floor(Math.random() * 450 + 1);
+        //console.log(Math.floor(Math.random() * 450 + 1));
     }
     
     // Loading the image by setting this.sprite to the appropriate image
@@ -296,10 +312,12 @@ var Enemy = function(x, y, moveRight, startMove, endMove) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     
-    // TODO: we are using too many times the same if's,                                                                 ** Improvement: simplify code
-    // there has to be a way to not write them over in each switch
+    /* TODO: we are using too many times the same if's,
+     * there has to be a better way to write the code,
+     * maybe implement functions for each type of movement and call them here?
+     */
     
-    console.log(CURRENT_LEVEL);
+    //console.log(CURRENT_LEVEL);
     switch (CURRENT_LEVEL) {
         case 1:
             // Updates the Enemy location, that goes from left to right
@@ -312,8 +330,7 @@ Enemy.prototype.update = function(dt) {
             break;
         
         case 2:
-            // Updates the Enemy location, that goes in the same spot, 
-            // from left to right and then goes back right to left
+            // Updates the Enemy location, that goes back and forth in the same interval of positions
             if (this.moveRight) {
                 this.x += this.speed * dt;
                 this.sprite = 'images/enemy-bug.png';
@@ -333,8 +350,7 @@ Enemy.prototype.update = function(dt) {
             break;
         
         case 3:
-            // Updates the Enemy location, that goes in the same spot, 
-            // from left to right and then goes back right to left
+            // Updates the Enemy location, that goes back and forth in the same interval of positions
             if (this.moveRight) {
                 this.x += this.speed * dt;
                 this.sprite = 'images/enemy-bug.png';
@@ -355,8 +371,7 @@ Enemy.prototype.update = function(dt) {
         
         case 4:
             if (this.endMove === 404) {
-                // Updates the Enemy location, that goes in the same spot, 
-                // from left to right and then goes back right to left
+                // Updates the Enemy location, that goes back and forth in the same interval of positions
                 if (this.moveRight) {
                     this.x += this.speed * dt;
                     this.sprite = 'images/enemy-bug.png';
@@ -406,19 +421,19 @@ Enemy.prototype.render = function() {
 var allEnemies = [];
 var enemyHeight = [146,229,312,395,478];  // only used in level 1
 
-// Create the enemies differently for each level, to try different combinations
+// Create the enemies differently for each level, to try different combinations of movement
 switch (CURRENT_LEVEL) {
     
     case 1:
-        // Here create 10 enemies, 2 for each row, with a random initial left location 
-        // (this way, the 2 from each row start at different points and they are not togeter) and a random speed
+        // Here we create 10 enemies, 2 for each row, with a random initial left location and a random speed
         for (var i = 0; i < 10; i++) {
             allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
         }
         break;
     
     case 2:
-        // Here put 7 enemies in exact positions, that will go right and then left in the same spot
+        // Here we put 7 enemies in exact positions, that will go back and forth
+        // using the positions that we pass in the parameters as startMove and endMove
         allEnemies.push(new Enemy(404, 63, true, 404, 808));
         allEnemies.push(new Enemy(0, 146, true, 0, 303));
         allEnemies.push(new Enemy(202, 229, true, 202, 606));
@@ -440,9 +455,9 @@ switch (CURRENT_LEVEL) {
     
     case 4:
         /* Here we combine: in rows with obstacles for the bugs (the house and the stone path), 
-         * we create them as level 2, going right and left
-         * In the other rows, we create as level 1, two bugs for row at different speeds and starting points
-         * But in some row they go left to right, and in some they go right to left
+         * we create them as level 2, going back and forth.
+         * In the other rows, we create as level 1, but with only 1 bug for row (2 bugs is too difficult).
+         * But in some row they go left to right, and in some they go right to left.
          */
         allEnemies.push(new Enemy(0, -20, true, 0, 404));
         allEnemies.push(new Enemy(808, 63, false, 808, 0));
@@ -456,13 +471,15 @@ switch (CURRENT_LEVEL) {
 
 
 
-/* -------------- PLAYER ---------------- */
+/* ------------------ PLAYER ------------------------- */
 
 // Implement the Player class
 var Player = function(x,y) {
     // Setting the Player initial location
     this.x = x;
     this.y = y;
+    
+    // Inicializating the previous variables (we will use them in checkCollisions)
     PREVIOUS_X = x;
     PREVIOUS_Y = y;
            
@@ -470,7 +487,7 @@ var Player = function(x,y) {
     this.sprite = 'images/' + HERO + '.png';
 }
 
-// Update the player's position
+// Update the player's position and check for any collision
 Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
