@@ -2,15 +2,19 @@
 
 Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
 <br>
-recreating the classic arcade game Frogger with Object-Oriented JavaScript and HTML5 Canvas.
+recreated the classic arcade game Frogger with Object-Oriented JavaScript and HTML5 Canvas.
 
 ### How to run the game
 
-lalala
+Download the zip in your desktop, unzip it and open the "index.html" file in your browser to play the game.
+<br>
+(It doesn't work on mobile devices).
 
 ### How to play the game
 
-lalala
+To play the game, use the arrow keys from your keyboard to move up, right, down and left.
+<br>
+Use the key Enter to change level or restart, when the game requires you to do so.
 
 ----------------------
 
