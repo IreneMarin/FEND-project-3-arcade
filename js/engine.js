@@ -68,7 +68,6 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
         lastTime = Date.now();
         main();
     }
@@ -79,23 +78,12 @@ var Engine = (function(global) {
     function update(dt) {
         switch(CURRENT_LEVEL) {
             case 0:
-            break;
+                break;
         
-        case 1:
-            updateEntities(dt);
-            break;
+            default:
+                updateEntities(dt);
+                break;
         
-        case 2:
-            updateEntities(dt);
-            break;
-        
-        case 3:
-            updateEntities(dt);
-            break;
-        
-        case 4:
-            updateEntities(dt);
-            break;
         }
         
         /* There is a bug when rendering the game and the Player 
@@ -120,8 +108,6 @@ var Engine = (function(global) {
         player.update();
     }
     
-    // Coaches video --> function updateExtras?
-
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -352,40 +338,6 @@ var Engine = (function(global) {
         player.render();
     }
     
-    /* --------------------------------------------------------- */
-    
-    // Coaches video --> function renderExtras? 
-    
-    // setTimeout --> pause the game for some seconds?
-    
-    // new levels --> function --> argument --> what makes the game go to new level?
-    // how do we render everything again?
-    
-    /* --------------------------------------------------------- */
-    
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-     
-    // Write a function that takes as a parameter the reason you want to restart
-    // Inside that you want the reset function, and you need to reset the player,
-    // the enemies and the graphics. Render everything again.
-    function reset() {
-        /* if (GAME_OVER) {
-            CURRENT_LEVEL = 0;
-            allObstacles.forEach(function(obstacle){
-                obstacle.reset(); 
-            });
-            allItems.forEach(function(item){
-            item.reset(); 
-            });
-            allEnemies.forEach(function(enemy) {
-                enemy.reset();
-            });
-            player.reset();
-        } */
-    }
     
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when

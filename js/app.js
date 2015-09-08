@@ -284,7 +284,7 @@ var Enemy = function(x, y, moveRight, startMove, endMove) {
     this.endMove = endMove;
     this.moveRight = moveRight;
     
-    if (CURRENT_LEVEL === 2) {
+    if (CURRENT_LEVEL === 2 || CURRENT_LEVEL === 4) {
         this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
     } else {
         this.speed = Math.floor(Math.random() * 450 + 1);
@@ -558,25 +558,34 @@ Player.prototype.reset = function() {
 
 
 Player.prototype.changeLevel = function(level) {
+    //dialog = document.getElementById('dialog' + (CURRENT_LEVEL - 1)).hidden;
     switch (level) {
         case 1:
             this.x = 404;
             this.y = 556;
+            START_X = 404;
+            START_Y = 556;
             break;
         
         case 2:
             this.x = 808;
             this.y = 556;
+            START_X = 808;
+            START_Y = 556;
             break;
        
         case 3:
             this.x = 0;
             this.y = 556;
+            START_X = 0;
+            START_Y = 556;
             break;
         
         case 4:
             this.x = 606;
             this.y = -25;
+            START_X = 606;
+            START_Y = -25;
             break;
     }
 }
@@ -601,6 +610,8 @@ var player = new Player(START_X, START_Y);
 
 
 /* -------------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
+
+var dialog;
 
 // Function to check if the player collides with something
 var checkCollisions = function() {
@@ -662,6 +673,8 @@ var checkCollisions = function() {
                         allItems[i].sprite = 'images/chest-open-green.png';
                         allItems[i + 1].item = 'chest-open';
                         allItems[i + 1].sprite = 'images/chest-lid.png';
+                        CURRENT_KEYS = CURRENT_KEYS - 1;
+                        document.getElementById('numberKeys').innerHTML = CURRENT_KEYS.toString();
                         player.stop();
                         break;
                         
@@ -679,6 +692,8 @@ var checkCollisions = function() {
                         allItems[i].sprite = 'images/chest-open-blue.png';
                         allItems[i + 1].item = 'chest-open';
                         allItems[i + 1].sprite = 'images/chest-lid.png';
+                        CURRENT_KEYS = CURRENT_KEYS - 1;
+                        document.getElementById('numberKeys').innerHTML = CURRENT_KEYS.toString();
                         player.stop();
                         break;
                         
@@ -766,6 +781,8 @@ var checkCollisions = function() {
                             allObstacles[i].item = 'door-open';
                             allObstacles[i].sprite = 'images/door-tall-open.png';
                         }
+                        CURRENT_KEYS = CURRENT_KEYS - 1;
+                        document.getElementById('numberKeys').innerHTML = CURRENT_KEYS.toString();
                         break;
                         
                     } else {
@@ -775,8 +792,9 @@ var checkCollisions = function() {
                     
                 case 'door-open':
                     player.sprite = 'images/' + HERO + '-sad.png';
-                    var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
+                    dialog = document.getElementById('dialog' + CURRENT_LEVEL);
                     dialog.show();
+                    //setInterval(dialog.close(), 6000);
                     NEXT_LEVEL = true;
                     // TODO: after dialog appearing, it should appear a screen with text and button to change to next level
                     // TODO: dialog.show only works on Chrome... find alternative for Mozilla... :(
@@ -787,9 +805,15 @@ var checkCollisions = function() {
 }
 
 var changeLevel = function(level) {
+    //dialog.close();
+    //dialog = document.getElementById('dialog' + (CURRENT_LEVEL - 1)).hidden;
+    player.sprite = 'images/' + HERO + '.png';
+    allEnemies = [];
+    allItems = [];
+    allObstacles = [];
     CURRENT_LEVEL = level;
     document.getElementById('numberLevel').innerHTML = level.toString();
-    player.reset(level);
+    player.changeLevel(level);
     itemsReset(level);
     enemyReset(level);
     NEXT_LEVEL = false;
