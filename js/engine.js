@@ -284,12 +284,46 @@ var Engine = (function(global) {
         }
         
         if (GAME_OVER) {
-            document.getElementById('game-over').hidden = false;                        
+            //document.getElementById('game-over').hidden = false;
+            
+            function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+                var words = text.split(' ');
+                var line = '';
+                
+                for(var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    var testWidth = metrics.width;
+                    if (testWidth > maxWidth && n > 0) {
+                        ctx.strokeText(line, x, y);
+                        ctx.fillText(line, x, y);
+                        line = words[n] + ' ';
+                        y += lineHeight;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                ctx.fillText(line, x, y);
+            }
+            
+            var maxWidth = 909;
+            var lineHeight = 45;
+            var x = 909;
+            var y = 200;
+            var text = 'GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to search for your friend again.';
+            
             ctx.globalCompositeOperation = 'source-over';
-            ctx.font = 'normal 40pt "Share Tech Mono"';
+            ctx.font = 'normal 40px "Share Tech Mono"';
             ctx.fillStyle = 'white';
+            ctx.lineWidth = 3;
+            // stroke color
+            ctx.strokeStyle = 'black';
+            //context.strokeText('Hello World!', x, y);
             ctx.textAlign = 'center';
-            ctx.fillText('GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to search for your friend again.', canvas.width/2, canvas.height/2);
+            //ctx.fillText('GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to search for your friend again.', canvas.width/2, canvas.height/2);
+            
+            wrapText(ctx, text, x, y, maxWidth, lineHeight);
+            
         } else {
             document.getElementById('game-over').hidden = true;
         }
