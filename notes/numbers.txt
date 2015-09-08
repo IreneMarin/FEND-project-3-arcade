@@ -85,3 +85,14 @@ rw/cl	1	2	3	4	5	6	7	8	9
 6		D	D	D	D	D	S	S	S	W
 7		D	W	W	W	D	S	S	S	W
 8		D	W	W	W	D	D	D	W	W
+
+
+CHANGE LEVEL
+Your friend wasn't here. Let's try another house!
+
+GAME OVER
+The bugs crawl over you, as you lay down, too exhausted to go on...
+Press Enter to search for your friend again 
+
+GAME END
+Congratulations! You found your friend!
