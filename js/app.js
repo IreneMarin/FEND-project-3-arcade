@@ -2,9 +2,9 @@
 
 var CURRENT_LIFES = 5;      // number of current lifes
 var CURRENT_KEYS = 0;       // number of current keys
-var HAS_BLUE_GEM = false;   // has picked the blue gem
-var HAS_GREEN_GEM = false;  // has picked the green gem
-var CURRENT_LEVEL = 4;      // level of the screen
+var HAS_BLUE_GEM = true;   // has picked the blue gem
+var HAS_GREEN_GEM = true;  // has picked the green gem
+var CURRENT_LEVEL = 1;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
 var PREVIOUS_X = 0;         // set previous X each time we update
@@ -39,7 +39,8 @@ Items.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
-// TODO: find a better way to create the obstacles for each level (an external json to access it?). This can't be efficient... nope... 
+// TODO: find a better way to create the obstacles for each level                                       ** Millora
+// (an external json to access it?). This can't be efficient... nope... 
 
 // Put all the stuff in the canvas (house, door, trees, rocks, hearts, keys, chest)
 if (CURRENT_LEVEL === 2) {
@@ -127,21 +128,21 @@ if (CURRENT_LEVEL === 2) {
     allObstacles[19] = new Items(505, 141, 'tree-tall', 'tree');
     allObstacles[20] = new Items(606, 141, 'tree-tall', 'tree');
     // row 4
-    allObstacles[21] = new Items(0, 249, 'water', 'water');
-    allObstacles[22] = new Items(101, 249, 'water', 'water');    
+    allObstacles[21] = new Items(0, 224, 'blanc', 'water');
+    allObstacles[22] = new Items(101, 224, 'blanc', 'water');    
     allObstacles[23] = new Items(202, 224, 'tree-ugly', 'tree');
     allObstacles[24] = new Items(404, 224, 'tree-tall', 'tree');
     allObstacles[25] = new Items(505, 224, 'tree-tall', 'tree');
     allObstacles[26] = new Items(606, 224, 'tree-tall', 'tree');
     // row 5
-    allObstacles[27] = new Items(0, 332, 'water', 'water');
-    allObstacles[28] = new Items(101, 332, 'water', 'water');    
+    allObstacles[27] = new Items(0, 307, 'blanc', 'water');
+    allObstacles[28] = new Items(101, 307, 'blanc', 'water');    
     allObstacles[29] = new Items(404, 307, 'tree-tall', 'tree');
     allObstacles[30] = new Items(606, 307, 'tree-ugly', 'tree');
     allObstacles[31] = new Items(707, 307, 'tree-ugly', 'tree');
     // row 6
-    allObstacles[32] = new Items(0, 415, 'water', 'water');
-    allObstacles[33] = new Items(101, 415, 'water', 'water');    
+    allObstacles[32] = new Items(0, 390, 'blanc', 'water');
+    allObstacles[33] = new Items(101, 390, 'blanc', 'water');    
     allObstacles[34] = new Items(606, 390, 'tree-ugly', 'tree');
     allObstacles[35] = new Items(707, 390, 'tree-ugly', 'tree');
     // row 7
@@ -281,42 +282,49 @@ var Enemy = function(x, y, moveRight, startMove, endMove) {
     this.moveRight = moveRight;
     
     if (CURRENT_LEVEL === 2) {
-        this.speed = 200;
+        //this.speed = 200;
+        this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
     } else {
-        this.speed = Math.floor(Math.random() * 450 + 1);;
-    }    
+        this.speed = Math.floor(Math.random() * 450 + 1);
+    }
     
     // Loading the image by setting this.sprite to the appropriate image
     this.sprite = 'images/enemy-bug.png';
 }
 
-var enemyMoveRight = true;
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    console.log(CURRENT_LEVEL);
-    switch (CURRENT_LEVEL) {        
-        case 1:
-            // Updates the Enemy location
-            this.x += this.speed * dt;
     
+    // TODO: we are using too many times the same if's,                                                 ** Millora
+    // there has to be a way to not write them over in each switch
+    
+    console.log(CURRENT_LEVEL);
+    switch (CURRENT_LEVEL) {
+        case 1:
+            // Updates the Enemy location, that goes from left to right
+            this.x += this.speed * dt;
+            
             // If the Enemy goes off screen, we reset the position to start again
             if (this.x > 909) {
-                this.x = Math.random() * -1200;        
+                this.x = Math.random() * -1200;
             }
             break;
         
-        case 2:        
+        case 2:
+            // Updates the Enemy location, that goes in the same spot, 
+            // from left to right and then goes back right to left
             if (this.moveRight) {
                 this.x += this.speed * dt;
-                this.sprite = 'images/enemy-bug.png'
+                this.sprite = 'images/enemy-bug.png';
                 if (this.x > this.endMove) {
                     this.x -= this.speed * dt;
-                    this.moveRight = false;            
-                }        
+                    this.moveRight = false;
+                }
             } else {
+                // Going back right to left, we change sprites 
                 this.x -= this.speed * dt;
-                this.sprite = 'images/enemy-bug-left.png'
+                this.sprite = 'images/enemy-bug-left.png';
                 if (this.x < this.startMove) {
                     this.x += this.speed * dt;
                     this.moveRight = true;
@@ -325,17 +333,68 @@ Enemy.prototype.update = function(dt) {
             break;
         
         case 3:
-            // Updates the Enemy location
-            this.x += this.speed * dt;
-    
-            // If the Enemy goes off screen, we reset the position to start again
-            if (this.x > 909) {
-                this.x = Math.random() * -1200;        
+            // Updates the Enemy location, that goes in the same spot, 
+            // from left to right and then goes back right to left
+            if (this.moveRight) {
+                this.x += this.speed * dt;
+                this.sprite = 'images/enemy-bug.png';
+                if (this.x > this.endMove) {
+                    this.x -= this.speed * dt;
+                    this.moveRight = false;
+                }
+            } else {
+                // Going back right to left, we change sprites 
+                this.x -= this.speed * dt;
+                this.sprite = 'images/enemy-bug-left.png';
+                if (this.x < this.startMove) {
+                    this.x += this.speed * dt;
+                    this.moveRight = true;
+                }
             }
-            break;     
-            
-    }
+            break;
+        
+        case 4:
+            if (this.endMove === 404) {
+                // Updates the Enemy location, that goes in the same spot, 
+                // from left to right and then goes back right to left
+                if (this.moveRight) {
+                    this.x += this.speed * dt;
+                    this.sprite = 'images/enemy-bug.png';
+                    if (this.x > this.endMove) {
+                        this.x -= this.speed * dt;
+                        this.moveRight = false;
+                    }
+                } else {
+                    // Going back right to left, we change sprites 
+                    this.x -= this.speed * dt;
+                    this.sprite = 'images/enemy-bug-left.png';
+                    if (this.x < this.startMove) {
+                        this.x += this.speed * dt;
+                        this.moveRight = true;
+                    }
+                }
+            } else {
+                if (this.moveRight) {
+                    // Updates the Enemy location, that goes from left to right
+                    this.x += this.speed * dt;
     
+                    // If the Enemy goes off screen in the right, we reset the position to start again
+                    if (this.x > 909) {
+                        this.x = Math.random() * -1200;
+                    }
+                } else {
+                    // Updates the Enemy location, that goes from right to left
+                    this.x -= this.speed * dt;
+                    this.sprite = 'images/enemy-bug-left.png';
+                     
+                    // If the Enemy goes off screen in the left, we reset the position to start again
+                    if (this.x < -101) {
+                        this.x = Math.floor(Math.random() * (1400 - 1000 + 1)) + 1000;
+                    }
+                }
+            }
+            break;
+    }
 }
 
 // Draw the enemy on the screen, required method for game
@@ -345,19 +404,21 @@ Enemy.prototype.render = function() {
 
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
-var enemyHeight = [146,229,312,395,478];
+var enemyHeight = [146,229,312,395,478];  // only used in level 1
 
-// Create the enemies differently for each level, to try different things
+// Create the enemies differently for each level, to try different combinations
 switch (CURRENT_LEVEL) {
     
     case 1:
-        // Create 10 enemies, 2 for each row, with a random initial location and a random speed
+        // Here create 10 enemies, 2 for each row, with a random initial left location 
+        // (this way, the 2 from each row start at different points and they are not togeter) and a random speed
         for (var i = 0; i < 10; i++) {
             allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
         }
         break;
     
     case 2:
+        // Here put 7 enemies in exact positions, that will go right and then left in the same spot
         allEnemies.push(new Enemy(404, 63, true, 404, 808));
         allEnemies.push(new Enemy(0, 146, true, 0, 303));
         allEnemies.push(new Enemy(202, 229, true, 202, 606));
@@ -368,12 +429,33 @@ switch (CURRENT_LEVEL) {
         break;
     
     case 3:
-        for (var i = 0; i < 10; i++) {
-            allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
-        }
+        // Here the same as level 2
+        allEnemies.push(new Enemy(101, -20, true, 101, 808));
+        allEnemies.push(new Enemy(303, 63, true, 303, 606));
+        allEnemies.push(new Enemy(303, 146, true, 303, 606));
+        allEnemies.push(new Enemy(202, 312, true, 202, 808));
+        allEnemies.push(new Enemy(202, 395, true, 202, 808));
+        allEnemies.push(new Enemy(202, 478, true, 202, 808));
         break;
     
     case 4:
+        /* Here we combine: in rows with obstacles for the bugs (the house and the stone path), 
+         * we create them as level 2, going right and left
+         * In the other rows, we create as level 1, two bugs for row at different speeds and starting points
+         * But in some row they go left to right, and in some they go right to left
+         */
+        allEnemies.push(new Enemy(0, -20, true, 0, 404));
+        allEnemies.push(new Enemy(808, 63, false, 808, 0));
+        allEnemies.push(new Enemy(808, 63, false, 808, 0));
+        allEnemies.push(new Enemy(0, 146, true, 0, 808));
+        allEnemies.push(new Enemy(0, 146, true, 0, 808));
+        allEnemies.push(new Enemy(808, 229, false, 808, 0));
+        allEnemies.push(new Enemy(808, 229, false, 808, 0));
+        allEnemies.push(new Enemy(0, 312, true, 0, 404));
+        allEnemies.push(new Enemy(0, 395, true, 0, 404));
+        allEnemies.push(new Enemy(0, 478, true, 0, 404));
+        allEnemies.push(new Enemy(808, 561, false, 808, 0));
+        allEnemies.push(new Enemy(808, 561, false, 808, 0));
         break;
 }
 
@@ -394,7 +476,7 @@ var Player = function(x,y) {
 }
 
 // Update the player's position
-Player.prototype.update = function() {   
+Player.prototype.update = function() {
     this.x = this.x;
     this.y = this.y;
     checkCollisions();
@@ -446,13 +528,10 @@ Player.prototype.handleInput = function(allowedKeys) {
                 break;
             }
             
-        //case 'enter':
+        //case 'enter':                                                                                 ** Arreglar
             //nextLevel();
             //CURRENT_LEVEL = CURRENT_LEVEL + 1;
             //break;
-        
-        //default:
-          //alert("Please only use the arrow keys.");
     }
 }
 
@@ -464,7 +543,8 @@ Player.prototype.reset = function() {
     this.y = START_Y;
 }
 
-// Stops de player when it tries to go over an obstacle (tree, rock, house, chest)
+// Stops de player when it tries to go over an obstacle (tree, rock, house, chest)                       ** Arreglar 
+// TODO: it doesn't stop, it goes one position back
 Player.prototype.stop = function() {
     this.x = PREVIOUS_X;
     this.y = PREVIOUS_Y;
@@ -489,7 +569,12 @@ var checkCollisions = function() {
     
     // Check to see if the rectangles overlap
     function checkCollision(player, obstacle) {
-	   return !(player.left > obstacle.right || player.right < obstacle.left || player.top > obstacle.bottom || player.bottom < obstacle.top);
+	   return !(
+           player.left > obstacle.right 
+           || player.right < obstacle.left 
+           || player.top > obstacle.bottom 
+           || player.bottom < obstacle.top
+           );
     };
     
     var playerRectangle = new Rectangle(player.x, player.y);
@@ -579,7 +664,7 @@ var checkCollisions = function() {
                     
                case 'chest-open':
                     break;
-            }             
+            }
         }
     }
     
@@ -591,15 +676,19 @@ var checkCollisions = function() {
             // Player has found an obstacle that can't be crossed over
             switch(allObstacles[i].item) {
                 case 'tree':
-                    // TODO: it doesn't work with true!
-                    if (HAS_GREEN_GEM === false) {  
+                    // TODO: it doesn't work with true!                                                                 ** Arreglar
+                    if (HAS_GREEN_GEM) {
+                        // player can go over the trees?
+                    } else {
                         player.stop();    
                         break;
                     }
                 
                 case 'water':
-                    // TODO: it doesn't work with true!
-                    if (HAS_BLUE_GEM === false) {
+                    // TODO: it doesn't work with true!                                                                    ** Arreglar
+                    if (HAS_BLUE_GEM) {
+                        // player can go over water?
+                    } else {
                         player.stop();    
                         break;
                     }
@@ -617,7 +706,7 @@ var checkCollisions = function() {
                         player.stop();
                         // opens door
                         if (CURRENT_LEVEL === 4) {
-                            // final game!
+                            // final game!                                                                                  ** Acabar joc
                             allObstacles[i].item = 'door-final';
                             allObstacles[i].sprite = 'images/door-tall-final.png';
                         } else {
@@ -632,15 +721,18 @@ var checkCollisions = function() {
                     }
                     
                 case 'door-open':
-                    player.sprite = 'images/' + HERO + '-sad.png';
-                    // change level!
+                    player.sprite = 'images/' + HERO + '-sad.png';                                                          
+                    // change level!                                                                                     ** Canviar nivell
                     //CURRENT_LEVEL = CURRENT_LEVEL + 1;
                     // TODO: make dialog appear
                     break;
-            }            
+                    
+                case 'door-final':
+                    // final game!                                                                                      ** Acabar joc
+                    break;
+            }
         }
-    }   
-    
+    }
 }
 
 
@@ -658,4 +750,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
