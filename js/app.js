@@ -810,6 +810,27 @@ var checkCollisions = function() {
                     NEXT_LEVEL = true;
                     // TODO: after dialog appeared, it should appear a screen with text and button to change to next level?
                     // TODO: dialog.show only works on Chrome... find alternative for Mozilla... :(
+                    
+                    // I am trying to implement the setTimeout to change levels automatically, but I want the player to wait
+                    // some seconds before the change, this way the dialog will be shown and read
+                    // It doesn't work though... 
+                    
+                    //delayTime = setTimeout(function() {  --> not working if I put it in a variable
+                    setTimeout(function() {
+                        player.sprite = 'images/' + HERO + '.png';
+                        allEnemies = [];
+                        allItems = [];
+                        allObstacles = [];
+                        CURRENT_LEVEL = CURRENT_LEVEL + 1;
+                        document.getElementById('numberLevel').innerHTML = CURRENT_LEVEL.toString();
+                        player.changeLevel(CURRENT_LEVEL);
+                        itemsReset(CURRENT_LEVEL);
+                        enemyReset(CURRENT_LEVEL);
+                        NEXT_LEVEL = false;
+                    },3000);
+                    
+                    clearTimeout();
+                    
                     break;
             }
         }
