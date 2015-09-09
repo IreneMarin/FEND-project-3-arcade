@@ -51,9 +51,7 @@ Items.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/** TODO: find a better way to create the obstacles for each level
- *  (an external json to access it?). This can't be efficient... 
- */
+/** @todo find a better way to create the obstacles for each level (an external json?). This can't be efficient... */
 
 var allObstacles = [];
 var allItems = [];
@@ -303,9 +301,8 @@ var Enemy = function (x, y, moveRight, startMove, endMove) {
  */
 Enemy.prototype.update = function (dt) {
 
-    /** TODO: we are using too many times the same if's,
-     *  there has to be a better way to write the code,
-     *  maybe implement functions for each type of movement and call them here?
+    /** @todo We are using too many times the same if's, there has to be a better way.
+     *  Maybe implement functions for each type of movement and call them here?
      */
 
     switch (currentLevel) {
@@ -606,7 +603,7 @@ Player.prototype.changeLevel = function (level) {
 };
 
 /** Stops de player when it tries to go over an obstacle (tree, rock, house, chest) */
-/** TODO: it doesn't stop properly, it is going one position back */
+/** @todo It doesn't stop properly, it is going one position back */
 Player.prototype.stop = function () {
     //console.log('this.x: ' + this.x + ', this.y: ' + this.y + ', previousX: ' + previousX + ', previousY: ' + previousY);
     this.x = previousX;
@@ -839,7 +836,7 @@ var checkCollisions = function () {
  *  Finally next_level goes to false, because we can't change level again if we don't play all the level.
  */
 var changeLevel = function (level) {
-    /** TODO: find a way to close de dialogs in the next level */
+    /** @todo Find a way to close de dialogs in the next level */
     //dialog.close();
     //dialog = document.getElementById('dialog' + (CURRENT_LEVEL - 1)).hidden;
     player.sprite = 'images/' + HERO + '.png';
