@@ -748,10 +748,18 @@ var checkCollisions = function () {
     }
 
     var dialog;
+<<<<<<< HEAD
 
     /** Check collision with objects (tree, house, door and rock) */
     for (var k = 0; k < allObstacles.length; k++) {
         var obstacleRectangle = new Rectangle(allObstacles[k].x, allObstacles[k].y);
+=======
+    var delayTime;
+    
+    // Check collision with objects (tree, house, door and rock)
+    for (var i = 0; i < allObstacles.length; i++) {
+        var obstacleRectangle = new Rectangle(allObstacles[i].x, allObstacles[i].y);
+>>>>>>> origin/master
         if (checkCollision(playerRectangle, obstacleRectangle)) {
 
             /** Player has found an obstacle that can't be crossed over */
@@ -812,13 +820,27 @@ var checkCollisions = function () {
                     player.sprite = 'images/' + HERO + '-sad.png';
                     dialog = document.getElementById('dialog' + currentLevel);
                     dialog.show();
+<<<<<<< HEAD
                     nextLevel = true;
 
                     setTimeout(function () {
+=======
+                    NEXT_LEVEL = true;
+                    // TODO: after dialog appeared, it should appear a screen with text and button to change to next level?
+                    // TODO: dialog.show only works on Chrome... find alternative for Mozilla... :(
+                    
+                    // I am trying to implement the setTimeout to change levels automatically, but I want the player to wait
+                    // some seconds before the change, this way the dialog will be shown and read
+                    // It doesn't work though... 
+                    
+                    //delayTime = setTimeout(function() {  --> not working if I put it in a variable
+                    setTimeout(function() {
+>>>>>>> origin/master
                         player.sprite = 'images/' + HERO + '.png';
                         allEnemies = [];
                         allItems = [];
                         allObstacles = [];
+<<<<<<< HEAD
                         if (nextLevel) {
                             currentLevel = currentLevel + 1;
                         }
@@ -831,6 +853,18 @@ var checkCollisions = function () {
 
                     clearTimeout();
 
+=======
+                        CURRENT_LEVEL = CURRENT_LEVEL + 1;
+                        document.getElementById('numberLevel').innerHTML = CURRENT_LEVEL.toString();
+                        player.changeLevel(CURRENT_LEVEL);
+                        itemsReset(CURRENT_LEVEL);
+                        enemyReset(CURRENT_LEVEL);
+                        NEXT_LEVEL = false;
+                    },3000);
+                    
+                    clearTimeout();
+                    
+>>>>>>> origin/master
                     break;
             }
         }

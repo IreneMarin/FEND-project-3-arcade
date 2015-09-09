@@ -7,6 +7,8 @@ recreated the classic arcade game Frogger with Object-Oriented JavaScript and HT
 ### How to run the game
 
 Download the zip in your desktop, unzip it and open the "index.html" file in your Google Chrome browser to play the game.
+<br><br>
+Or you can play it here: <a href='http://irene.marin.cat/udacity/project3/index.html' target='_blank'>link to game</a>
 
 ### How to play the game
 
@@ -52,7 +54,7 @@ You will be provided visual assets and a game loop engine; using these tools you
  
  
 ### Start page
-- ~~Create the story~~ (change it XD)
+- ~~Create the story~~ 
 - Selector to choose the hero
 - Selector to choose the difficulty: easy, normal, nightmare? 
  
@@ -101,14 +103,16 @@ You will be provided visual assets and a game loop engine; using these tools you
 ### Code
 - Errors:
   - Player.stop: doesn't stop properly, is moving to the previous position
-  - Game over: the Enter key doesn't work (it cannot restart)
-  - dialog.show() doesn't close when changing level
-  - dialog.show() doesn't work in Mozilla: find alternative? :(
+  - dialog.show() doesn't close when changing level 
+  - dialog.show() doesn't work in Mozilla: find alternative? :( 
+  - after changing levels, the bugs spend a couple of seconds not moving
+  - ~~Game over: the Enter key doesn't work (it cannot restart)~~
   - ~~Fix checkObstacles function~~
   - ~~Gems: doesn't give power when has_gem~~
   - ~~Change level/state: implement it how?~~
   - ~~Finish level: create last level screen~~
 - Improvements: 
-  - Obstacles in canvas: find a better way to create each level (external json to access?)
-  - Enemy.update: simplify code (too many repeated if's --> put in functions?)
-  - Put message between levels with instructions to go to next level
+  - Obstacles & canvas: find a better way to create each level (external json?) 
+  - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
+  - ~~Go to next level automatically with setTimeout~~
+  - ~~JSHint the code~~
