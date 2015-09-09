@@ -109,6 +109,6 @@ You will be provided visual assets and a game loop engine; using these tools you
   - ~~Change level/state: implement it how?~~
   - ~~Finish level: create last level screen~~
 - Improvements: 
-  - Obstacles in canvas: find a better way to create each level (external json to access?) --- line 53
+  - Obstacles & canvas: find a better way to create each level (external json?) --- line 53
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) --- line 304
   - Put message between levels with instructions to go to next level --- line 811
