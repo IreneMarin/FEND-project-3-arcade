@@ -1,22 +1,22 @@
 /* ----------------- GLOBAL VARIABLES --------------------- */
 /* We define here the variables that we will be using through app.js and engine.js
- * for different things. They are used basically for the current stats (hearts, lifes, gems, etc).
+ * for different things. They are used for the current stats (hearts, lifes, gems, game_over, etc).
  */
 
 var CURRENT_LIFES = 5;      // number of current lifes
-var GAME_OVER = false;      // boolean to know when we die
 var CURRENT_KEYS = 0;       // number of current keys
+var CURRENT_LEVEL = 0;      // level of the screen
 var HAS_BLUE_GEM = false;   // has picked the blue gem
 var HAS_GREEN_GEM = false;  // has picked the green gem
-var CURRENT_LEVEL = 0;      // level of the screen
 var HERO = "char-horn-girl";// choosen hero
 var DIFFICULTY = 0;         // choosen level of difficulty
 var PREVIOUS_X = 0;         // set previous X each time we update
 var PREVIOUS_Y = 0;         // set previous y each time we update
 var START_X = 0;            // set starting player position for the level
 var START_Y = 0;            // set starting player position for the level
-var NEXT_LEVEL = true;
-var FINAL = false;
+var NEXT_LEVEL = true;      // if we can change level, this is true to enable 'enter' key
+var GAME_OVER = false;      // boolean to know when we die
+var GAME_FINAL = false;     // boolean to know when we finish 
 
 // Put the variables on screen to appear in the menu html
 document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
@@ -53,12 +53,12 @@ Items.prototype.render = function() {
 /* TODO: find a better way to create the obstacles for each level
  * (an external json to access it?). This can't be efficient... 
  */
- 
- 
+
 var allObstacles = [];
 var allItems = [];
  
-// Put all the stuff in the canvas, different for each level; and initialize global player variable
+// Create function that will be called when changing level, to put all the obstacles of
+// the next level in the canvas (house, door, trees, rocks, water, keys, lifes and chest)
 var itemsReset = function(level) {
     switch (level) {
         
@@ -285,11 +285,12 @@ var Enemy = function(x, y, moveRight, startMove, endMove) {
     this.endMove = endMove;
     this.moveRight = moveRight;
     
-    if (CURRENT_LEVEL === 2 || CURRENT_LEVEL === 4) {
-        this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
-    } else {
+    //this.speed = 150; // this one is for testing the game
+    if (CURRENT_LEVEL === 1) {
         this.speed = Math.floor(Math.random() * 450 + 1);
         //console.log(Math.floor(Math.random() * 450 + 1));
+    } else {
+        this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
     }
     
     // Loading the image by setting this.sprite to the appropriate image
@@ -305,7 +306,6 @@ Enemy.prototype.update = function(dt) {
      * maybe implement functions for each type of movement and call them here?
      */
     
-    //console.log(CURRENT_LEVEL);
     switch (CURRENT_LEVEL) {
         case 1:
             // Updates the Enemy location, that goes from left to right
@@ -409,7 +409,10 @@ Enemy.prototype.render = function() {
 var allEnemies = [];
 var enemyHeight = [146,229,312,395,478];  // only used in level 1
 
-// Create the enemies differently for each level, to try different combinations of movement
+/* Create function to reset the enemies, that will be called when we change levels,
+ * where we draw the enemies of the next level on the canvas.
+ * For each level varys to try different types of movements.
+ */
 var enemyReset = function(level) {
     
     switch(level) {
@@ -548,16 +551,17 @@ Player.prototype.reset = function() {
     CURRENT_LIFES = CURRENT_LIFES - 1;
     document.getElementById('numberLifes').innerHTML = CURRENT_LIFES.toString();
     
-    // If after the subtraction of life we have 0 lifes --> Game Over
+    // If after the subtraction of life we have 0 lifes --> it is Game Over
     if (CURRENT_LIFES === 0) {
-        player.gameOver();        
+        player.gameOver();
     } else {
         this.x = START_X;
         this.y = START_Y;
     }
 }
 
-
+// Create function to reset the players position to the initial for each level
+// This function is called when we change level and are initializing the next level
 Player.prototype.changeLevel = function(level) {
     //dialog = document.getElementById('dialog' + (CURRENT_LEVEL - 1)).hidden;
     switch (level) {
@@ -600,14 +604,15 @@ Player.prototype.stop = function() {
 
 // When we have 0 lifes, it is game over
 Player.prototype.gameOver = function() {
-    console.log("Game Over");
+    //console.log("Game Over");
     GAME_OVER = true;
     allEnemies = [];
-    // TODO: do something here to put a screen with a game over message
+    // TODO: make the 'enter' key clickable, to restart the game
 }
 
+// When we open the door in level 4, it is the final state of the game
 Player.prototype.gameFinal = function() {
-    FINAL = true;
+    GAME_FINAL = true;
     allEnemies = [];
 }
 
@@ -616,8 +621,6 @@ var player = new Player(START_X, START_Y);
 
 
 /* -------------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
-
-var dialog;
 
 // Function to check if the player collides with something
 var checkCollisions = function() {
@@ -736,6 +739,8 @@ var checkCollisions = function() {
         }
     }
     
+    var dialog;
+    
     // Check collision with objects (tree, house, door and rock)
     for (var i = 0; i < allObstacles.length; i++) {
         var obstacleRectangle = new Rectangle(allObstacles[i].x, allObstacles[i].y);
@@ -744,9 +749,8 @@ var checkCollisions = function() {
             // Player has found an obstacle that can't be crossed over
             switch(allObstacles[i].item) {
                 case 'tree':
-                    // TODO: if we have green gem, we should be able to cross trees
                     if (HAS_GREEN_GEM) {
-                        // here player can go over the trees
+                        // if player has gem, it can go over the trees
                         break;
                     } else {
                         player.stop();    
@@ -755,9 +759,8 @@ var checkCollisions = function() {
                     console.log(HAS_GREEN_GEM);
                 
                 case 'water':
-                    // TODO: if we have blue gem, we should be able to cross water
                     if (HAS_BLUE_GEM) {
-                        // here player can go over water
+                        // if player has gem, it can go over the water
                         break;
                     } else {
                         player.stop();    
@@ -775,15 +778,16 @@ var checkCollisions = function() {
                 case 'door':
                     if (CURRENT_KEYS > 0) {
                         player.stop();
-                        // if we have key,opens door
+                        
+                        // if we have key, open door of final level
                         if (CURRENT_LEVEL === 4) {
-                            // TODO: change state and create final game screen!
                             allObstacles[i].item = 'door-final';
                             allObstacles[i].sprite = 'images/door-tall-final.png';
-                            var dialog = document.getElementById('dialog' + CURRENT_LEVEL);
+                            dialog = document.getElementById('dialog' + CURRENT_LEVEL);
                             dialog.show();
                             player.gameFinal();
-                            
+                        
+                        // if we have key, open door
                         } else {
                             allObstacles[i].item = 'door-open';
                             allObstacles[i].sprite = 'images/door-tall-open.png';
@@ -798,12 +802,13 @@ var checkCollisions = function() {
                     }
                     
                 case 'door-open':
+                    // When we open door of level, it shows the message and it puts next_level to true,
+                    // this way it enables key 'enter' to be used to go to next level.
                     player.sprite = 'images/' + HERO + '-sad.png';
                     dialog = document.getElementById('dialog' + CURRENT_LEVEL);
                     dialog.show();
-                    //setInterval(dialog.close(), 6000);
                     NEXT_LEVEL = true;
-                    // TODO: after dialog appearing, it should appear a screen with text and button to change to next level
+                    // TODO: after dialog appeared, it should appear a screen with text and button to change to next level?
                     // TODO: dialog.show only works on Chrome... find alternative for Mozilla... :(
                     break;
             }
@@ -811,7 +816,15 @@ var checkCollisions = function() {
     }
 }
 
+/* Function to change the level. It is called in handleInput, when player presses 'enter' key, if we have next_level true
+ * First we change player's sprite to the happy one
+ * Then we delete everything in allEnemies, allItems and allObstacles arrays (we don't want the things from the previous level to show)
+ * Then we change the level, and we put the new level onscreen
+ * After we call the 3 functions to reset the player's position, items and enemies position, passing the parameter of the next level
+ * Finally next_level goes to false, because we can't change level again if we don't play all the level.
+ */
 var changeLevel = function(level) {
+    // TODO: find a way to close de dialogs in the next level
     //dialog.close();
     //dialog = document.getElementById('dialog' + (CURRENT_LEVEL - 1)).hidden;
     player.sprite = 'images/' + HERO + '.png';

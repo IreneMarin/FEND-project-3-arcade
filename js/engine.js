@@ -58,9 +58,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
          
-        // if game_over --> do something like not put animation?
         win.requestAnimationFrame(main);
-        
     };
 
     /* This function does some initial setup that should only occur once,
@@ -77,13 +75,13 @@ var Engine = (function(global) {
      */
     function update(dt) {
         switch(CURRENT_LEVEL) {
+            // If we are in the starting screen, we don't show the canvas
             case 0:
                 break;
         
             default:
                 updateEntities(dt);
                 break;
-        
         }
         
         /* There is a bug when rendering the game and the Player 
@@ -269,8 +267,7 @@ var Engine = (function(global) {
                 break;
         }
         
-        
-        
+        // Function to wrap the text that will appear on the canvas when game_over or game_final
         function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
             var words = text.split(' ');
             var line = '';
@@ -295,7 +292,7 @@ var Engine = (function(global) {
         var x = 470;
         var y = 320;
         var text = '';
-            
+        
         if (GAME_OVER) {            
             text = 'GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to start over.';
             ctx.globalCompositeOperation = 'source-over';
@@ -307,7 +304,7 @@ var Engine = (function(global) {
             wrapText(ctx, text, x, y, maxWidth, lineHeight);
         }
         
-        if (FINAL) {
+        if (GAME_FINAL) {
             text = 'CONGRATULATIONS! You found your friend\s house!';
             ctx.globalCompositeOperation = 'source-over';
             ctx.font = 'normal 40px "Share Tech Mono"';
@@ -347,7 +344,6 @@ var Engine = (function(global) {
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
      */
-    
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
