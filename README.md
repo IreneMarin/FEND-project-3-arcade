@@ -54,7 +54,7 @@ You will be provided visual assets and a game loop engine; using these tools you
  
  
 ### Start page
-- ~~Create the story~~ (change it XD)
+- ~~Create the story~~ 
 - Selector to choose the hero
 - Selector to choose the difficulty: easy, normal, nightmare? 
  
@@ -106,7 +106,7 @@ You will be provided visual assets and a game loop engine; using these tools you
   - dialog.show() doesn't close when changing level 
   - dialog.show() doesn't work in Mozilla: find alternative? :( 
   - after changing levels, the bugs spend a couple of seconds not moving
-  - ~~Game over: the Enter key doesn't work (it cannot restart) ~~
+  - ~~Game over: the Enter key doesn't work (it cannot restart)~~
   - ~~Fix checkObstacles function~~
   - ~~Gems: doesn't give power when has_gem~~
   - ~~Change level/state: implement it how?~~
