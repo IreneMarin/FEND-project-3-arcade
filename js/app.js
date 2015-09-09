@@ -617,7 +617,6 @@ Player.prototype.stop = function () {
 Player.prototype.gameOver = function () {
     GAME_OVER = true;
     allEnemies = [];
-    /** TODO: delete text from canvas */
 };
 
 /** When we open the door in level 4, it is the final state of the game */
@@ -670,24 +669,22 @@ var checkCollisions = function () {
         if (checkCollision(playerRectangle, itemRectangle)) {
 
             switch (allItems[j].item) {
-                /** If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
-                case 'key':
+                
+                case 'key':     /** If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
                     currentKeys = currentKeys + 1;
                     document.getElementById('numberKeys').innerHTML = currentKeys.toString();
                     allItems.splice(j, 1);
                     break;
-
-                    /** If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
-                case 'life':
+                    
+                case 'life':    /** If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
                     currentLifes = currentLifes + 1;
                     document.getElementById('numberLifes').innerHTML = currentLifes.toString();
                     allItems.splice(j, 1);
                     break;
-
-                    /** If it collides with closed chest, check for key */
-                case 'chest-green':
+                    
+                case 'chest-green':     /** If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
-                        // if we have key, open chest and player stops
+                        /** If we have key, open chest and player stops */
                         allItems[j].item = 'gem-green';
                         allItems[j].sprite = 'images/chest-open-green.png';
                         allItems[j + 1].item = 'chest-open';
@@ -701,9 +698,8 @@ var checkCollisions = function () {
                         player.stop();
                     }
                     break;
-
-                    /** If it collides with closed chest, check for key */
-                case 'chest-blue':
+                    
+                case 'chest-blue':      /** If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
                         /** If we have key, open chest and player stops */
                         allItems[j].item = 'gem-blue';
@@ -719,18 +715,16 @@ var checkCollisions = function () {
                         player.stop();
                     }
                     break;
-
-                    /** If it collides with open chest with gem --> pick up gem */
-                case 'gem-green':
+                    
+                case 'gem-green':       /** If it collides with open chest with gem --> pick up gem */
                     hasGreenGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-green.png'>";
                     allItems[j].item = 'chest-open';
                     allItems[j].sprite = 'images/chest-open.png';
                     player.stop();
                     break;
-
-                    /** If it collides with open chest with gem --> pick up gem */
-                case 'gem-blue':
+                    
+                case 'gem-blue':        /** If it collides with open chest with gem --> pick up gem */
                     hasBlueGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-blue.png'>";
                     allItems[j].item = 'chest-open';
@@ -748,18 +742,10 @@ var checkCollisions = function () {
     }
 
     var dialog;
-<<<<<<< HEAD
-
-    /** Check collision with objects (tree, house, door and rock) */
-    for (var k = 0; k < allObstacles.length; k++) {
-        var obstacleRectangle = new Rectangle(allObstacles[k].x, allObstacles[k].y);
-=======
-    var delayTime;
     
     // Check collision with objects (tree, house, door and rock)
-    for (var i = 0; i < allObstacles.length; i++) {
-        var obstacleRectangle = new Rectangle(allObstacles[i].x, allObstacles[i].y);
->>>>>>> origin/master
+    for (var k = 0; k < allObstacles.length; k++) {
+        var obstacleRectangle = new Rectangle(allObstacles[k].x, allObstacles[k].y);
         if (checkCollision(playerRectangle, obstacleRectangle)) {
 
             /** Player has found an obstacle that can't be crossed over */
@@ -799,9 +785,9 @@ var checkCollisions = function () {
                             dialog = document.getElementById('dialog' + currentLevel);
                             dialog.show();
                             player.gameFinal();
-
-                            /** If we have key, open door */
+                            
                         } else {
+                            /** If we have key, open door */
                             allObstacles[k].item = 'door-open';
                             allObstacles[k].sprite = 'images/door-tall-open.png';
                         }
@@ -820,27 +806,13 @@ var checkCollisions = function () {
                     player.sprite = 'images/' + HERO + '-sad.png';
                     dialog = document.getElementById('dialog' + currentLevel);
                     dialog.show();
-<<<<<<< HEAD
                     nextLevel = true;
 
                     setTimeout(function () {
-=======
-                    NEXT_LEVEL = true;
-                    // TODO: after dialog appeared, it should appear a screen with text and button to change to next level?
-                    // TODO: dialog.show only works on Chrome... find alternative for Mozilla... :(
-                    
-                    // I am trying to implement the setTimeout to change levels automatically, but I want the player to wait
-                    // some seconds before the change, this way the dialog will be shown and read
-                    // It doesn't work though... 
-                    
-                    //delayTime = setTimeout(function() {  --> not working if I put it in a variable
-                    setTimeout(function() {
->>>>>>> origin/master
                         player.sprite = 'images/' + HERO + '.png';
                         allEnemies = [];
                         allItems = [];
                         allObstacles = [];
-<<<<<<< HEAD
                         if (nextLevel) {
                             currentLevel = currentLevel + 1;
                         }
@@ -853,18 +825,6 @@ var checkCollisions = function () {
 
                     clearTimeout();
 
-=======
-                        CURRENT_LEVEL = CURRENT_LEVEL + 1;
-                        document.getElementById('numberLevel').innerHTML = CURRENT_LEVEL.toString();
-                        player.changeLevel(CURRENT_LEVEL);
-                        itemsReset(CURRENT_LEVEL);
-                        enemyReset(CURRENT_LEVEL);
-                        NEXT_LEVEL = false;
-                    },3000);
-                    
-                    clearTimeout();
-                    
->>>>>>> origin/master
                     break;
             }
         }
