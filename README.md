@@ -100,15 +100,15 @@ You will be provided visual assets and a game loop engine; using these tools you
 
 ### Code
 - Errors:
-  - Player.stop: doesn't stop properly, is moving to the previous position
-  - Game over: the Enter key doesn't work (it cannot restart)
-  - dialog.show() doesn't close when changing level
-  - dialog.show() doesn't work in Mozilla: find alternative? :(
+  - Player.stop: doesn't stop properly, is moving to the previous position --- line 599
+  - Game over: the Enter key doesn't work (it cannot restart) --- line 610
+  - dialog.show() doesn't close when changing level --- line 827
+  - dialog.show() doesn't work in Mozilla: find alternative? :( --- line 812
   - ~~Fix checkObstacles function~~
   - ~~Gems: doesn't give power when has_gem~~
   - ~~Change level/state: implement it how?~~
   - ~~Finish level: create last level screen~~
 - Improvements: 
-  - Obstacles in canvas: find a better way to create each level (external json to access?)
-  - Enemy.update: simplify code (too many repeated if's --> put in functions?)
-  - Put message between levels with instructions to go to next level
+  - Obstacles in canvas: find a better way to create each level (external json to access?) --- line 53
+  - Enemy.update: simplify code (too many repeated if's --> put in functions?) --- line 304
+  - Put message between levels with instructions to go to next level --- line 811
