@@ -7,7 +7,7 @@ recreated the classic arcade game Frogger with Object-Oriented JavaScript and HT
 ### How to run the game
 
 Download the zip in your desktop, unzip it and open the "index.html" file in your Google Chrome browser to play the game.
-<br>
+<br><br>
 Or you can play it here: <a href='http://irene.marin.cat/udacity/project3/index.html' target='_blank'>link to game</a>
 
 ### How to play the game
