@@ -740,6 +740,7 @@ var checkCollisions = function() {
     }
     
     var dialog;
+    var delayTime;
     
     // Check collision with objects (tree, house, door and rock)
     for (var i = 0; i < allObstacles.length; i++) {
