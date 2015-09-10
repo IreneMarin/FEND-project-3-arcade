@@ -20,12 +20,11 @@
         <img src="images/menu/fila-esquerra.jpg" width="600"><img src="images/menu/fila-dreta.jpg" width="600" style="padding-left: 9px;">
         After a month of coding non-stop, you finally finished project 3...
         <br><br>
-        Now it is time to have some beers with your friend, who has waited patiently without bugging you, and celebrate it!
+        Now it is time to have some beers with your friend, who has waited patiently without bugging you (got it? xD), and celebrate it!
         <br><br>
-        But wait... you forgot where she lives... darn.
-        <br><br>
-        So let's go search for her house!<br>
-        <img src="images/menu/fila-esquerra.jpg" width="600"><img src="images/menu/fila-dreta.jpg" width="600">
+        But wait... you forgot where she lives... darn. So let's go search for her house!
+        <br>
+        <img src="images/menu/fila-esquerra.jpg" width="600"><img src="images/menu/fila-dreta.jpg" width="600" style="padding-left: 9px;">
         <div class="choices">
             Choose your hero:<br><br>
             <img src="images/menu/char-boy.png">
@@ -39,30 +38,50 @@
             <div class="difficulty" style="background: #57c63f;">EASY</div>
             <div class="difficulty" style="background: #f6cd5c;">NORMAL</div>
             <div class="difficulty" style="background: #d73e3e;">HARD</div>
+            <div class="difficulty" style="background: #363636; color: #fff;">NIGHTMARE</div>
         </div>
         <div class="instructions">
-            To move your character,<br>use the keyboard arrows.<br>
-            <img src="images/menu/arrows.png"><br>
-            To start the game,<br>press Enter.<br>
-            <img src="images/menu/enter.png">
+            To move your character,<br>use the keyboard arrows.
+            <br>
+            <div class="arrow">
+                <img src="images/menu/up.png">
+            </div>
+            <br>
+            <div class="arrow">
+                <img src="images/menu/left.png">
+            </div>
+            <div class="arrow">
+                <img src="images/menu/down.png">
+            </div>
+            <div class="arrow">
+                <img src="images/menu/right.png">
+            </div>
+            <br><br>
+            To start the game,<br>press Enter.
+            <br>
+            <div class="arrow-enter">
+                <img src="images/menu/up.png">
+            </div>
         </div>
     </div>
     <div style="clear: both;"></div>
     
     <!-- Dialogs for each level when the player opens de door -->
-    <dialog id="dialog1">
-        <p>She is not here...</p>
-    </dialog>
-    <dialog id="dialog2">
-        <p>Where is her house?</p>
-    </dialog>
-    <dialog id="dialog3">
-        <p>I'm getting tired...</p>
-    </dialog>
-    <dialog id="dialog4">
-        <p>Hi, friend!!</p>
-    </dialog>
-
+    <div id="dialogs">
+        <div id="dialog1">
+            <p>She is not here...</p>
+        </div>
+        <div id="dialog2">
+            <p>Where is her house?</p>
+        </div>
+        <div id="dialog3">
+            <p>I'm getting tired...</p>
+        </div>
+        <div id="dialog4">
+            <p>Hi, friend!!</p>
+        </div>
+    </div>
+    
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>

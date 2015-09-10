@@ -29,7 +29,9 @@ var Engine = (function(global) {
     canvas.width = 909;
     canvas.height = 760;
     doc.body.appendChild(canvas);
-
+    
+    document.getElementById('dialogs').style.left = ((screen.width - canvas.width) / 2 - 10) + 'px';
+    
     /** This function serves as the kickoff point for the game loop itself
      *  and handles properly calling the update and render methods.
      */

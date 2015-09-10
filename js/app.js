@@ -30,6 +30,11 @@ if (hasGreenGem) {
     document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-green.png'>";
 }
 
+document.getElementById('dialog1').hidden = true;
+document.getElementById('dialog2').hidden = true;
+document.getElementById('dialog3').hidden = true;
+document.getElementById('dialog4').hidden = true;
+
 
 /** -------------------- OBSTACLES & ITEMS ------------------------- */
 
@@ -739,10 +744,8 @@ var checkCollisions = function () {
             }
         }
     }
-
-    var dialog;
     
-    // Check collision with objects (tree, house, door and rock)
+    /** Check collision with objects (tree, house, door and rock) */
     for (var k = 0; k < allObstacles.length; k++) {
         var obstacleRectangle = new Rectangle(allObstacles[k].x, allObstacles[k].y);
         if (checkCollision(playerRectangle, obstacleRectangle)) {
@@ -781,8 +784,7 @@ var checkCollisions = function () {
                         if (currentLevel === 4) {
                             allObstacles[k].item = 'door-final';
                             allObstacles[k].sprite = 'images/door-tall-final.png';
-                            dialog = document.getElementById('dialog' + currentLevel);
-                            dialog.show();
+                            document.getElementById('dialog' + currentLevel).hidden = false;
                             player.gameFinal();
                             
                         } else {
@@ -803,12 +805,12 @@ var checkCollisions = function () {
                      * this way it enables key 'enter' to be used to go to next level.
                      */
                     player.sprite = 'images/' + HERO + '-sad.png';
-                    dialog = document.getElementById('dialog' + currentLevel);
-                    dialog.show();
+                    document.getElementById('dialog' + currentLevel).hidden = false;
                     nextLevel = true;
 
                     setTimeout(function () {
                         player.sprite = 'images/' + HERO + '.png';
+                        document.getElementById('dialog' + currentLevel).hidden = true;
                         allEnemies = [];
                         allItems = [];
                         allObstacles = [];
@@ -838,10 +840,8 @@ var checkCollisions = function () {
  *  Finally next_level goes to false, because we can't change level again if we don't play all the level.
  */
 var changeLevel = function (level) {
-    /** @todo Find a way to close de dialogs in the next level */
-    //dialog.close();
-    //dialog = document.getElementById('dialog' + (CURRENT_LEVEL - 1)).hidden;
     player.sprite = 'images/' + HERO + '.png';
+    //document.getElementById('dialog' + currentLevel).hidden = true;
     allEnemies = [];
     allItems = [];
     allObstacles = [];
