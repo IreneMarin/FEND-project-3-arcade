@@ -79,6 +79,17 @@ body {
     padding: 20px 0 40px 0;
 }
 
+.difficulty {
+    border-radius: 6px;
+    padding: 7px 0 5px;
+    letter-spacing: -2px;
+    font-size: 24px;
+    margin: 10px 0 20px 90px;
+    width: 100px;
+    box-shadow: 2px 2px 0px;
+    text-align: center;
+}
+
 /* Dialogs at the end of each level */ 
 #dialog1, #dialog2, #dialog3, #dialog4 {
     background: url("../images/speech-bubble-left.png") no-repeat;
