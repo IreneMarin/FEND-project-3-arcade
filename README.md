@@ -56,7 +56,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 ### Start page
 - ~~Create the story~~ 
 - Selector to choose the hero
-- Selector to choose the difficulty: easy, normal, nightmare? 
+- Selector to choose the difficulty: easy, normal, hard, nightmare 
  
 ### Canvas
 - ~~Create big canvas~~
@@ -103,8 +103,8 @@ You will be provided visual assets and a game loop engine; using these tools you
 ### Code
 - Errors:
   - Player.stop: doesn't stop properly, is moving to the previous position
-  - dialog.show() doesn't close when changing level 
-  - dialog.show() doesn't work in Mozilla: find alternative? :( 
+  - ~~dialog.show() doesn't close when changing level~~
+  - ~~dialog.show() doesn't work in Mozilla: find alternative~~ 
   - after changing levels, the bugs spend a couple of seconds not moving
   - ~~Game over: the Enter key doesn't work (it cannot restart)~~
   - ~~Fix checkObstacles function~~
