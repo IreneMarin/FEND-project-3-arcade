@@ -291,7 +291,7 @@ var Engine = (function(global) {
         var y = 320;
         var text = '';
         
-        if (gameOver) {            
+        if (gameLost) {
             text = 'GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to start over.';
             ctx.globalCompositeOperation = 'source-over';
             ctx.font = 'normal 40px "Share Tech Mono"';
@@ -302,7 +302,7 @@ var Engine = (function(global) {
             wrapText(ctx, text, x, y, maxWidth, lineHeight);
         }
         
-        if (gameFinal) {
+        if (gameWon) {
             text = 'CONGRATULATIONS! You found your friend\s house!';
             ctx.globalCompositeOperation = 'source-over';
             ctx.font = 'normal 40px "Share Tech Mono"';
@@ -353,18 +353,22 @@ var Engine = (function(global) {
         'images/heart.png',
         'images/key.png',
         'images/rock.png',
-        'images/speechbubble.png',
+        'images/speech-bubble.png',
         'images/char-boy.png',
+        'images/char-boy-sad.png',
         'images/char-cat-girl.png',
+        'images/char-cat-girl-sad.png',
         'images/char-horn-girl.png',
         'images/char-horn-girl-sad.png',
         'images/char-pink-girl.png',
         'images/char-princess-girl.png',
+        'images/char-princess-girl-sad.png',
         'images/chest-closed.png',
         'images/chest-lid.png',
         'images/chest-open.png',
         'images/chest-open-green.png',
         'images/chest-open-blue.png',
+        'images/chest-open-orange.png',
         'images/door-tall-closed.png',
         'images/door-tall-open.png',
         'images/door-tall-final.png',

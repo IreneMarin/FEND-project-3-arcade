@@ -6,8 +6,8 @@
 var HERO = "char-horn-girl";    // choosen hero
 var DIFFICULTY = 0;             // choosen level of difficulty
 
-var gameOver = false;          // boolean to know when we die
-var gameFinal = false;         // boolean to know when we finish
+var gameLost = false;           // boolean to know when we die
+var gameWon = false;            // boolean to know when we finish
 var currentLifes = 5;           // number of current lifes
 var currentKeys = 0;            // number of current keys
 var currentLevel = 0;           // level of the screen
@@ -546,7 +546,7 @@ Player.prototype.handleInput = function (allowedKeys) {
         /** The player has 0 lifes, it is game_over. So, if he/she presses Enter --> we reset the game */
         if (allowedKeys === 'enter') {
             changeLevel(1);
-            gameOver = false;
+            gameLost = false;
             currentLifes = 5;
             document.getElementById('numberLifes').innerHTML = currentLifes.toString();
             currentKeys = 0;
@@ -614,13 +614,13 @@ Player.prototype.stop = function () {
 
 /** When we have 0 lifes, it is game over */
 Player.prototype.gameOver = function () {
-    gameOver = true;
+    gameLost = true;
     allEnemies = [];
 };
 
 /** When we open the door in level 4, it is the final state of the game */
 Player.prototype.gameFinal = function () {
-    gameFinal = true;
+    gameWon = true;
     allEnemies = [];
 };
 
