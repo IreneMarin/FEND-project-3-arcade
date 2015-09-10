@@ -5,9 +5,9 @@
 
 var HERO = "char-horn-girl";    // choosen hero
 var DIFFICULTY = 0;             // choosen level of difficulty
-var GAME_OVER = false;          // boolean to know when we die
-var GAME_FINAL = false;         // boolean to know when we finish
 
+var gameOver = false;          // boolean to know when we die
+var gameFinal = false;         // boolean to know when we finish
 var currentLifes = 5;           // number of current lifes
 var currentKeys = 0;            // number of current keys
 var currentLevel = 0;           // level of the screen
@@ -24,10 +24,10 @@ document.getElementById('numberLifes').innerHTML = currentLifes.toString();
 document.getElementById('numberKeys').innerHTML = currentKeys.toString();
 document.getElementById('numberLevel').innerHTML = currentLevel.toString();
 if (hasBlueGem) {
-    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-blue.png'>";
+    document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-blue.png'>";
 }
 if (hasGreenGem) {
-    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-green.png'>";
+    document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-green.png'>";
 }
 
 
@@ -546,9 +546,11 @@ Player.prototype.handleInput = function (allowedKeys) {
         /** The player has 0 lifes, it is game_over. So, if he/she presses Enter --> we reset the game */
         if (allowedKeys === 'enter') {
             changeLevel(1);
-            GAME_OVER = false;
+            gameOver = false;
             currentLifes = 5;
             document.getElementById('numberLifes').innerHTML = currentLifes.toString();
+            currentKeys = 0;
+            document.getElementById('numberKeys').innerHTML = currentKeys.toString();
         }
     }
 };
@@ -612,13 +614,13 @@ Player.prototype.stop = function () {
 
 /** When we have 0 lifes, it is game over */
 Player.prototype.gameOver = function () {
-    GAME_OVER = true;
+    gameOver = true;
     allEnemies = [];
 };
 
 /** When we open the door in level 4, it is the final state of the game */
 Player.prototype.gameFinal = function () {
-    GAME_FINAL = true;
+    gameFinal = true;
     allEnemies = [];
 };
 
@@ -715,7 +717,7 @@ var checkCollisions = function () {
                     
                 case 'gem-green':       /** If it collides with open chest with gem --> pick up gem */
                     hasGreenGem = true;
-                    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-green.png'>";
+                    document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-green.png'>";
                     allItems[j].item = 'chest-open';
                     allItems[j].sprite = 'images/chest-open.png';
                     player.stop();
@@ -723,7 +725,7 @@ var checkCollisions = function () {
                     
                 case 'gem-blue':        /** If it collides with open chest with gem --> pick up gem */
                     hasBlueGem = true;
-                    document.getElementById('hasGems').innerHTML += "<img src='images/menu-gem-blue.png'>";
+                    document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-blue.png'>";
                     allItems[j].item = 'chest-open';
                     allItems[j].sprite = 'images/chest-open.png';
                     player.stop();

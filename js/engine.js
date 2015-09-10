@@ -291,7 +291,7 @@ var Engine = (function(global) {
         var y = 320;
         var text = '';
         
-        if (GAME_OVER) {            
+        if (gameOver) {            
             text = 'GAME OVER. The bugs crawl over you, as you lay down, too exhausted to go on... Press Enter to start over.';
             ctx.globalCompositeOperation = 'source-over';
             ctx.font = 'normal 40px "Share Tech Mono"';
@@ -302,7 +302,7 @@ var Engine = (function(global) {
             wrapText(ctx, text, x, y, maxWidth, lineHeight);
         }
         
-        if (GAME_FINAL) {
+        if (gameFinal) {
             text = 'CONGRATULATIONS! You found your friend\s house!';
             ctx.globalCompositeOperation = 'source-over';
             ctx.font = 'normal 40px "Share Tech Mono"';
