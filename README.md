@@ -103,6 +103,7 @@ You will be provided visual assets and a game loop engine; using these tools you
 ### Code
 - Errors:
   - Player.stop: doesn't stop properly, is moving to the previous position
+  - Fix dialog's positions
   - ~~dialog.show() doesn't close when changing level~~
   - ~~dialog.show() doesn't work in Mozilla: find alternative~~ 
   - after changing levels, the bugs spend a couple of seconds not moving
@@ -116,3 +117,5 @@ You will be provided visual assets and a game loop engine; using these tools you
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
   - ~~Go to next level automatically with setTimeout~~
   - ~~JSHint the code~~
+  - Implement animations
+  - Implement sounds
