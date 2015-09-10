@@ -12,12 +12,12 @@ Or you can play it here: <a href='http://irene.marin.cat/udacity/project3/index.
 
 ### How to play the game
 
-<img src='images/arrows.png'>
+<img src='images/menu/arrows.png'>
 <br>
 To play the game, use the arrow keys from your keyboard to move up, right, down and left.
 <br>
 <br>
-<img src='images/enter.png'>
+<img src='images/menu/enter.png'>
 <br>
 Use the key Enter to change level or restart, when the game requires you to do so.
 
