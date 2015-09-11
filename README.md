@@ -127,7 +127,4 @@ Game engine.js and resources.js by Udacity
   - ~~JSHint the code~~
   - Implement animations
   - Implement sounds
-<<<<<<< HEAD
   - Create production code
-=======
->>>>>>> origin/master
