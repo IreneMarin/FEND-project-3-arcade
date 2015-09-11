@@ -65,6 +65,7 @@ body {
 
 #opening .choices img {
     padding: 0;
+    cursor: pointer;
 }
 
 .instructions {
@@ -88,6 +89,7 @@ body {
     width: 120px;
     box-shadow: 2px 2px 0px #000;
     text-align: center;
+    cursor: pointer;
 }
 
 .arrow {

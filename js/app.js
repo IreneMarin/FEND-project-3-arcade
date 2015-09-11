@@ -3,8 +3,8 @@
  *  for different things. They are used for the current stats (hearts, lifes, gems, game_over, etc).
  */
 
-var HERO = 'char-horn-girl';    // choosen hero
-var DIFFICULTY = 0;             // choosen level of difficulty
+var HERO = 'char-horn-girl';    // choosen hero (horn-girl by default)
+var DIFFICULTY = 1;             // choosen level of difficulty (normal by default)
 var gameLost = false;           // boolean to know when we die
 var gameWon = false;            // boolean to know when we finish
 var currentLifes = 5;           // number of current lifes
@@ -35,6 +35,7 @@ document.getElementById('dialog2').hidden = true;
 document.getElementById('dialog3').hidden = true;
 document.getElementById('dialog4').hidden = true;
 
+/** Initialize the hero to the player's choosen, if clicked */
 var char1 = document.getElementById('boy');
 char1.addEventListener('click', function(){HERO = 'char-boy';}, false);
 var char2 = document.getElementById('cat-girl');
@@ -43,6 +44,16 @@ var char3 = document.getElementById('horn-girl');
 char3.addEventListener('click', function(){HERO = 'char-horn-girl';}, false);
 var char4 = document.getElementById('princess-girl');
 char4.addEventListener('click', function(){HERO = 'char-princess-girl';}, false);
+
+/** Initialize the difficulty to the player's choosen, if clicked */
+var dif1 = document.getElementById('easy');
+dif1.addEventListener('click', function(){DIFFICULTY = 0;}, false);
+var dif2 = document.getElementById('normal');
+dif2.addEventListener('click', function(){DIFFICULTY = 1;}, false);
+var dif3 = document.getElementById('hard');
+dif3.addEventListener('click', function(){DIFFICULTY = 2;}, false);
+var dif4 = document.getElementById('nightmare');
+dif4.addEventListener('click', function(){DIFFICULTY = 3;}, false);
 
 
 /** -------------------- OBSTACLES & ITEMS ------------------------- */
@@ -299,11 +310,39 @@ var Enemy = function (x, y, moveRight, startMove, endMove) {
     this.endMove = endMove;
     this.moveRight = moveRight;
 
-    //this.speed = 150; // this one is for testing the game
-    if (currentLevel === 1) {
-        this.speed = Math.floor(Math.random() * 450 + 1);
-    } else {
-        this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
+    /** Change speed of the enemies for each level of difficulty */
+    switch (DIFFICULTY) {
+        case 1:
+            if (currentLevel === 1) {
+                this.speed = Math.floor(Math.random() * 450 + 1);
+            } else {
+                this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
+            }
+            break;
+            
+        case 2:
+            if (currentLevel === 1) {
+                this.speed = Math.floor(Math.random() * 550 + 1);
+            } else {
+                this.speed = Math.floor(Math.random() * (300 - 150 + 1)) + 150;
+            }
+            break;
+            
+        case 3:
+            if (currentLevel === 1) {
+                this.speed = Math.floor(Math.random() * 550 + 1);
+            } else {
+                this.speed = Math.floor(Math.random() * (350 - 150 + 1)) + 150;
+            }
+            break;
+            
+        default: 
+            if (currentLevel === 1) {
+                this.speed = Math.floor(Math.random() * 250 + 1);
+            } else {
+                this.speed = Math.floor(Math.random() * (150 - 50 + 1)) + 50;
+            }
+            break;
     }
 
     /** Loading the image by setting this.sprite to the appropriate image */
@@ -430,9 +469,17 @@ var enemyReset = function (level) {
 
     switch (level) {
         case 1:
-            /** Here we create 10 enemies, 2 for each row, with a random initial left location and a random speed */
-            for (var i = 0; i < 10; i++) {
-                allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
+            /** Here we create 10 enemies, 2 for each row, with a random initial left location and a random speed
+             *  If we have nightmare difficulty, there are 3 for each row
+             */
+            if (DIFFICULTY === 3) {
+                for (var i = 0; i < 15; i++) {
+                    allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
+                }
+            } else {
+                for (var i = 0; i < 10; i++) {
+                    allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
+                }
             }
             break;
 
@@ -441,8 +488,13 @@ var enemyReset = function (level) {
             /*  using the positions that we pass in the parameters as startMove and endMove
              */
             allEnemies.push(new Enemy(404, 63, true, 404, 808));
-            allEnemies.push(new Enemy(0, 146, true, 0, 303));
-            allEnemies.push(new Enemy(202, 229, true, 202, 606));
+            if (DIFFICULTY === 3) {
+                allEnemies.push(new Enemy(0, 146, true, 0, 606));
+                allEnemies.push(new Enemy(0, 229, true, 0, 606));
+            } else {
+                allEnemies.push(new Enemy(0, 146, true, 0, 303));
+                allEnemies.push(new Enemy(202, 229, true, 202, 606));
+            }
             allEnemies.push(new Enemy(202, 312, true, 202, 808));
             allEnemies.push(new Enemy(0, 395, true, 0, 404));
             allEnemies.push(new Enemy(606, 395, true, 606, 808));
@@ -451,8 +503,14 @@ var enemyReset = function (level) {
 
         case 3:
             allEnemies.push(new Enemy(101, -20, true, 101, 808));
-            allEnemies.push(new Enemy(303, 63, true, 303, 606));
-            allEnemies.push(new Enemy(303, 146, true, 303, 606));
+            if (DIFFICULTY === 3) {
+                allEnemies.push(new Enemy(101, 63, true, 101, 606));
+                allEnemies.push(new Enemy(0, 146, true, 0, 606));
+                allEnemies.push(new Enemy(202, 574, true, 202, 505));
+            } else {
+                allEnemies.push(new Enemy(303, 63, true, 303, 606));
+                allEnemies.push(new Enemy(303, 146, true, 303, 606));
+            }
             allEnemies.push(new Enemy(202, 312, true, 202, 808));
             allEnemies.push(new Enemy(202, 395, true, 202, 808));
             allEnemies.push(new Enemy(202, 478, true, 202, 808));
@@ -461,16 +519,22 @@ var enemyReset = function (level) {
         case 4:
             /** Here we combine: in rows with obstacles for the bugs (the house and the stone path), 
              * we create them as level 2, going back and forth.
-             * In the other rows, we create as level 1, but with only 1 bug for row (2 bugs is too difficult).
+             * In the other rows, we create as level 1, but with only 1 bug per row.
+             * For nightmare difficulty, we put 2 bugs per row.
              * But in some row they go left to right, and in some they go right to left.
              */
-            allEnemies.push(new Enemy(0, -20, true, 0, 404));
-            allEnemies.push(new Enemy(808, 63, false, 808, 0));
-            allEnemies.push(new Enemy(0, 146, true, 0, 808));
-            allEnemies.push(new Enemy(808, 229, false, 808, 0));
-            allEnemies.push(new Enemy(0, 312, true, 0, 404));
-            allEnemies.push(new Enemy(0, 395, true, 0, 404));
-            allEnemies.push(new Enemy(0, 478, true, 0, 404));
+            allEnemies.push(new Enemy(0, -20, true, 0, 404));       // back and forth
+            allEnemies.push(new Enemy(808, 63, false, 808, 0));     // right
+            allEnemies.push(new Enemy(0, 146, true, 0, 808));       // left
+            allEnemies.push(new Enemy(808, 229, false, 808, 0));    // right
+            allEnemies.push(new Enemy(0, 312, true, 0, 404));       // back and forth
+            allEnemies.push(new Enemy(0, 395, true, 0, 404));       // back and forth
+            allEnemies.push(new Enemy(0, 478, true, 0, 404));       // back and forth
+            if (DIFFICULTY === 3) {
+                allEnemies.push(new Enemy(808, 63, false, 808, 0));     // right
+                allEnemies.push(new Enemy(0, 146, true, 0, 808));       // left
+                allEnemies.push(new Enemy(808, 229, false, 808, 0));    // right
+            }
             break;
     }
 };
