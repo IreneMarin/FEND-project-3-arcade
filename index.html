@@ -9,29 +9,29 @@
 <body>
     <!-- Menu during the game, for the stats -->
     <div id="menu">
-        <div class="lifes"><img src="images/menu/heart.png"><span id="numberLifes"></span></div>
-        <div class="keys"><img src="images/menu/key.png"><span id="numberKeys"></span></div>
-        <div class="gems"><span id="hasGems"></span></div>        
+        <div class="items"><img src="images/menu/heart.png"><span id="numberLifes"></span></div>
+        <div class="items"><img src="images/menu/key.png"><span id="numberKeys"></span></div>
+        <div class="items"><span id="hasGems"></span></div>        
         <div class="level">LVL <span id="numberLevel"></span></div>
     </div>
     
     <!-- Start screen of the game --> 
     <div id="opening">
-        <img src="images/menu/fila-esquerra.jpg" width="600"><img src="images/menu/fila-dreta.jpg" width="600" style="padding-left: 9px;">
+        <img src="images/menu/gems.jpg" class="gems">
         After a month of coding non-stop, you finally finished project 3...
         <br><br>
         Now it is time to have some beers with your friend, who has waited patiently without bugging you (got it? xD), and celebrate it!
         <br><br>
         But wait... you forgot where she lives... darn. So let's go search for her house!
         <br>
-        <img src="images/menu/fila-esquerra.jpg" width="600"><img src="images/menu/fila-dreta.jpg" width="600" style="padding-left: 9px;">
+        <img src="images/menu/gems.jpg" class="gems">
         <div class="choices">
             Choose your hero:<br><br>
-            <img id="boy" src="images/menu/char-boy.png">
-            <img id="cat-girl" src="images/menu/char-cat-girl.png">
+            <img id="boy" src="images/menu/char-boy.png" class="player">
+            <img id="cat-girl" src="images/menu/char-cat-girl.png" class="player">
             <br>
-            <img id="horn-girl" src="images/menu/char-horn-girl.png">
-            <img id="princess-girl" src="images/menu/char-princess-girl.png">
+            <img id="horn-girl" src="images/menu/char-horn-girl.png" class="player">
+            <img id="princess-girl" src="images/menu/char-princess-girl.png" class="player">
         </div>
         <div class="choices">
             Choose the difficulty:<br><br>
@@ -43,25 +43,11 @@
         <div class="instructions">
             To move your character,<br>use the keyboard arrows.
             <br>
-            <div class="arrow">
-                <img src="images/menu/up.png">
-            </div>
-            <br>
-            <div class="arrow">
-                <img src="images/menu/left.png">
-            </div>
-            <div class="arrow">
-                <img src="images/menu/down.png">
-            </div>
-            <div class="arrow">
-                <img src="images/menu/right.png">
-            </div>
+            <img src="images/menu/arrows-blue.jpg">
             <br><br>
             To start the game,<br>press Enter.
             <br>
-            <div class="arrow-enter">
-                <img src="images/menu/up.png">
-            </div>
+            <img src="images/menu/enter-blue.jpg">
         </div>
     </div>
     <div style="clear: both;"></div>
@@ -69,16 +55,16 @@
     <!-- Dialogs for each level when the player opens de door -->
     <div id="dialogs">
         <div id="dialog1">
-            <p>She is not here...</p>
+            She is not here...
         </div>
         <div id="dialog2">
-            <p>Where is her house?</p>
+            Where is her house?
         </div>
         <div id="dialog3">
-            <p>I'm getting tired...</p>
+            I'm getting tired...
         </div>
         <div id="dialog4">
-            <p>Hi, friend!!</p>
+            Hi, friend!!
         </div>
     </div>
     

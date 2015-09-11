@@ -8,29 +8,18 @@ body {
 /* Menu */
 #menu {
     width: 909px;
-    height: 90px;
+    height: 60px;
     margin: 0 auto;
     padding-top: 30px;
     text-align: left;
     font-size: 50px;
 }
 
-#menu img {
-    height: 40px;
-    margin-right: 10px;
+#numberLifes, #numberKeys, #hasGems {
+    padding-left: 10px;
 }
 
-.lifes {
-    float: left;
-    width: 20%;
-}
-
-.keys {
-    float: left;
-    width: 20%;
-}
-
-.gems {
+.items {
     float: left;
     width: 20%;
 }
@@ -51,7 +40,7 @@ body {
     font-size: 32px;
 }
 
-#opening img {
+.gems {
     padding: 50px 0 40px;
 }
 
@@ -63,21 +52,9 @@ body {
     padding-top: 10px;
 }
 
-#opening .choices img {
+.player {
     padding: 0;
     cursor: pointer;
-}
-
-.instructions {
-    float: left;
-    width: 29%;
-    font-size: 24px;
-    text-align: center;
-    padding-top: 10px;
-}
-
-#opening .instructions img {
-    padding: 20px 0 40px 0;
 }
 
 .difficulty {
@@ -92,34 +69,12 @@ body {
     cursor: pointer;
 }
 
-.arrow {
-    border-radius: 6px;
-    padding-top: 8px;
-    width: 40px;
-    height: 32px;
-    background: #363636;
-    box-shadow: 2px 2px 0px #000;
+.instructions {
+    float: left;
+    width: 29%;
+    font-size: 24px;
     text-align: center;
-    display: inline-block;
-    margin-top: 10px;
-}
-
-.arrow-enter {
-    border-radius: 6px;
-    padding-top: 8px;
-    padding-left: 10px;
-    width: 90px;
-    height: 32px;
-    background: #363636;
-    box-shadow: 2px 2px 0px #000;
-    text-align: left;
-    display: inline-block;
-    margin-top: 10px;
-}
-
-#opening .arrow img, #opening .arrow-enter img {
-    padding: 0;
-    width: 24px;
+    padding-top: 10px;
 }
 
 /* Dialogs at the end of each level */
@@ -134,14 +89,10 @@ body {
 #dialog1, #dialog2, #dialog3, #dialog4 {
     background: url("../images/speech-bubble-left.png") no-repeat;
     border: none;
-    padding: 0;
+    padding: 22px 15px 0 15px;
     width: 101px;
     height: 109px;
     position: relative;
-}
-
-#dialog1 p, #dialog2 p, #dialog3 p, #dialog4 p {
-    padding: 22px 15px 0 15px;
 }
 
 #dialog1 {
