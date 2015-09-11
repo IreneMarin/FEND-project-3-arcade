@@ -7,15 +7,17 @@ recreated the classic arcade game Frogger with Object-Oriented JavaScript and HT
 
 ### How to run the game
 
-Download the zip in your desktop, unzip it and open the "index.html" file in your browser to play the game.
-<br><br>
+Download the repository in your desktop, unzip it and open the "index.html" file in your browser to play the game.
+<br>
 Or you can play it here: 
 <a href='http://irene.marin.cat/udacity/project3/index.html' target='_blank'>link to game</a>
 
 ### How to play the game
 
-To play the game, use the arrow keys from your keyboard to move up, right, down and left.
+<img src="images/menu/arrows.jpg" width="120"><br>
+To play the game, use the arrow keys from your keyboard to move your player up, right, down and left.
 <br><br>
+<img src="images/menu/enter.jpg" width="90"><br>
 Use the key Enter to change level or restart, when the game requires you to do so.
 
 ----------------------
