@@ -3,9 +3,8 @@
  *  for different things. They are used for the current stats (hearts, lifes, gems, game_over, etc).
  */
 
-var HERO = "char-horn-girl";    // choosen hero
+var HERO = 'char-horn-girl';    // choosen hero
 var DIFFICULTY = 0;             // choosen level of difficulty
-
 var gameLost = false;           // boolean to know when we die
 var gameWon = false;            // boolean to know when we finish
 var currentLifes = 5;           // number of current lifes
@@ -30,10 +29,20 @@ if (hasGreenGem) {
     document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-green.png'>";
 }
 
+/** Initialize the 4 dialogs as hidden. They will ony appear at the end of each level */
 document.getElementById('dialog1').hidden = true;
 document.getElementById('dialog2').hidden = true;
 document.getElementById('dialog3').hidden = true;
 document.getElementById('dialog4').hidden = true;
+
+var char1 = document.getElementById('boy');
+char1.addEventListener('click', function(){HERO = 'char-boy';}, false);
+var char2 = document.getElementById('cat-girl');
+char2.addEventListener('click', function(){HERO = 'char-cat-girl';}, false);
+var char3 = document.getElementById('horn-girl');
+char3.addEventListener('click', function(){HERO = 'char-horn-girl';}, false);
+var char4 = document.getElementById('princess-girl');
+char4.addEventListener('click', function(){HERO = 'char-princess-girl';}, false);
 
 
 /** -------------------- OBSTACLES & ITEMS ------------------------- */
