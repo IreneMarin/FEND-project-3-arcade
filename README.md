@@ -1,29 +1,26 @@
 ## Classic Arcade Game Clone project
 
-Third project from the Front-End Web Developer Nanodegree in <a href="https://www.udacity.com" target="_blank">Udacity</a>:
+Third project from the Front-End Web Developer Nanodegree in 
+<a href="https://www.udacity.com" target="_blank">Udacity</a>:
 <br>
 recreated the classic arcade game Frogger with Object-Oriented JavaScript and HTML5 Canvas.
 
 ### How to run the game
 
-Download the zip in your desktop, unzip it and open the "index.html" file in your Google Chrome browser to play the game.
+Download the zip in your desktop, unzip it and open the "index.html" file in your browser to play the game.
 <br><br>
-Or you can play it here: <a href='http://irene.marin.cat/udacity/project3/index.html' target='_blank'>link to game</a>
+Or you can play it here: 
+<a href='http://irene.marin.cat/udacity/project3/index.html' target='_blank'>link to game</a>
 
 ### How to play the game
 
-<img src='images/menu/arrows.png'>
-<br>
 To play the game, use the arrow keys from your keyboard to move up, right, down and left.
-<br>
-<br>
-<img src='images/menu/enter.png'>
-<br>
+<br><br>
 Use the key Enter to change level or restart, when the game requires you to do so.
 
 ----------------------
 
-### Udacity's instructions:
+### Udacity's instructions
 
 You will be provided visual assets and a game loop engine; using these tools you must add a number of entities to the game including the player characters and enemies to recreate the classic arcade game Frogger.
 
@@ -35,8 +32,16 @@ You will be provided visual assets and a game loop engine; using these tools you
 6. Identify the various classes you will need to write.
 7. Identify and code the properties each class must have to accomplish its tasks.
 8. Write the functions that provide functionality to each of your class instances.
- 
------------------------------------
+
+----------------------
+
+### Attributions
+
+"<a href='http://www.lostgarden.com/2007/05/dancs-miraculously-flexible-game.html' target='_blank'>PlanetCute</a>" art by Daniel Cook (lostgarden.com)
+
+Game engine.js and resources.js by Udacity
+
+----------------------
 
 ## TO DO
  
