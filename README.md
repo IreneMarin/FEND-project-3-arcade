@@ -118,9 +118,11 @@ Game engine.js and resources.js by Udacity
   - ~~Change level/state: implement it how?~~
   - ~~Finish level: create last level screen~~
 - Improvements: 
-  - Obstacles & canvas: find a better way to create each level (external json?) 
+  - Obstacles & canvas: find a better way to create each level (external json?)
+  - Keep DOM Access to a minimum: use a helper method that batch-converts a dataset to HTML
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
   - ~~Go to next level automatically with setTimeout~~
   - ~~JSHint the code~~
   - Implement animations
   - Implement sounds
+  - Create production code

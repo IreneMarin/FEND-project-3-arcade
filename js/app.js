@@ -1,3 +1,5 @@
+'use strict';
+
 /** ----------------- GLOBAL VARIABLES --------------------- */
 /** We define here the variables that we will be using through app.js and engine.js
  *  for different things. They are used for the current stats (hearts, lifes, gems, game_over, etc).
@@ -36,25 +38,22 @@ document.getElementById('dialog3').hidden = true;
 document.getElementById('dialog4').hidden = true;
 
 /** Initialize the hero to the player's choosen, if clicked */
-var char1 = document.getElementById('boy');
-char1.addEventListener('click', function(){HERO = 'char-boy';}, false);
-var char2 = document.getElementById('cat-girl');
-char2.addEventListener('click', function(){HERO = 'char-cat-girl';}, false);
-var char3 = document.getElementById('horn-girl');
-char3.addEventListener('click', function(){HERO = 'char-horn-girl';}, false);
-var char4 = document.getElementById('princess-girl');
-char4.addEventListener('click', function(){HERO = 'char-princess-girl';}, false);
+document.getElementById('boy').addEventListener('click', function(){HERO = 'char-boy';}, false);
+document.getElementById('cat-girl').addEventListener('click', function(){HERO = 'char-cat-girl';}, false);
+document.getElementById('horn-girl').addEventListener('click', function(){HERO = 'char-horn-girl';}, false);
+document.getElementById('princess-girl').addEventListener('click', function(){HERO = 'char-princess-girl';}, false);
 
 /** Initialize the difficulty to the player's choosen, if clicked */
-var dif1 = document.getElementById('easy');
-dif1.addEventListener('click', function(){DIFFICULTY = 0;}, false);
-var dif2 = document.getElementById('normal');
-dif2.addEventListener('click', function(){DIFFICULTY = 1;}, false);
-var dif3 = document.getElementById('hard');
-dif3.addEventListener('click', function(){DIFFICULTY = 2;}, false);
-var dif4 = document.getElementById('nightmare');
-dif4.addEventListener('click', function(){DIFFICULTY = 3;}, false);
+document.getElementById('easy').addEventListener('click', function(){DIFFICULTY = 0;}, false);
+document.getElementById('normal').addEventListener('click', function(){DIFFICULTY = 1;}, false);
+document.getElementById('hard').addEventListener('click', function(){DIFFICULTY = 2;}, false);
+document.getElementById('nightmare').addEventListener('click', function(){DIFFICULTY = 3;}, false);
 
+/** Useful function to create random numbers */
+var randomNumber = function(speedHigh, speedLow) {
+    return Math.floor(Math.random() * (speedHigh - speedLow) + 1) + speedLow;
+};
+    
 
 /** -------------------- OBSTACLES & ITEMS ------------------------- */
 
@@ -88,208 +87,216 @@ var itemsReset = function (level) {
     switch (level) {
 
         case 1:
-
-            // house
-            allObstacles[0] = new Items(303, 45, 'window-tall', 'house');
-            allObstacles[1] = new Items(404, 60, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(505, 45, 'window-tall', 'house');
-            allObstacles[3] = new Items(303, -40, 'roof-south-west', 'house');
-            allObstacles[4] = new Items(404, -40, 'roof-south', 'house');
-            allObstacles[5] = new Items(505, -40, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[6] = new Items(0, -25, 'tree-short', 'tree');
-            allObstacles[7] = new Items(101, -25, 'tree-short', 'tree');
-            allObstacles[8] = new Items(202, -25, 'tree-short', 'tree');
-            allObstacles[9] = new Items(606, -25, 'tree-short', 'tree');
-            allObstacles[10] = new Items(707, -25, 'tree-short', 'tree');
-            allObstacles[11] = new Items(808, -25, 'tree-short', 'tree');
-            // row 3
-            allObstacles[12] = new Items(606, 141, 'tree-ugly', 'tree');
-            // row 4
-            allObstacles[13] = new Items(101, 224, 'tree-ugly', 'tree');
-            allObstacles[14] = new Items(606, 224, 'tree-ugly', 'tree');
-            allObstacles[15] = new Items(707, 224, 'rock', 'rock');
-            // row 5
-            allObstacles[16] = new Items(303, 307, 'tree-ugly', 'tree');
-            // row 7
-            allObstacles[17] = new Items(505, 470, 'rock', 'rock');
-
-            allItems[0] = new Items(707, 131, 'key', 'key');
-            allItems[1] = new Items(101, 131, 'key', 'key');
-            allItems[2] = new Items(0, 465, 'heart', 'life');
-
+            allObstacles = [
+                // house
+                new Items(303, 45, 'window-tall', 'house'),
+                new Items(404, 60, 'door-tall-closed', 'door'),
+                new Items(505, 45, 'window-tall', 'house'),
+                new Items(303, -40, 'roof-south-west', 'house'),
+                new Items(404, -40, 'roof-south', 'house'),
+                new Items(505, -40, 'roof-south-east', 'house'),
+                // row 1
+                new Items(0, -25, 'tree-short', 'tree'),
+                new Items(101, -25, 'tree-short', 'tree'),
+                new Items(202, -25, 'tree-short', 'tree'),
+                new Items(606, -25, 'tree-short', 'tree'),
+                new Items(707, -25, 'tree-short', 'tree'),
+                new Items(808, -25, 'tree-short', 'tree'),
+                // row 3
+                new Items(606, 141, 'tree-ugly', 'tree'),
+                // row 4
+                new Items(101, 224, 'tree-ugly', 'tree'),
+                new Items(606, 224, 'tree-ugly', 'tree'),
+                new Items(707, 224, 'rock', 'rock'),
+                // row 5
+                new Items(303, 307, 'tree-ugly', 'tree'),
+                // row 7
+                new Items(505, 470, 'rock', 'rock'),
+            ];
+            
+            allItems = [
+                new Items(707, 131, 'key', 'key'),
+                new Items(101, 131, 'key', 'key'),
+                new Items(0, 465, 'heart', 'life')
+            ];
+            
             break;
 
         case 2:
-
-            // house
-            allObstacles[0] = new Items(0, 45, 'wood-block', 'house');
-            allObstacles[1] = new Items(101, 60, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(202, 45, 'wood-block', 'house');
-            allObstacles[3] = new Items(0, -40, 'roof-south-west', 'house');
-            allObstacles[4] = new Items(101, -40, 'roof-south', 'house');
-            allObstacles[5] = new Items(202, -40, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[6] = new Items(303, -25, 'blanc', 'water');
-            allObstacles[7] = new Items(404, -25, 'blanc', 'water');
-            allObstacles[8] = new Items(505, -25, 'blanc', 'water');
-            allObstacles[9] = new Items(606, -25, 'blanc', 'water');
-            allObstacles[10] = new Items(707, -25, 'blanc', 'water');
-            allObstacles[11] = new Items(808, -25, 'blanc', 'water');
-            // row 2
-            allObstacles[12] = new Items(303, 58, 'tree-ugly', 'tree');
-            // row 3
-            allObstacles[13] = new Items(404, 141, 'tree-tall', 'tree');
-            allObstacles[14] = new Items(707, 141, 'tree-ugly', 'tree');
-            // row 4
-            allObstacles[15] = new Items(101, 224, 'tree-ugly', 'tree');
-            allObstacles[16] = new Items(707, 224, 'tree-ugly', 'tree');
-            allObstacles[17] = new Items(808, 224, 'tree-ugly', 'tree');
-            // row 5
-            allObstacles[18] = new Items(101, 307, 'tree-ugly', 'tree');
-            // row 6
-            allObstacles[19] = new Items(505, 390, 'rock', 'rock');
-            // row 7
-            allObstacles[20] = new Items(0, 470, 'rock', 'rock');
-            allObstacles[21] = new Items(303, 470, 'tree-tall', 'tree');
-            // row 8
-            allObstacles[22] = new Items(303, 556, 'rock', 'rock');
-            allObstacles[23] = new Items(404, 556, 'tree-tall', 'tree');
-            allObstacles[24] = new Items(505, 556, 'tree-tall', 'tree');
-
-            allItems[0] = new Items(808, 131, 'key', 'key');
-            allItems[1] = new Items(0, 297, 'key', 'key');
-            allItems[2] = new Items(606, 48, 'heart', 'life');
-            allItems[3] = new Items(202, 465, 'chest-closed', 'chest-green');
-            allItems[4] = new Items(202, 400, 'blanc', 'chest-lid');
+            allObstacles = [
+                // house
+                new Items(0, 45, 'wood-block', 'house'),
+                new Items(101, 60, 'door-tall-closed', 'door'),
+                new Items(202, 45, 'wood-block', 'house'),
+                new Items(0, -40, 'roof-south-west', 'house'),
+                new Items(101, -40, 'roof-south', 'house'),
+                new Items(202, -40, 'roof-south-east', 'house'),
+                // row 1
+                new Items(303, -25, 'blanc', 'water'),
+                new Items(404, -25, 'blanc', 'water'),
+                new Items(505, -25, 'blanc', 'water'),
+                new Items(606, -25, 'blanc', 'water'),
+                new Items(707, -25, 'blanc', 'water'),
+                new Items(808, -25, 'blanc', 'water'),
+                // row 2
+                new Items(303, 58, 'tree-ugly', 'tree'),
+                // row 3
+                new Items(404, 141, 'tree-tall', 'tree'),
+                new Items(707, 141, 'tree-ugly', 'tree'),
+                // row 4
+                new Items(101, 224, 'tree-ugly', 'tree'),
+                new Items(707, 224, 'tree-ugly', 'tree'),
+                new Items(808, 224, 'tree-ugly', 'tree'),
+                // row 5
+                new Items(101, 307, 'tree-ugly', 'tree'),
+                // row 6
+                new Items(505, 390, 'rock', 'rock'),
+                // row 7
+                new Items(0, 470, 'rock', 'rock'),
+                new Items(303, 470, 'tree-tall', 'tree'),
+                // row 8
+                new Items(303, 556, 'rock', 'rock'),
+                new Items(404, 556, 'tree-tall', 'tree'),
+                new Items(505, 556, 'tree-tall', 'tree')
+            ];
+            
+            allItems = [
+                new Items(808, 131, 'key', 'key'),
+                new Items(0, 297, 'key', 'key'),
+                new Items(606, 48, 'heart', 'life'),
+                new Items(202, 465, 'chest-closed', 'chest-green'),
+                new Items(202, 400, 'blanc', 'chest-lid')
+            ];            
 
             break;
 
         case 3:
-
-            // house
-            allObstacles[0] = new Items(707, 224, 'window-tall', 'house');
-            allObstacles[1] = new Items(808, 234, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(707, 58, 'roof-north-west', 'house');
-            allObstacles[3] = new Items(808, 58, 'roof-north-east', 'house');
-            allObstacles[4] = new Items(707, 141, 'roof-south-west', 'house');
-            allObstacles[5] = new Items(808, 141, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[6] = new Items(101, -25, 'tree-tall', 'tree');
-            allObstacles[7] = new Items(202, -25, 'tree-ugly', 'tree');
-            allObstacles[8] = new Items(303, -25, 'tree-ugly', 'tree');
-            allObstacles[9] = new Items(404, -25, 'tree-ugly', 'tree');
-            allObstacles[10] = new Items(505, -25, 'rock', 'rock');
-            // row 2
-            allObstacles[11] = new Items(101, 58, 'tree-tall', 'tree');
-            allObstacles[12] = new Items(202, 58, 'tree-tall', 'tree');
-            allObstacles[13] = new Items(505, 58, 'tree-ugly', 'tree');
-            allObstacles[14] = new Items(606, 58, 'tree-ugly', 'tree');
-            // row 3
-            allObstacles[15] = new Items(0, 141, 'rock', 'rock');
-            allObstacles[16] = new Items(101, 141, 'rock', 'rock');
-            allObstacles[17] = new Items(202, 141, 'tree-ugly', 'tree');
-            allObstacles[18] = new Items(404, 141, 'rock', 'rock');
-            allObstacles[19] = new Items(505, 141, 'tree-tall', 'tree');
-            allObstacles[20] = new Items(606, 141, 'tree-tall', 'tree');
-            // row 4
-            allObstacles[21] = new Items(0, 224, 'blanc', 'water');
-            allObstacles[22] = new Items(101, 224, 'blanc', 'water');
-            allObstacles[23] = new Items(202, 224, 'tree-ugly', 'tree');
-            allObstacles[24] = new Items(404, 224, 'tree-tall', 'tree');
-            allObstacles[25] = new Items(505, 224, 'tree-tall', 'tree');
-            allObstacles[26] = new Items(606, 224, 'tree-tall', 'tree');
-            // row 5
-            allObstacles[27] = new Items(0, 307, 'blanc', 'water');
-            allObstacles[28] = new Items(101, 307, 'blanc', 'water');
-            allObstacles[29] = new Items(404, 307, 'tree-tall', 'tree');
-            allObstacles[30] = new Items(606, 307, 'tree-ugly', 'tree');
-            allObstacles[31] = new Items(707, 307, 'tree-ugly', 'tree');
-            // row 6
-            allObstacles[32] = new Items(0, 390, 'blanc', 'water');
-            allObstacles[33] = new Items(101, 390, 'blanc', 'water');
-            allObstacles[34] = new Items(606, 390, 'tree-ugly', 'tree');
-            allObstacles[35] = new Items(707, 390, 'tree-ugly', 'tree');
-            // row 7
-            allObstacles[36] = new Items(303, 470, 'tree-ugly', 'tree');
-            allObstacles[37] = new Items(404, 470, 'tree-ugly', 'tree');
-            // row 8
-            allObstacles[38] = new Items(303, 556, 'tree-ugly', 'tree');
-            allObstacles[39] = new Items(404, 556, 'tree-tall', 'tree');
-            allObstacles[40] = new Items(606, 556, 'rock', 'rock');
-            allObstacles[41] = new Items(707, 556, 'tree-tall', 'tree');
-            allObstacles[42] = new Items(808, 556, 'tree-tall', 'tree');
-
-            allItems[0] = new Items(505, 546, 'key', 'key');
-            allItems[1] = new Items(808, -35, 'heart', 'life');
-            allItems[2] = new Items(0, -35, 'chest-closed', 'chest-blue');
-            allItems[3] = new Items(0, -100, 'blanc', 'chest-lid');
+            allObstacles = [
+                // house
+                new Items(707, 224, 'window-tall', 'house'),
+                new Items(808, 234, 'door-tall-closed', 'door'),
+                new Items(707, 58, 'roof-north-west', 'house'),
+                new Items(808, 58, 'roof-north-east', 'house'),
+                new Items(707, 141, 'roof-south-west', 'house'),
+                new Items(808, 141, 'roof-south-east', 'house'),
+                // row 1
+                new Items(101, -25, 'tree-tall', 'tree'),
+                new Items(202, -25, 'tree-ugly', 'tree'),
+                new Items(303, -25, 'tree-ugly', 'tree'),
+                new Items(404, -25, 'tree-ugly', 'tree'),
+                new Items(505, -25, 'rock', 'rock'),
+                // row 2
+                new Items(101, 58, 'tree-tall', 'tree'),
+                new Items(202, 58, 'tree-tall', 'tree'),
+                new Items(505, 58, 'tree-ugly', 'tree'),
+                new Items(606, 58, 'tree-ugly', 'tree'),
+                // row 3
+                new Items(0, 141, 'rock', 'rock'),
+                new Items(101, 141, 'rock', 'rock'),
+                new Items(202, 141, 'tree-ugly', 'tree'),
+                new Items(404, 141, 'rock', 'rock'),
+                new Items(505, 141, 'tree-tall', 'tree'),
+                new Items(606, 141, 'tree-tall', 'tree'),
+                // row 4
+                new Items(0, 224, 'blanc', 'water'),
+                new Items(101, 224, 'blanc', 'water'),
+                new Items(202, 224, 'tree-ugly', 'tree'),
+                new Items(404, 224, 'tree-tall', 'tree'),
+                new Items(505, 224, 'tree-tall', 'tree'),
+                new Items(606, 224, 'tree-tall', 'tree'),
+                // row 5
+                new Items(0, 307, 'blanc', 'water'),
+                new Items(101, 307, 'blanc', 'water'),
+                new Items(404, 307, 'tree-tall', 'tree'),
+                new Items(606, 307, 'tree-ugly', 'tree'),
+                new Items(707, 307, 'tree-ugly', 'tree'),
+                // row 6
+                new Items(0, 390, 'blanc', 'water'),
+                new Items(101, 390, 'blanc', 'water'),
+                new Items(606, 390, 'tree-ugly', 'tree'),
+                new Items(707, 390, 'tree-ugly', 'tree'),
+                // row 7
+                new Items(303, 470, 'tree-ugly', 'tree'),
+                new Items(404, 470, 'tree-ugly', 'tree'),
+                // row 8
+                new Items(303, 556, 'tree-ugly', 'tree'),
+                new Items(404, 556, 'tree-tall', 'tree'),
+                new Items(606, 556, 'rock', 'rock'),
+                new Items(707, 556, 'tree-tall', 'tree'),
+                new Items(808, 556, 'tree-tall', 'tree')
+            ];
+            
+            allItems = [
+                new Items(505, 546, 'key', 'key'),
+                new Items(808, -35, 'heart', 'life'),
+                new Items(0, -35, 'chest-closed', 'chest-blue'),
+                new Items(0, -100, 'blanc', 'chest-lid')
+            ];
 
             break;
 
         case 4:
-
-            // house
-            allObstacles[0] = new Items(505, 470, 'window-tall', 'house');
-            allObstacles[1] = new Items(606, 480, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(707, 470, 'window-tall', 'house');
-            allObstacles[3] = new Items(505, 307, 'roof-north-west', 'house');
-            allObstacles[4] = new Items(606, 307, 'roof-north', 'house');
-            allObstacles[5] = new Items(707, 307, 'roof-north-east', 'house');
-            allObstacles[6] = new Items(505, 390, 'roof-south-west', 'house');
-            allObstacles[7] = new Items(606, 390, 'roof-south', 'house');
-            allObstacles[8] = new Items(707, 390, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[9] = new Items(303, -25, 'blanc', 'water');
-            allObstacles[10] = new Items(404, -25, 'blanc', 'water');
-            // row 2
-            allObstacles[11] = new Items(101, 83, 'blanc', 'water');
-            allObstacles[12] = new Items(808, 58, 'rock', 'rock');
-            // row 3
-            allObstacles[13] = new Items(101, 166, 'blanc', 'water');
-            allObstacles[14] = new Items(202, 166, 'blanc', 'water');
-            allObstacles[15] = new Items(404, 166, 'blanc', 'water');
-            allObstacles[16] = new Items(505, 166, 'blanc', 'water');
-            allObstacles[17] = new Items(606, 166, 'blanc', 'water');
-            allObstacles[18] = new Items(707, 166, 'blanc', 'water');
-            allObstacles[19] = new Items(808, 141, 'rock', 'rock');
-            // row 4
-            allObstacles[20] = new Items(101, 249, 'blanc', 'water');
-            allObstacles[21] = new Items(202, 249, 'blanc', 'water');
-            allObstacles[22] = new Items(404, 249, 'blanc', 'water');
-            allObstacles[23] = new Items(505, 249, 'blanc', 'water');
-            allObstacles[24] = new Items(606, 249, 'blanc', 'water');
-            allObstacles[25] = new Items(707, 249, 'blanc', 'water');
-            allObstacles[26] = new Items(808, 249, 'blanc', 'water');
-            // row 5
-            allObstacles[27] = new Items(202, 307, 'tree-ugly', 'tree');
-            allObstacles[28] = new Items(404, 307, 'blanc', 'water');
-            allObstacles[29] = new Items(808, 307, 'blanc', 'water');
-            // row 6
-            allObstacles[30] = new Items(0, 390, 'rock', 'rock');
-            allObstacles[31] = new Items(101, 390, 'rock', 'rock');
-            allObstacles[32] = new Items(202, 390, 'tree-ugly', 'tree');
-            allObstacles[33] = new Items(808, 415, 'blanc', 'water');
-            // row 7
-            allObstacles[34] = new Items(0, 498, 'blanc', 'water');
-            allObstacles[35] = new Items(101, 498, 'blanc', 'water');
-            allObstacles[36] = new Items(202, 498, 'blanc', 'water');
-            allObstacles[37] = new Items(303, 498, 'blanc', 'water');
-            allObstacles[38] = new Items(808, 498, 'blanc', 'water');
-            // row 8
-            allObstacles[39] = new Items(0, 581, 'blanc', 'water');
-            allObstacles[40] = new Items(101, 581, 'blanc', 'water');
-            allObstacles[41] = new Items(202, 581, 'blanc', 'water');
-            allObstacles[42] = new Items(303, 581, 'blanc', 'water');
-            allObstacles[43] = new Items(707, 581, 'blanc', 'water');
-            allObstacles[44] = new Items(808, 581, 'blanc', 'water');
-
-            allItems[0] = new Items(101, 297, 'key', 'key');
-            allItems[1] = new Items(505, 214, 'heart', 'life');
+            allObstacles = [
+                // house
+                new Items(505, 470, 'window-tall', 'house'),
+                new Items(606, 480, 'door-tall-closed', 'door'),
+                new Items(707, 470, 'window-tall', 'house'),
+                new Items(505, 307, 'roof-north-west', 'house'),
+                new Items(606, 307, 'roof-north', 'house'),
+                new Items(707, 307, 'roof-north-east', 'house'),
+                new Items(505, 390, 'roof-south-west', 'house'),
+                new Items(606, 390, 'roof-south', 'house'),
+                new Items(707, 390, 'roof-south-east', 'house'),
+                // row 1
+                new Items(303, -25, 'blanc', 'water'),
+                new Items(404, -25, 'blanc', 'water'),
+                // row 2
+                new Items(101, 83, 'blanc', 'water'),
+                new Items(808, 58, 'rock', 'rock'),
+                // row 3
+                new Items(101, 166, 'blanc', 'water'),
+                new Items(202, 166, 'blanc', 'water'),
+                new Items(404, 166, 'blanc', 'water'),
+                new Items(505, 166, 'blanc', 'water'),
+                new Items(606, 166, 'blanc', 'water'),
+                new Items(707, 166, 'blanc', 'water'),
+                new Items(808, 141, 'rock', 'rock'),
+                // row 4
+                new Items(101, 249, 'blanc', 'water'),
+                new Items(202, 249, 'blanc', 'water'),
+                new Items(404, 249, 'blanc', 'water'),
+                new Items(505, 249, 'blanc', 'water'),
+                new Items(606, 249, 'blanc', 'water'),
+                new Items(707, 249, 'blanc', 'water'),
+                new Items(808, 249, 'blanc', 'water'),
+                // row 5
+                new Items(202, 307, 'tree-ugly', 'tree'),
+                new Items(404, 307, 'blanc', 'water'),
+                new Items(808, 307, 'blanc', 'water'),
+                // row 6
+                new Items(0, 390, 'rock', 'rock'),
+                new Items(101, 390, 'rock', 'rock'),
+                new Items(202, 390, 'tree-ugly', 'tree'),
+                new Items(808, 415, 'blanc', 'water'),
+                // row 7
+                new Items(0, 498, 'blanc', 'water'),
+                new Items(101, 498, 'blanc', 'water'),
+                new Items(202, 498, 'blanc', 'water'),
+                new Items(303, 498, 'blanc', 'water'),
+                new Items(808, 498, 'blanc', 'water'),
+                // row 8
+                new Items(0, 581, 'blanc', 'water'),
+                new Items(101, 581, 'blanc', 'water'),
+                new Items(202, 581, 'blanc', 'water'),
+                new Items(303, 581, 'blanc', 'water'),
+                new Items(707, 581, 'blanc', 'water'),
+                new Items(808, 581, 'blanc', 'water')
+            ];
+            
+            allItems = [
+                new Items(101, 297, 'key', 'key'),
+                new Items(505, 214, 'heart', 'life')
+            ];            
 
             break;
     }
@@ -303,45 +310,30 @@ var itemsReset = function (level) {
  *  and 3 parameters to create different types of movement for the bugs
  */
 var Enemy = function (x, y, moveRight, startMove, endMove) {
+    
     /** Setting the initial location and speed */
     this.x = x;
     this.y = y;
     this.startMove = startMove;
     this.endMove = endMove;
     this.moveRight = moveRight;
-
+    
     /** Change speed of the enemies for each level of difficulty */
     switch (DIFFICULTY) {
         case 1:
-            if (currentLevel === 1) {
-                this.speed = Math.floor(Math.random() * 450 + 1);
-            } else {
-                this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
-            }
+            this.speed = (currentLevel === 1) ? randomNumber(450,0) : randomNumber(200,100);
             break;
             
         case 2:
-            if (currentLevel === 1) {
-                this.speed = Math.floor(Math.random() * 550 + 1);
-            } else {
-                this.speed = Math.floor(Math.random() * (300 - 150 + 1)) + 150;
-            }
+            this.speed = (currentLevel === 1) ? randomNumber(550,0) : randomNumber(300,150);
             break;
             
         case 3:
-            if (currentLevel === 1) {
-                this.speed = Math.floor(Math.random() * 550 + 1);
-            } else {
-                this.speed = Math.floor(Math.random() * (350 - 150 + 1)) + 150;
-            }
+            this.speed = (currentLevel === 1) ? randomNumber(550,0) : randomNumber(350,150);
             break;
             
-        default: 
-            if (currentLevel === 1) {
-                this.speed = Math.floor(Math.random() * 250 + 1);
-            } else {
-                this.speed = Math.floor(Math.random() * (150 - 50 + 1)) + 50;
-            }
+        default:
+            this.speed = (currentLevel === 1) ? randomNumber(250,0) : randomNumber(150,50);
             break;
     }
 
@@ -365,7 +357,7 @@ Enemy.prototype.update = function (dt) {
 
             /** If the Enemy goes off screen, we reset the position to start again */
             if (this.x > 909) {
-                this.x = Math.random() * -1200;
+                this.x =  Math.random() * -1200;
             }
             break;
 
@@ -466,20 +458,14 @@ var enemyHeight = [146, 229, 312, 395, 478];  // only used in level 1
  *  For each level varys to try different types of movements.
  */
 var enemyReset = function (level) {
-
     switch (level) {
         case 1:
             /** Here we create 10 enemies, 2 for each row, with a random initial left location and a random speed
              *  If we have nightmare difficulty, there are 3 for each row
              */
-            if (DIFFICULTY === 3) {
-                for (var i = 0; i < 15; i++) {
-                    allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
-                }
-            } else {
-                for (var i = 0; i < 10; i++) {
-                    allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
-                }
+            var numberEnemies = (DIFFICULTY === 3) ? 15 : 10;
+            for (var i = 0; i < numberEnemies; i++) {
+                allEnemies.push(new Enemy(- randomNumber(500,100), enemyHeight[i % 5], true, 0, 808));
             }
             break;
 
@@ -547,8 +533,6 @@ var Player = function (x, y) {
     /** Setting the Player initial location */
     this.x = x;
     this.y = y;
-
-    /** Inicializating the previous variables (we will use them in checkCollisions) */
     previousX = x;
     previousY = y;
 
@@ -560,7 +544,9 @@ var Player = function (x, y) {
 Player.prototype.update = function () {
     this.x = this.x;
     this.y = this.y;
-    checkCollisions();
+    checkCollisionEnemies();
+    checkCollisionItems();
+    checkCollisionObstacles();
 };
 
 /** Draw the player on the screen */
@@ -572,12 +558,13 @@ Player.prototype.render = function () {
  * The Player moves accordingly to that input
  */
 Player.prototype.handleInput = function (allowedKeys) {
-
+    
+    //allowedKeys.preventDefault();
+    
     /** If lifes = 0 it means game_over, so we can't move anymore */
     if (currentLifes > 0) {
-
+        
         switch (allowedKeys) {
-
             case 'left':
                 /** We check to avoid player moving off-screen and update previousX */
                 if (this.x > 0) {
@@ -708,104 +695,108 @@ var player = new Player(startX, startY);
 
 /** ----------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
 
-/** Function to check if the player collides with something */
-var checkCollisions = function () {
+/** Calculate the central Rectangle to avoid the blank space */
+var Rectangle = function (left, top) {
+    this.left = left + 35;
+    this.top = top + 20;
+    this.right = this.left + 65;
+    this.bottom = this.top + 62;
+};
 
-    /** Calculate the central Rectangle to avoid the blank space */
-    var Rectangle = function (left, top) {
-        this.left = left + 35;
-        this.top = top + 20;
-        this.right = this.left + 65;
-        this.bottom = this.top + 62;
-    };
+/** Check to see if the rectangles overlap */
+var checkCollision = function (player, obstacle) {
+    return !(
+        player.left > obstacle.right ||
+        player.right < obstacle.left ||
+        player.top > obstacle.bottom ||
+        player.bottom < obstacle.top
+    );
+};
 
-    /** Check to see if the rectangles overlap */
-    function checkCollision(player, obstacle) {
-        return !(
-            player.left > obstacle.right ||
-            player.right < obstacle.left ||
-            player.top > obstacle.bottom ||
-            player.bottom < obstacle.top
-            );
-    }
-
+/** Check collision with enemy bugs */
+var checkCollisionEnemies = function () {
     var playerRectangle = new Rectangle(player.x, player.y);
-
-    /** Check collision with enemy bugs */
-    for (var i = 0; i < allEnemies.length; i++) {
+    
+    for (var i = 0, j = allEnemies.length; i < j; i++) {
         var enemyRectangle = new Rectangle(allEnemies[i].x, allEnemies[i].y);
         if (checkCollision(playerRectangle, enemyRectangle)) {
             /** If player collides with bug, reset position of player */
             player.reset();
         }
     }
+};
 
-    /** Check collision with items */
-    for (var j = 0; j < allItems.length; j++) {
-        var itemRectangle = new Rectangle(allItems[j].x, allItems[j].y);
+/** Check collision with items */
+var checkCollisionItems = function() {
+    var playerRectangle = new Rectangle(player.x, player.y);
+    
+    for (var i = 0, j = allItems.length; i < j; i++) {
+        var itemRectangle = new Rectangle(allItems[i].x, allItems[i].y);
         if (checkCollision(playerRectangle, itemRectangle)) {
 
-            switch (allItems[j].item) {
+            switch (allItems[i].item) {
                 
-                case 'key':     /** If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
+                case 'key':
+                    /** If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
                     currentKeys = currentKeys + 1;
                     document.getElementById('numberKeys').innerHTML = currentKeys.toString();
-                    allItems.splice(j, 1);
+                    allItems.splice(i, 1);
                     break;
                     
-                case 'life':    /** If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
+                case 'life':
+                    /** If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
                     currentLifes = currentLifes + 1;
                     document.getElementById('numberLifes').innerHTML = currentLifes.toString();
-                    allItems.splice(j, 1);
+                    allItems.splice(i, 1);
                     break;
                     
-                case 'chest-green':     /** If it collides with closed chest, check for key */
+                case 'chest-green':
+                    /** If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
-                        /** If we have key, open chest and player stops */
-                        allItems[j].item = 'gem-green';
-                        allItems[j].sprite = 'images/chest-open-green.png';
-                        allItems[j + 1].item = 'chest-open';
-                        allItems[j + 1].sprite = 'images/chest-lid.png';
+                        allItems[i].item = 'gem-green';
+                        allItems[i].sprite = 'images/chest-open-green.png';
+                        allItems[i + 1].item = 'chest-open';
+                        allItems[i + 1].sprite = 'images/chest-lid.png';
                         currentKeys = currentKeys - 1;
                         document.getElementById('numberKeys').innerHTML = currentKeys.toString();
                         player.stop();
 
                     } else {
-                        /** If we don't have key, player stops */
                         player.stop();
                     }
                     break;
                     
-                case 'chest-blue':      /** If it collides with closed chest, check for key */
+                case 'chest-blue':
+                    /** If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
-                        /** If we have key, open chest and player stops */
-                        allItems[j].item = 'gem-blue';
-                        allItems[j].sprite = 'images/chest-open-blue.png';
-                        allItems[j + 1].item = 'chest-open';
-                        allItems[j + 1].sprite = 'images/chest-lid.png';
+                        allItems[i].item = 'gem-blue';
+                        allItems[i].sprite = 'images/chest-open-blue.png';
+                        allItems[i + 1].item = 'chest-open';
+                        allItems[i + 1].sprite = 'images/chest-lid.png';
                         currentKeys = currentKeys - 1;
                         document.getElementById('numberKeys').innerHTML = currentKeys.toString();
                         player.stop();
 
                     } else {
-                        /** If we don't have key, player stops */
                         player.stop();
                     }
                     break;
                     
-                case 'gem-green':       /** If it collides with open chest with gem --> pick up gem */
+                case 'gem-green':
+                    /** If it collides with open chest with gem --> pick up gem */
                     hasGreenGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-green.png'>";
-                    allItems[j].item = 'chest-open';
-                    allItems[j].sprite = 'images/chest-open.png';
+                    allItems[i].item = 'chest-open';
+                    allItems[i].sprite = 'images/chest-open.png';
                     player.stop();
                     break;
                     
-                case 'gem-blue':        /** If it collides with open chest with gem --> pick up gem */
+                case 'gem-blue':
+                    /** If it collides with open chest with gem --> pick up gem */
                     hasBlueGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='images/menu/gem-blue.png'>";
-                    allItems[j].item = 'chest-open';
-                    allItems[j].sprite = 'images/chest-open.png';
+                    allItems[i].item = 'chest-open';
+                    allItems[i].sprite = 'images/chest-open.png';
                     player.stop();
                     break;
 
@@ -817,26 +808,28 @@ var checkCollisions = function () {
             }
         }
     }
+};
+
+/** Check collision with objects (tree, house, door and rock) */
+var checkCollisionObstacles = function() {
+    var playerRectangle = new Rectangle(player.x, player.y);
     
-    /** Check collision with objects (tree, house, door and rock) */
-    for (var k = 0; k < allObstacles.length; k++) {
-        var obstacleRectangle = new Rectangle(allObstacles[k].x, allObstacles[k].y);
+    for (var i = 0, j = allObstacles.length; i < j; i++) {
+        var obstacleRectangle = new Rectangle(allObstacles[i].x, allObstacles[i].y);
         if (checkCollision(playerRectangle, obstacleRectangle)) {
 
             /** Player has found an obstacle that can't be crossed over */
-            switch (allObstacles[k].item) {
+            switch (allObstacles[i].item) {
                 case 'tree':
-                    if (hasGreenGem) {
-                        /** If player has gem, it can go over the trees */
-                    } else {
+                    /** If player has gem, it can go over the trees */
+                    if (!hasGreenGem) {
                         player.stop();
                     }
                     break;
 
                 case 'water':
-                    if (hasBlueGem) {
-                        /** If player has gem, it can go over the water */
-                    } else {
+                    /** If player has gem, it can go over the water */
+                    if (!hasBlueGem) {
                         player.stop();
                     }
                     break;
@@ -852,18 +845,18 @@ var checkCollisions = function () {
                 case 'door':
                     if (currentKeys > 0) {
                         player.stop();
-
-                        /** If we have key and level 4, open door of final level */
+                                                
                         if (currentLevel === 4) {
-                            allObstacles[k].item = 'door-final';
-                            allObstacles[k].sprite = 'images/door-tall-final.png';
+                            /** If we have key and level 4, open door of final level */
+                            allObstacles[i].item = 'door-final';
+                            allObstacles[i].sprite = 'images/door-tall-final.png';
                             document.getElementById('dialog' + currentLevel).hidden = false;
                             player.gameFinal();
                             
                         } else {
                             /** If we have key, open door */
-                            allObstacles[k].item = 'door-open';
-                            allObstacles[k].sprite = 'images/door-tall-open.png';
+                            allObstacles[i].item = 'door-open';
+                            allObstacles[i].sprite = 'images/door-tall-open.png';
                         }
                         currentKeys = currentKeys - 1;
                         document.getElementById('numberKeys').innerHTML = currentKeys.toString();
@@ -914,7 +907,6 @@ var checkCollisions = function () {
  */
 var changeLevel = function (level) {
     player.sprite = 'images/' + HERO + '.png';
-    //document.getElementById('dialog' + currentLevel).hidden = true;
     allEnemies = [];
     allItems = [];
     allObstacles = [];

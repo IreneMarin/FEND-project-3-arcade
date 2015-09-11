@@ -15,6 +15,7 @@
  */
 
 var Engine = (function(global) {
+    'use strict';
     /** Predefine the variables we'll be using within this scope,
      *  create the canvas element, grab the 2D context for that canvas
      *  set the canvas elements height/width and add it to the DOM.
@@ -126,17 +127,9 @@ var Engine = (function(global) {
         var matrix;
          
         /** TODO: find a better way to store and access the matrix for the grounds */
-               
         switch(currentLevel)
         {
-            case 0:
-                document.getElementById('menu').hidden = true;
-                document.getElementById('opening').hidden = false;
-                break;
-                
             case 1:
-                document.getElementById('menu').hidden = false;
-                document.getElementById('opening').hidden = true;
                 matrix = [
                     [s,s,s,f,f,f,s,s,s], // row 1
                     [s,s,s,f,f,f,s,s,s], // row 2
@@ -147,29 +140,9 @@ var Engine = (function(global) {
                     [g,g,g,g,g,g,g,g,g], // row 7
                     [s,s,s,s,s,s,s,s,s]  // row 8
                 ];
-                
-                /** Loop through the number of rows and columns we've defined above
-                 *  and, using the matrix double array, draw the correct image for that
-                 *  portion of the "grid"
-                 */
-                for (var row = 0; row < 8; row++) {
-                    for (var col = 0; col < 9; col++) {
-                        /** The drawImage function of the canvas' context element
-                         *  requires 3 parameters: the image to draw, the x coordinate
-                         *  to start drawing and the y coordinate to start drawing.
-                         *  We're using our Resources helpers to refer to our images
-                         *  so that we get the benefits of caching these images, since
-                         *  we're using them over and over.
-                         */
-                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
-                    }
-                }
-                renderEntities();
                 break;
             
             case 2:
-                document.getElementById('menu').hidden = false;
-                document.getElementById('opening').hidden = true;
                 matrix = [
                     [f,f,f,w,w,w,w,w,w], // row 1
                     [f,f,f,g,g,g,g,g,g], // row 2
@@ -180,29 +153,9 @@ var Engine = (function(global) {
                     [d,d,d,g,g,g,g,s,s], // row 7
                     [d,d,d,d,g,g,g,s,s]  // row 8
                 ];
-                
-                /* Loop through the number of rows and columns we've defined above
-                 * and, using the matrix double array, draw the correct image for that
-                 * portion of the "grid"
-                 */
-                for (var row = 0; row < 8; row++) {
-                    for (var col = 0; col < 9; col++) {
-                        /* The drawImage function of the canvas' context element
-                         * requires 3 parameters: the image to draw, the x coordinate
-                         * to start drawing and the y coordinate to start drawing.
-                         * We're using our Resources helpers to refer to our images
-                         * so that we get the benefits of caching these images, since
-                         * we're using them over and over.
-                         */
-                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
-                    }
-                }
-                renderEntities();
                 break;
             
             case 3:
-                document.getElementById('menu').hidden = false;
-                document.getElementById('opening').hidden = true;
                 matrix = [
                     [d,g,g,g,g,d,d,d,d], // row 1
                     [d,g,g,d,d,g,g,s,s], // row 2
@@ -213,29 +166,9 @@ var Engine = (function(global) {
                     [s,s,d,g,g,g,g,g,g], // row 7
                     [s,s,d,g,g,g,g,g,g]  // row 8
                 ];
-                
-                /* Loop through the number of rows and columns we've defined above
-                 * and, using the matrix double array, draw the correct image for that
-                 * portion of the "grid"
-                 */
-                for (var row = 0; row < 8; row++) {
-                    for (var col = 0; col < 9; col++) {
-                        /* The drawImage function of the canvas' context element
-                         * requires 3 parameters: the image to draw, the x coordinate
-                         * to start drawing and the y coordinate to start drawing.
-                         * We're using our Resources helpers to refer to our images
-                         * so that we get the benefits of caching these images, since
-                         * we're using them over and over.
-                         */
-                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
-                    }
-                }
-                renderEntities();
                 break;
                         
             case 4:
-                document.getElementById('menu').hidden = false;
-                document.getElementById('opening').hidden = true;
                 matrix = [
                     [d,d,d,w,w,s,s,s,s], // row 1
                     [d,w,d,d,d,d,d,d,d], // row 2
@@ -246,29 +179,38 @@ var Engine = (function(global) {
                     [w,w,w,w,d,f,f,f,w], // row 7
                     [w,w,w,w,d,d,d,w,w]  // row 8
                 ];
-                
-                /* Loop through the number of rows and columns we've defined above
-                 * and, using the matrix double array, draw the correct image for that
-                 * portion of the "grid"
-                 */
-                for (var row = 0; row < 8; row++) {
-                    for (var col = 0; col < 9; col++) {
-                        /* The drawImage function of the canvas' context element
-                         * requires 3 parameters: the image to draw, the x coordinate
-                         * to start drawing and the y coordinate to start drawing.
-                         * We're using our Resources helpers to refer to our images
-                         * so that we get the benefits of caching these images, since
-                         * we're using them over and over.
-                         */
-                        ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
-                    }
-                }
-                renderEntities();
                 break;
         }
         
+        if (currentLevel === 0) {
+            document.getElementById('menu').hidden = true;
+            document.getElementById('opening').hidden = false;
+            
+        } else {
+            document.getElementById('menu').hidden = false;
+            document.getElementById('opening').hidden = true;
+            
+            /* Loop through the number of rows and columns we've defined above
+             * and, using the matrix double array, draw the correct image for that
+             * portion of the "grid"
+             */
+            for (var row = 0; row < 8; row++) {
+                for (var col = 0; col < 9; col++) {
+                    /* The drawImage function of the canvas' context element
+                     * requires 3 parameters: the image to draw, the x coordinate
+                     * to start drawing and the y coordinate to start drawing.
+                     * We're using our Resources helpers to refer to our images
+                     * so that we get the benefits of caching these images, since
+                     * we're using them over and over.
+                     */
+                    ctx.drawImage(Resources.get(matrix[row][col]), col * 101, row * 83);
+                }
+            }
+            renderEntities();
+        }
+        
         /** Function to wrap the text that will appear on the canvas when game_over or game_final */
-        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        var wrapText = function (ctx, text, x, y, maxWidth, lineHeight) {
             var words = text.split(' ');
             var line = '';
                 
@@ -286,7 +228,7 @@ var Engine = (function(global) {
                 }
             }
             ctx.fillText(line, x, y);
-        }
+        };
         var maxWidth = 650;
         var lineHeight = 50;
         var x = 470;
