@@ -20,6 +20,9 @@ var startX = 0;                 // set starting player position for the level
 var startY = 0;                 // set starting player position for the level
 var nextLevel = true;           // if we can change level, this is true to enable 'enter' key
 
+
+/** @todo Keep DOM Access to a minimum: use a helper method that batch-converts a dataset to HTML */
+
 /** Put the variables on screen to appear in the menu html */
 document.getElementById('numberLifes').innerHTML = currentLifes.toString();
 document.getElementById('numberKeys').innerHTML = currentKeys.toString();
@@ -75,7 +78,7 @@ Items.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/** @todo find a better way to create the obstacles for each level (an external json?). This can't be efficient... */
+/** @todo Find a better way to create the obstacles for each level (an external json?) */
 
 var allObstacles = [];
 var allItems = [];
@@ -533,9 +536,7 @@ var Player = function (x, y) {
     /** Setting the Player initial location */
     this.x = x;
     this.y = y;
-    previousX = x;
-    previousY = y;
-
+    
     /** Loading the image by setting this.sprite */
     this.sprite = 'images/' + HERO + '.png';
 };
@@ -544,6 +545,7 @@ var Player = function (x, y) {
 Player.prototype.update = function () {
     this.x = this.x;
     this.y = this.y;
+    console.log('Update: this.x ' + this.x + ', previousX ' + previousX + ', this.y ' + this.y + ', previousY ' + previousY)
     checkCollisionEnemies();
     checkCollisionItems();
     checkCollisionObstacles();
@@ -570,7 +572,7 @@ Player.prototype.handleInput = function (allowedKeys) {
                 if (this.x > 0) {
                     this.x -= 101;
                     previousX = this.x + 101;
-                    console.log(this.x + ' ' + previousX);
+                    console.log('Go left: this.x ' + this.x + ', previousX ' + previousX);
                 }
                 break;
 
@@ -579,6 +581,7 @@ Player.prototype.handleInput = function (allowedKeys) {
                 if (this.y > 0) {
                     this.y -= 83;
                     previousY = this.y + 83;
+                    console.log('Go up: this.y ' + this.y + ', previousY ' + previousY);
                 }
                 break;
 
@@ -587,6 +590,7 @@ Player.prototype.handleInput = function (allowedKeys) {
                 if (this.x < 808) {
                     this.x += 101;
                     previousX = this.x - 101;
+                    console.log('Go right: this.x ' + this.x + ', previousX ' + previousX);
                 }
                 break;
 
@@ -595,6 +599,7 @@ Player.prototype.handleInput = function (allowedKeys) {
                 if (this.y < 556) {
                     this.y += 83;
                     previousY = this.y - 83;
+                    console.log('Go down: this.y ' + this.y + ', previousY ' + previousY);
                 }
                 break;
 
@@ -672,9 +677,10 @@ Player.prototype.changeLevel = function (level) {
 /** Stops de player when it tries to go over an obstacle (tree, rock, house, chest) */
 /** @todo It doesn't stop properly, it is going one position back */
 Player.prototype.stop = function () {
-    //console.log('this.x: ' + this.x + ', this.y: ' + this.y + ', previousX: ' + previousX + ', previousY: ' + previousY);
+    console.log('Què passa quan fem player.stop? this.x: ' + this.x + ', this.y: ' + this.y + ', previousX: ' + previousX + ', previousY: ' + previousY);
     this.x = previousX;
     this.y = previousY;
+    console.log('Player.stop després de posar previous a this.x: ' + this.x + ', this.y: ' + this.y);
 };
 
 /** When we have 0 lifes, it is game over */
@@ -735,7 +741,6 @@ var checkCollisionItems = function() {
         if (checkCollision(playerRectangle, itemRectangle)) {
 
             switch (allItems[i].item) {
-                
                 case 'key':
                     /** If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
                     currentKeys = currentKeys + 1;
@@ -835,7 +840,8 @@ var checkCollisionObstacles = function() {
                     break;
 
                 case 'rock':
-                    player.stop();
+                    console.log('Xoquem amb una roca, i this.x: ' + this.x + ', this.y: ' + this.y + ', previousX: ' + previousX + ', previousY: ' + previousY);
+                    //player.stop();
                     break;
 
                 case 'house':
@@ -891,7 +897,6 @@ var checkCollisionObstacles = function() {
                     }, 2000);
 
                     clearTimeout();
-
                     break;
             }
         }
@@ -933,3 +938,48 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+SoundManager = Class.extend({
+    // your code here
+    clips: {},
+    enabled: true,
+    _context: null,
+    _mainNode: null,
+    
+    init: function() 
+    {
+        try {
+            // attempt to grab the WebKitAudioContect()
+            // http://www.html5rocks.com/en/tutorials/webaudio/intro/
+            this._context = new webkitAudioContect();
+        }
+        catch(e) {
+            // Alert the user if there's a problem
+            alert('Web Audio API is not supported in this browser');
+        }
+        // Create the main Game Node, then connect it to the context's destination
+        this._mainNode = this._context.createGainNode(0);
+        this._mainNode.connect(this._contect.destination);
+    },
+    
+    loadAsync: function(path, callbackFcn)
+    {
+        // Check if the path exists in the clips dictionary,
+        // and call callbackFcn if it is
+        
+        // Otherwise, create a new clip
+        
+        // Fire off an XHR to the given path. Once it has
+        // loaded, decode the audio data, calling 
+        // callbackFcn once it is decoded.
+        
+        // Return the clip's sound.
+        
+    }
+});
+
+// We'll be filling out the Sound class a little bit later in the unit.
+// For now, we'll just use a blank Class to use in our above code.
+Sound = Class.extend({});
+
+var gSM = new SoundManager();
