@@ -100,9 +100,6 @@ Game sounds by <a href='http://www.freesound.org/people/fins/' target='_blank'>F
   - ~~level 2~~ 
   - ~~level 3~~ 
   - ~~level 4~~ 
-- Animation:
-  - when collision with bug
-  - when pick up item
 - Sound:
   - when collision with bug
   - when collision with nature
@@ -127,6 +124,5 @@ Game sounds by <a href='http://www.freesound.org/people/fins/' target='_blank'>F
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
   - ~~Go to next level automatically with setTimeout~~
   - ~~JSHint the code~~
-  - Implement animations
   - Implement sounds
   - Create production code
