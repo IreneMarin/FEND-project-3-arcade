@@ -1,3 +1,17 @@
+/* Share Tech Mono */
+@font-face {
+  font-family: 'Share Tech Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/share-tech-mono-v5-latin-regular.eot'); 
+  src: local('Share Tech Mono'), local('ShareTechMono-Regular'),
+       url('../fonts/share-tech-mono-v5-latin-regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/share-tech-mono-v5-latin-regular.woff2') format('woff2'),
+       url('../fonts/share-tech-mono-v5-latin-regular.woff') format('woff'),
+       url('../fonts/share-tech-mono-v5-latin-regular.ttf') format('truetype'),
+       url('../fonts/share-tech-mono-v5-latin-regular.svg#ShareTechMono') format('svg');
+}
+
 body {
     text-align: center;
     margin: 0 auto;
@@ -86,8 +100,9 @@ body {
     margin: 0 auto;
     text-align: center;
 }
+
 #dialog1, #dialog2, #dialog3, #dialog4 {
-    background: url("../images/speech-bubble-left.png") no-repeat;
+    background: url("../img/speech-bubble-left.png") no-repeat;
     border: none;
     padding: 22px 15px 0 15px;
     width: 101px;
@@ -106,7 +121,7 @@ body {
 }
 
 #dialog3 {
-    background: url("../images/speech-bubble-right.png") no-repeat;
+    background: url("../img/speech-bubble-right.png") no-repeat;
     top: 240px;
     left: 720px;
 }
