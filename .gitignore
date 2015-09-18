@@ -44,3 +44,4 @@ Temporary Items
 node_modules/*
 proves/*
 .settings/*
+.vscode/*
