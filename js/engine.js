@@ -119,11 +119,11 @@ var Engine = (function(global) {
          *  Afterwards we create a matrix for each row/column, where we will put
          *  each type of ground for each spot, that will vary for each level.
          */
-        var s = 'images/stone-block.png';
-        var g = 'images/grass-block.png';
-        var w = 'images/water-block.png';
-        var d = 'images/dirt-block.png';
-        var f = 'images/wood-block.png';
+        var s = 'img/stone-block.png';
+        var g = 'img/grass-block.png';
+        var w = 'img/water-block.png';
+        var d = 'img/dirt-block.png';
+        var f = 'img/wood-block.png';
         var matrix;
          
         /** TODO: find a better way to store and access the matrix for the grounds */
@@ -287,48 +287,48 @@ var Engine = (function(global) {
      *  all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        'images/wood-block.png',
-        'images/dirt-block.png',
-        'images/enemy-bug.png',
-        'images/enemy-bug-left.png',
-        'images/heart.png',
-        'images/key.png',
-        'images/rock.png',
-        'images/speech-bubble.png',
-        'images/char-boy.png',
-        'images/char-boy-sad.png',
-        'images/char-cat-girl.png',
-        'images/char-cat-girl-sad.png',
-        'images/char-horn-girl.png',
-        'images/char-horn-girl-sad.png',
-        'images/char-pink-girl.png',
-        'images/char-princess-girl.png',
-        'images/char-princess-girl-sad.png',
-        'images/chest-closed.png',
-        'images/chest-lid.png',
-        'images/chest-open.png',
-        'images/chest-open-green.png',
-        'images/chest-open-blue.png',
-        'images/chest-open-orange.png',
-        'images/door-tall-closed.png',
-        'images/door-tall-open.png',
-        'images/door-tall-final.png',
-        'images/roof-east.png',
-        'images/roof-north.png',
-        'images/roof-north-east.png',
-        'images/roof-north-west.png',
-        'images/roof-south.png',
-        'images/roof-south-east.png',
-        'images/roof-south-west.png',
-        'images/roof-west.png',
-        'images/window-tall.png',
-        'images/tree-short.png',
-        'images/tree-tall.png',
-        'images/tree-ugly.png',
-        'images/blanc.png'
+        'img/stone-block.png',
+        'img/water-block.png',
+        'img/grass-block.png',
+        'img/wood-block.png',
+        'img/dirt-block.png',
+        'img/enemy-bug.png',
+        'img/enemy-bug-left.png',
+        'img/heart.png',
+        'img/key.png',
+        'img/rock.png',
+        'img/speech-bubble.png',
+        'img/char-boy.png',
+        'img/char-boy-sad.png',
+        'img/char-cat-girl.png',
+        'img/char-cat-girl-sad.png',
+        'img/char-horn-girl.png',
+        'img/char-horn-girl-sad.png',
+        'img/char-pink-girl.png',
+        'img/char-princess-girl.png',
+        'img/char-princess-girl-sad.png',
+        'img/chest-closed.png',
+        'img/chest-lid.png',
+        'img/chest-open.png',
+        'img/chest-open-green.png',
+        'img/chest-open-blue.png',
+        'img/chest-open-orange.png',
+        'img/door-tall-closed.png',
+        'img/door-tall-open.png',
+        'img/door-tall-final.png',
+        'img/roof-east.png',
+        'img/roof-north.png',
+        'img/roof-north-east.png',
+        'img/roof-north-west.png',
+        'img/roof-south.png',
+        'img/roof-south-east.png',
+        'img/roof-south-west.png',
+        'img/roof-west.png',
+        'img/window-tall.png',
+        'img/tree-short.png',
+        'img/tree-tall.png',
+        'img/tree-ugly.png',
+        'img/blanc.png'
     ]);
     Resources.onReady(init);
 

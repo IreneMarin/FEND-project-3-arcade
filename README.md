@@ -14,10 +14,10 @@ Or you can play it here:
 
 ### How to play the game
 
-<img src="images/menu/arrows.jpg" width="120"><br>
+<img src="img/menu/arrows.jpg" width="120"><br>
 To play the game, use the arrow keys from your keyboard to move your player up, right, down and left.
 <br><br>
-<img src="images/menu/enter.jpg" width="90"><br>
+<img src="img/menu/enter.jpg" width="90"><br>
 Use the key Enter to change level or restart, when the game requires you to do so.
 
 ----------------------
