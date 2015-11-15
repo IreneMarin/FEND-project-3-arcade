@@ -47,6 +47,12 @@ Game sounds by <a href='http://www.freesound.org/people/fins/' target='_blank'>F
 
 ----------------------
 
+### License
+
+The project is licensed under the [MIT license](license.txt).
+
+---------------------
+
 ## TO DO
  
 ### Basic game 
