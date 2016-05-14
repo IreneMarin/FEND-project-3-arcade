@@ -91,7 +91,6 @@ The project is licensed under the [MIT license](license.txt).
 - ~~Gems:~~
   - ~~1 blue gem: to walk underwater (in the checkObstacles)~~
   - ~~1 green gem: to walk through trees (in the checkObstacles)~~
-- When picking item, item goes small in hand, and afterwards dissapears and appears at counter 
 
 ### Items to interact
 - ~~Interact: try to go over door or chest --> checkObstacles --> if key --> do something~~
@@ -127,7 +126,6 @@ The project is licensed under the [MIT license](license.txt).
   - ~~Finish level: create last level screen~~
 - Improvements: 
   - Implement sounds
-  - Change interaction to pick items
   - Keep DOM Access to a minimum: use a helper method that batch-converts a dataset to HTML
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
   - ~~Go to next level automatically with setTimeout~~
