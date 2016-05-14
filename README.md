@@ -70,8 +70,8 @@ The project is licensed under the [MIT license](license.txt).
  
 ### Start page
 - ~~Create the story~~ 
-- Selector to choose the hero
-- Selector to choose the difficulty: easy, normal, hard, nightmare
+- ~~Selector to choose the hero~~
+- ~~Selector to choose the difficulty: easy, normal, hard, nightmare~~
  
 ### Canvas
 - ~~Create big canvas~~
