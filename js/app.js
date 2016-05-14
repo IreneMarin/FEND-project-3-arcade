@@ -1,23 +1,28 @@
+//'use strict';
+
 /** ----------------- GLOBAL VARIABLES --------------------- */
-/** We define here the variables that we will be using through app.js and engine.js
- *  for different things. They are used for the current stats (hearts, lifes, gems, game_over, etc).
+/** We define here the variables that we will be using through app.js and engine.js.
+ *  They are used for the current stats (hearts, lifes, gems, game_over, etc).
  */
 
-var HERO = "char-horn-girl";    // choosen hero
-var DIFFICULTY = 0;             // choosen level of difficulty
+/** @global */
+var HERO = "char-horn-girl",    // choosen hero (horn-girl by default)
+    DIFFICULTY = 1,             // choosen level of difficulty (normal by default)
+    gameLost = false,           // boolean to know when we die
+    gameWon = false,            // boolean to know when we finish
+    currentLifes = 5,           // number of current lifes
+    currentKeys = 0,            // number of current keys
+    currentLevel = 0,           // level of the screen
+    hasBlueGem = false,         // has picked the blue gem
+    hasGreenGem = false,        // has picked the green gem
+    previousX = [],             // set previous X each time we update position
+    previousY = [],             // set previous y each time we update position
+    startX = 0,                 // set starting player position for the level
+    startY = 0,                 // set starting player position for the level
+    nextLevel = true;           // if we can change level, this is true to enable 'enter' key
 
-var gameLost = false;           // boolean to know when we die
-var gameWon = false;            // boolean to know when we finish
-var currentLifes = 5;           // number of current lifes
-var currentKeys = 0;            // number of current keys
-var currentLevel = 0;           // level of the screen
-var hasBlueGem = false;         // has picked the blue gem
-var hasGreenGem = false;        // has picked the green gem
-var previousX = [];              // set previous X each time we update
-var previousY = [];              // set previous y each time we update
-var startX = 0;                 // set starting player position for the level
-var startY = 0;                 // set starting player position for the level
-var nextLevel = true;           // if we can change level, this is true to enable 'enter' key
+
+/** @todo Keep DOM Access to a minimum: use a helper method that batch-converts a dataset to HTML */
 
 /** Put the variables on screen to appear in the menu html */
 document.getElementById('numberLifes').innerHTML = currentLifes.toString();
@@ -30,19 +35,41 @@ if (hasGreenGem) {
     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-green.png'>";
 }
 
+/* Initialize the 4 dialogs as hidden. They will ony appear at the end of each level */
 document.getElementById('dialog1').hidden = true;
 document.getElementById('dialog2').hidden = true;
 document.getElementById('dialog3').hidden = true;
 document.getElementById('dialog4').hidden = true;
 
+/* Initialize the hero to the player's choosen, if clicked */
+document.getElementById('boy').addEventListener('click', function () { HERO = 'char-boy'; }, false);
+document.getElementById('cat-girl').addEventListener('click', function () { HERO = 'char-cat-girl'; }, false);
+document.getElementById('horn-girl').addEventListener('click', function () { HERO = 'char-horn-girl'; }, false);
+document.getElementById('princess-girl').addEventListener('click', function () { HERO = 'char-princess-girl'; }, false);
+
+/* Initialize the difficulty to the player's choosen, if clicked */
+document.getElementById('easy').addEventListener('click', function () { DIFFICULTY = 0; }, false);
+document.getElementById('normal').addEventListener('click', function () { DIFFICULTY = 1; }, false);
+document.getElementById('hard').addEventListener('click', function () { DIFFICULTY = 2; }, false);
+document.getElementById('nightmare').addEventListener('click', function () { DIFFICULTY = 3; }, false);
+
+
+/* Useful function to create random numbers */
+var randomNumber = function (speedHigh, speedLow) {
+    return Math.floor(Math.random() * (speedHigh - speedLow) + 1) + speedLow;
+};
+
 
 /** -------------------- OBSTACLES & ITEMS ------------------------- */
 
-/** Implement the Items class, with 4 parameters: 
- *  position of the item, sprite to put the image, and the property "item".
- *  With "item" we will be able to differentiate the obstacles, 
- *  depending if they are: house, door, tree, rock, gem or chest. 
- *  This way, we only need to create 1 function for all the types of items.
+/**
+ * @class Creates the Items class
+ * @description Implement the Items class, to put all the different obstacles onscreen,
+ * like trees, rocks, house, door, hearts, keys and chests
+ * @param {number} x - X position of the item
+ * @param {number} y - Y position of the item
+ * @param {string} sprite - URL sprite of the image's item
+ * @param {string} item - Property to differentiate the obstacles: house, door, tree, rock, gem or chest
  */
 var Items = function (x, y, sprite, item) {
     this.x = x;
@@ -51,239 +78,257 @@ var Items = function (x, y, sprite, item) {
     this.item = item;
 };
 
-/** Draw the items on the screen */
+/** 
+ * @function Render function for the items
+ * @description Draw the items on the screen 
+ */
 Items.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/** @todo find a better way to create the obstacles for each level (an external json?). This can't be efficient... */
-
 var allObstacles = [];
 var allItems = [];
 
-/** Create function that will be called when changing level, to put all the obstacles of
- *  the next level in the canvas (house, door, trees, rocks, water, keys, lifes and chest)
+/**
+ * @function Reset function
+ * @description Function that will be called when changing level, to put all the obstacles of
+ * the next level in the canvas (house, door, trees, rocks, water, keys, lifes and chest)
+ * @param {number} next level parameter
+ * @todo Find a better way to create the obstacles for each level (an external json?)
  */
 var itemsReset = function (level) {
     switch (level) {
 
         case 1:
+            allObstacles = [
+                // house
+                new Items(303, 45, 'window-tall', 'house'),
+                new Items(404, 60, 'door-tall-closed', 'door'),
+                new Items(505, 45, 'window-tall', 'house'),
+                new Items(303, -40, 'roof-south-west', 'house'),
+                new Items(404, -40, 'roof-south', 'house'),
+                new Items(505, -40, 'roof-south-east', 'house'),
+                // row 1
+                new Items(0, -25, 'tree-short', 'tree'),
+                new Items(101, -25, 'tree-short', 'tree'),
+                new Items(202, -25, 'tree-short', 'tree'),
+                new Items(606, -25, 'tree-short', 'tree'),
+                new Items(707, -25, 'tree-short', 'tree'),
+                new Items(808, -25, 'tree-short', 'tree'),
+                // row 3
+                new Items(606, 141, 'tree-ugly', 'tree'),
+                // row 4
+                new Items(101, 224, 'tree-ugly', 'tree'),
+                new Items(606, 224, 'tree-ugly', 'tree'),
+                new Items(707, 224, 'rock', 'rock'),
+                // row 5
+                new Items(303, 307, 'tree-ugly', 'tree'),
+                // row 7
+                new Items(505, 470, 'rock', 'rock')
+            ];
 
-            // house
-            allObstacles[0] = new Items(303, 45, 'window-tall', 'house');
-            allObstacles[1] = new Items(404, 60, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(505, 45, 'window-tall', 'house');
-            allObstacles[3] = new Items(303, -40, 'roof-south-west', 'house');
-            allObstacles[4] = new Items(404, -40, 'roof-south', 'house');
-            allObstacles[5] = new Items(505, -40, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[6] = new Items(0, -25, 'tree-short', 'tree');
-            allObstacles[7] = new Items(101, -25, 'tree-short', 'tree');
-            allObstacles[8] = new Items(202, -25, 'tree-short', 'tree');
-            allObstacles[9] = new Items(606, -25, 'tree-short', 'tree');
-            allObstacles[10] = new Items(707, -25, 'tree-short', 'tree');
-            allObstacles[11] = new Items(808, -25, 'tree-short', 'tree');
-            // row 3
-            allObstacles[12] = new Items(606, 141, 'tree-ugly', 'tree');
-            // row 4
-            allObstacles[13] = new Items(101, 224, 'tree-ugly', 'tree');
-            allObstacles[14] = new Items(606, 224, 'tree-ugly', 'tree');
-            allObstacles[15] = new Items(707, 224, 'rock', 'rock');
-            // row 5
-            allObstacles[16] = new Items(303, 307, 'tree-ugly', 'tree');
-            // row 7
-            allObstacles[17] = new Items(505, 470, 'rock', 'rock');
-
-            allItems[0] = new Items(707, 131, 'key', 'key');
-            allItems[1] = new Items(101, 131, 'key', 'key');
-            allItems[2] = new Items(0, 465, 'heart', 'life');
+            allItems = [
+                new Items(707, 131, 'key', 'key'),
+                new Items(101, 131, 'key', 'key'),
+                new Items(0, 465, 'heart', 'life')
+            ];
 
             break;
 
         case 2:
+            allObstacles = [
+                // house
+                new Items(0, 45, 'wood-block', 'house'),
+                new Items(101, 60, 'door-tall-closed', 'door'),
+                new Items(202, 45, 'wood-block', 'house'),
+                new Items(0, -40, 'roof-south-west', 'house'),
+                new Items(101, -40, 'roof-south', 'house'),
+                new Items(202, -40, 'roof-south-east', 'house'),
+                // row 1
+                new Items(303, -25, 'blanc', 'water'),
+                new Items(404, -25, 'blanc', 'water'),
+                new Items(505, -25, 'blanc', 'water'),
+                new Items(606, -25, 'blanc', 'water'),
+                new Items(707, -25, 'blanc', 'water'),
+                new Items(808, -25, 'blanc', 'water'),
+                // row 2
+                new Items(303, 58, 'tree-ugly', 'tree'),
+                // row 3
+                new Items(404, 141, 'tree-tall', 'tree'),
+                new Items(707, 141, 'tree-ugly', 'tree'),
+                // row 4
+                new Items(101, 224, 'tree-ugly', 'tree'),
+                new Items(707, 224, 'tree-ugly', 'tree'),
+                new Items(808, 224, 'tree-ugly', 'tree'),
+                // row 5
+                new Items(101, 307, 'tree-ugly', 'tree'),
+                // row 6
+                new Items(505, 390, 'rock', 'rock'),
+                // row 7
+                new Items(0, 470, 'rock', 'rock'),
+                new Items(303, 470, 'tree-tall', 'tree'),
+                // row 8
+                new Items(303, 556, 'rock', 'rock'),
+                new Items(404, 556, 'tree-tall', 'tree'),
+                new Items(505, 556, 'tree-tall', 'tree')
+            ];
 
-            // house
-            allObstacles[0] = new Items(0, 45, 'wood-block', 'house');
-            allObstacles[1] = new Items(101, 60, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(202, 45, 'wood-block', 'house');
-            allObstacles[3] = new Items(0, -40, 'roof-south-west', 'house');
-            allObstacles[4] = new Items(101, -40, 'roof-south', 'house');
-            allObstacles[5] = new Items(202, -40, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[6] = new Items(303, -25, 'blanc', 'water');
-            allObstacles[7] = new Items(404, -25, 'blanc', 'water');
-            allObstacles[8] = new Items(505, -25, 'blanc', 'water');
-            allObstacles[9] = new Items(606, -25, 'blanc', 'water');
-            allObstacles[10] = new Items(707, -25, 'blanc', 'water');
-            allObstacles[11] = new Items(808, -25, 'blanc', 'water');
-            // row 2
-            allObstacles[12] = new Items(303, 58, 'tree-ugly', 'tree');
-            // row 3
-            allObstacles[13] = new Items(404, 141, 'tree-tall', 'tree');
-            allObstacles[14] = new Items(707, 141, 'tree-ugly', 'tree');
-            // row 4
-            allObstacles[15] = new Items(101, 224, 'tree-ugly', 'tree');
-            allObstacles[16] = new Items(707, 224, 'tree-ugly', 'tree');
-            allObstacles[17] = new Items(808, 224, 'tree-ugly', 'tree');
-            // row 5
-            allObstacles[18] = new Items(101, 307, 'tree-ugly', 'tree');
-            // row 6
-            allObstacles[19] = new Items(505, 390, 'rock', 'rock');
-            // row 7
-            allObstacles[20] = new Items(0, 470, 'rock', 'rock');
-            allObstacles[21] = new Items(303, 470, 'tree-tall', 'tree');
-            // row 8
-            allObstacles[22] = new Items(303, 556, 'rock', 'rock');
-            allObstacles[23] = new Items(404, 556, 'tree-tall', 'tree');
-            allObstacles[24] = new Items(505, 556, 'tree-tall', 'tree');
-
-            allItems[0] = new Items(808, 131, 'key', 'key');
-            allItems[1] = new Items(0, 297, 'key', 'key');
-            allItems[2] = new Items(606, 48, 'heart', 'life');
-            allItems[3] = new Items(202, 465, 'chest-closed', 'chest-green');
-            allItems[4] = new Items(202, 400, 'blanc', 'chest-lid');
+            allItems = [
+                new Items(808, 131, 'key', 'key'),
+                new Items(0, 297, 'key', 'key'),
+                new Items(606, 48, 'heart', 'life'),
+                new Items(202, 465, 'chest-closed', 'chest-green'),
+                new Items(202, 400, 'blanc', 'chest-lid')
+            ];
 
             break;
 
         case 3:
+            allObstacles = [
+                // house
+                new Items(707, 224, 'window-tall', 'house'),
+                new Items(808, 234, 'door-tall-closed', 'door'),
+                new Items(707, 58, 'roof-north-west', 'house'),
+                new Items(808, 58, 'roof-north-east', 'house'),
+                new Items(707, 141, 'roof-south-west', 'house'),
+                new Items(808, 141, 'roof-south-east', 'house'),
+                // row 1
+                new Items(101, -25, 'tree-tall', 'tree'),
+                new Items(202, -25, 'tree-ugly', 'tree'),
+                new Items(303, -25, 'tree-ugly', 'tree'),
+                new Items(404, -25, 'tree-ugly', 'tree'),
+                new Items(505, -25, 'rock', 'rock'),
+                // row 2
+                new Items(101, 58, 'tree-tall', 'tree'),
+                new Items(202, 58, 'tree-tall', 'tree'),
+                new Items(505, 58, 'tree-ugly', 'tree'),
+                new Items(606, 58, 'tree-ugly', 'tree'),
+                // row 3
+                new Items(0, 141, 'rock', 'rock'),
+                new Items(101, 141, 'rock', 'rock'),
+                new Items(202, 141, 'tree-ugly', 'tree'),
+                new Items(404, 141, 'rock', 'rock'),
+                new Items(505, 141, 'tree-tall', 'tree'),
+                new Items(606, 141, 'tree-tall', 'tree'),
+                // row 4
+                new Items(0, 224, 'blanc', 'water'),
+                new Items(101, 224, 'blanc', 'water'),
+                new Items(202, 224, 'tree-ugly', 'tree'),
+                new Items(404, 224, 'tree-tall', 'tree'),
+                new Items(505, 224, 'tree-tall', 'tree'),
+                new Items(606, 224, 'tree-tall', 'tree'),
+                // row 5
+                new Items(0, 307, 'blanc', 'water'),
+                new Items(101, 307, 'blanc', 'water'),
+                new Items(404, 307, 'tree-tall', 'tree'),
+                new Items(606, 307, 'tree-ugly', 'tree'),
+                new Items(707, 307, 'tree-ugly', 'tree'),
+                // row 6
+                new Items(0, 390, 'blanc', 'water'),
+                new Items(101, 390, 'blanc', 'water'),
+                new Items(606, 390, 'tree-ugly', 'tree'),
+                new Items(707, 390, 'tree-ugly', 'tree'),
+                // row 7
+                new Items(303, 470, 'tree-ugly', 'tree'),
+                new Items(404, 470, 'tree-ugly', 'tree'),
+                // row 8
+                new Items(303, 556, 'tree-ugly', 'tree'),
+                new Items(404, 556, 'tree-tall', 'tree'),
+                new Items(606, 556, 'rock', 'rock'),
+                new Items(707, 556, 'tree-tall', 'tree'),
+                new Items(808, 556, 'tree-tall', 'tree')
+            ];
 
-            // house
-            allObstacles[0] = new Items(707, 224, 'window-tall', 'house');
-            allObstacles[1] = new Items(808, 234, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(707, 58, 'roof-north-west', 'house');
-            allObstacles[3] = new Items(808, 58, 'roof-north-east', 'house');
-            allObstacles[4] = new Items(707, 141, 'roof-south-west', 'house');
-            allObstacles[5] = new Items(808, 141, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[6] = new Items(101, -25, 'tree-tall', 'tree');
-            allObstacles[7] = new Items(202, -25, 'tree-ugly', 'tree');
-            allObstacles[8] = new Items(303, -25, 'tree-ugly', 'tree');
-            allObstacles[9] = new Items(404, -25, 'tree-ugly', 'tree');
-            allObstacles[10] = new Items(505, -25, 'rock', 'rock');
-            // row 2
-            allObstacles[11] = new Items(101, 58, 'tree-tall', 'tree');
-            allObstacles[12] = new Items(202, 58, 'tree-tall', 'tree');
-            allObstacles[13] = new Items(505, 58, 'tree-ugly', 'tree');
-            allObstacles[14] = new Items(606, 58, 'tree-ugly', 'tree');
-            // row 3
-            allObstacles[15] = new Items(0, 141, 'rock', 'rock');
-            allObstacles[16] = new Items(101, 141, 'rock', 'rock');
-            allObstacles[17] = new Items(202, 141, 'tree-ugly', 'tree');
-            allObstacles[18] = new Items(404, 141, 'rock', 'rock');
-            allObstacles[19] = new Items(505, 141, 'tree-tall', 'tree');
-            allObstacles[20] = new Items(606, 141, 'tree-tall', 'tree');
-            // row 4
-            allObstacles[21] = new Items(0, 224, 'blanc', 'water');
-            allObstacles[22] = new Items(101, 224, 'blanc', 'water');
-            allObstacles[23] = new Items(202, 224, 'tree-ugly', 'tree');
-            allObstacles[24] = new Items(404, 224, 'tree-tall', 'tree');
-            allObstacles[25] = new Items(505, 224, 'tree-tall', 'tree');
-            allObstacles[26] = new Items(606, 224, 'tree-tall', 'tree');
-            // row 5
-            allObstacles[27] = new Items(0, 307, 'blanc', 'water');
-            allObstacles[28] = new Items(101, 307, 'blanc', 'water');
-            allObstacles[29] = new Items(404, 307, 'tree-tall', 'tree');
-            allObstacles[30] = new Items(606, 307, 'tree-ugly', 'tree');
-            allObstacles[31] = new Items(707, 307, 'tree-ugly', 'tree');
-            // row 6
-            allObstacles[32] = new Items(0, 390, 'blanc', 'water');
-            allObstacles[33] = new Items(101, 390, 'blanc', 'water');
-            allObstacles[34] = new Items(606, 390, 'tree-ugly', 'tree');
-            allObstacles[35] = new Items(707, 390, 'tree-ugly', 'tree');
-            // row 7
-            allObstacles[36] = new Items(303, 470, 'tree-ugly', 'tree');
-            allObstacles[37] = new Items(404, 470, 'tree-ugly', 'tree');
-            // row 8
-            allObstacles[38] = new Items(303, 556, 'tree-ugly', 'tree');
-            allObstacles[39] = new Items(404, 556, 'tree-tall', 'tree');
-            allObstacles[40] = new Items(606, 556, 'rock', 'rock');
-            allObstacles[41] = new Items(707, 556, 'tree-tall', 'tree');
-            allObstacles[42] = new Items(808, 556, 'tree-tall', 'tree');
-
-            allItems[0] = new Items(505, 546, 'key', 'key');
-            allItems[1] = new Items(808, -35, 'heart', 'life');
-            allItems[2] = new Items(0, -35, 'chest-closed', 'chest-blue');
-            allItems[3] = new Items(0, -100, 'blanc', 'chest-lid');
+            allItems = [
+                new Items(505, 546, 'key', 'key'),
+                new Items(808, -35, 'heart', 'life'),
+                new Items(0, -35, 'chest-closed', 'chest-blue'),
+                new Items(0, -100, 'blanc', 'chest-lid')
+            ];
 
             break;
 
         case 4:
+            allObstacles = [
+                // house
+                new Items(505, 470, 'window-tall', 'house'),
+                new Items(606, 480, 'door-tall-closed', 'door'),
+                new Items(707, 470, 'window-tall', 'house'),
+                new Items(505, 307, 'roof-north-west', 'house'),
+                new Items(606, 307, 'roof-north', 'house'),
+                new Items(707, 307, 'roof-north-east', 'house'),
+                new Items(505, 390, 'roof-south-west', 'house'),
+                new Items(606, 390, 'roof-south', 'house'),
+                new Items(707, 390, 'roof-south-east', 'house'),
+                // row 1
+                new Items(303, -25, 'blanc', 'water'),
+                new Items(404, -25, 'blanc', 'water'),
+                // row 2
+                new Items(101, 83, 'blanc', 'water'),
+                new Items(808, 58, 'rock', 'rock'),
+                // row 3
+                new Items(101, 166, 'blanc', 'water'),
+                new Items(202, 166, 'blanc', 'water'),
+                new Items(404, 166, 'blanc', 'water'),
+                new Items(505, 166, 'blanc', 'water'),
+                new Items(606, 166, 'blanc', 'water'),
+                new Items(707, 166, 'blanc', 'water'),
+                new Items(808, 141, 'rock', 'rock'),
+                // row 4
+                new Items(101, 249, 'blanc', 'water'),
+                new Items(202, 249, 'blanc', 'water'),
+                new Items(404, 249, 'blanc', 'water'),
+                new Items(505, 249, 'blanc', 'water'),
+                new Items(606, 249, 'blanc', 'water'),
+                new Items(707, 249, 'blanc', 'water'),
+                new Items(808, 249, 'blanc', 'water'),
+                // row 5
+                new Items(202, 307, 'tree-ugly', 'tree'),
+                new Items(404, 307, 'blanc', 'water'),
+                new Items(808, 307, 'blanc', 'water'),
+                // row 6
+                new Items(0, 390, 'rock', 'rock'),
+                new Items(101, 390, 'rock', 'rock'),
+                new Items(202, 390, 'tree-ugly', 'tree'),
+                new Items(808, 415, 'blanc', 'water'),
+                // row 7
+                new Items(0, 498, 'blanc', 'water'),
+                new Items(101, 498, 'blanc', 'water'),
+                new Items(202, 498, 'blanc', 'water'),
+                new Items(303, 498, 'blanc', 'water'),
+                new Items(808, 498, 'blanc', 'water'),
+                // row 8
+                new Items(0, 581, 'blanc', 'water'),
+                new Items(101, 581, 'blanc', 'water'),
+                new Items(202, 581, 'blanc', 'water'),
+                new Items(303, 581, 'blanc', 'water'),
+                new Items(707, 581, 'blanc', 'water'),
+                new Items(808, 581, 'blanc', 'water')
+            ];
 
-            // house
-            allObstacles[0] = new Items(505, 470, 'window-tall', 'house');
-            allObstacles[1] = new Items(606, 480, 'door-tall-closed', 'door');
-            allObstacles[2] = new Items(707, 470, 'window-tall', 'house');
-            allObstacles[3] = new Items(505, 307, 'roof-north-west', 'house');
-            allObstacles[4] = new Items(606, 307, 'roof-north', 'house');
-            allObstacles[5] = new Items(707, 307, 'roof-north-east', 'house');
-            allObstacles[6] = new Items(505, 390, 'roof-south-west', 'house');
-            allObstacles[7] = new Items(606, 390, 'roof-south', 'house');
-            allObstacles[8] = new Items(707, 390, 'roof-south-east', 'house');
-
-            // row 1
-            allObstacles[9] = new Items(303, -25, 'blanc', 'water');
-            allObstacles[10] = new Items(404, -25, 'blanc', 'water');
-            // row 2
-            allObstacles[11] = new Items(101, 83, 'blanc', 'water');
-            allObstacles[12] = new Items(808, 58, 'rock', 'rock');
-            // row 3
-            allObstacles[13] = new Items(101, 166, 'blanc', 'water');
-            allObstacles[14] = new Items(202, 166, 'blanc', 'water');
-            allObstacles[15] = new Items(404, 166, 'blanc', 'water');
-            allObstacles[16] = new Items(505, 166, 'blanc', 'water');
-            allObstacles[17] = new Items(606, 166, 'blanc', 'water');
-            allObstacles[18] = new Items(707, 166, 'blanc', 'water');
-            allObstacles[19] = new Items(808, 141, 'rock', 'rock');
-            // row 4
-            allObstacles[20] = new Items(101, 249, 'blanc', 'water');
-            allObstacles[21] = new Items(202, 249, 'blanc', 'water');
-            allObstacles[22] = new Items(404, 249, 'blanc', 'water');
-            allObstacles[23] = new Items(505, 249, 'blanc', 'water');
-            allObstacles[24] = new Items(606, 249, 'blanc', 'water');
-            allObstacles[25] = new Items(707, 249, 'blanc', 'water');
-            allObstacles[26] = new Items(808, 249, 'blanc', 'water');
-            // row 5
-            allObstacles[27] = new Items(202, 307, 'tree-ugly', 'tree');
-            allObstacles[28] = new Items(404, 307, 'blanc', 'water');
-            allObstacles[29] = new Items(808, 307, 'blanc', 'water');
-            // row 6
-            allObstacles[30] = new Items(0, 390, 'rock', 'rock');
-            allObstacles[31] = new Items(101, 390, 'rock', 'rock');
-            allObstacles[32] = new Items(202, 390, 'tree-ugly', 'tree');
-            allObstacles[33] = new Items(808, 415, 'blanc', 'water');
-            // row 7
-            allObstacles[34] = new Items(0, 498, 'blanc', 'water');
-            allObstacles[35] = new Items(101, 498, 'blanc', 'water');
-            allObstacles[36] = new Items(202, 498, 'blanc', 'water');
-            allObstacles[37] = new Items(303, 498, 'blanc', 'water');
-            allObstacles[38] = new Items(808, 498, 'blanc', 'water');
-            // row 8
-            allObstacles[39] = new Items(0, 581, 'blanc', 'water');
-            allObstacles[40] = new Items(101, 581, 'blanc', 'water');
-            allObstacles[41] = new Items(202, 581, 'blanc', 'water');
-            allObstacles[42] = new Items(303, 581, 'blanc', 'water');
-            allObstacles[43] = new Items(707, 581, 'blanc', 'water');
-            allObstacles[44] = new Items(808, 581, 'blanc', 'water');
-
-            allItems[0] = new Items(101, 297, 'key', 'key');
-            allItems[1] = new Items(505, 214, 'heart', 'life');
+            allItems = [
+                new Items(101, 297, 'key', 'key'),
+                new Items(505, 214, 'heart', 'life')
+            ];
 
             break;
     }
 };
 
 
-/** ------------------ ENEMIES ---------------------- */
+/* ------------------ ENEMIES ---------------------- */
 
-/** Implement the Enemiy class, to create the enemies our player must avoid
- *  We have the 2 parameters to initialize the enemy position
- *  and 3 parameters to create different types of movement for the bugs
+/**
+ * @class Creates the Enemy class
+ * @description Create the enemies our player must avoid, initializating the position and with 3 parameters to creat different types of movements
+ * @param {number} x position of the enemy
+ * @param {number} y position of the enemy
+ * @param {boolean} if true, the bug will go back and forth in a given interval of x position; if false, it will go to the same direction in a loop
+ * @param {number} the starting point of the bug
+ * @param {number} the ending point of the bug
  */
 var Enemy = function (x, y, moveRight, startMove, endMove) {
-    /** Setting the initial location and speed */
+    /* Setting the initial location and speed */
     this.x = x;
     this.y = y;
     this.startMove = startMove;
@@ -291,18 +336,34 @@ var Enemy = function (x, y, moveRight, startMove, endMove) {
     this.moveRight = moveRight;
 
     //this.speed = 150; // this one is for testing the game
-    if (currentLevel === 1) {
-        this.speed = Math.floor(Math.random() * 450 + 1);
-    } else {
-        this.speed = Math.floor(Math.random() * (200 - 100 + 1)) + 100;
+
+    /* Change speed of the enemies for each level of difficulty */
+    switch (DIFFICULTY) {
+        case 1:
+            this.speed = (currentLevel === 1) ? randomNumber(450, 0) : randomNumber(200, 100);
+            break;
+
+        case 2:
+            this.speed = (currentLevel === 1) ? randomNumber(550, 0) : randomNumber(300, 150);
+            break;
+
+        case 3:
+            this.speed = (currentLevel === 1) ? randomNumber(550, 0) : randomNumber(350, 150);
+            break;
+
+        default:
+            this.speed = (currentLevel === 1) ? randomNumber(250, 0) : randomNumber(150, 50);
+            break;
     }
 
-    /** Loading the image by setting this.sprite to the appropriate image */
+    /* Loading the image by setting this.sprite to the appropriate image */
     this.sprite = 'img/enemy-bug.png';
 };
 
-/** Update the enemy's position, required method for game
- *  Parameter: dt, a time delta between ticks
+/** 
+ * @function Update enemy function
+ * @description Update the enemy's position, required method for game
+ * @param {number} Parameter: dt, a time delta between ticks
  */
 Enemy.prototype.update = function (dt) {
 
@@ -312,17 +373,17 @@ Enemy.prototype.update = function (dt) {
 
     switch (currentLevel) {
         case 1:
-            /** Updates the Enemy location, that goes from left to right */
+            /* Updates the Enemy location, that goes from left to right */
             this.x += this.speed * dt;
 
-            /** If the Enemy goes off screen, we reset the position to start again */
+            /* If the Enemy goes off screen, we reset the position to start again */
             if (this.x > 909) {
                 this.x = Math.random() * -1200;
             }
             break;
 
         case 2:
-            /** Updates the Enemy location, that goes back and forth in the same interval of positions */
+            /* Updates the Enemy location, that goes back and forth in the same interval of positions */
             if (this.moveRight) {
                 this.x += this.speed * dt;
                 this.sprite = 'img/enemy-bug.png';
@@ -331,7 +392,7 @@ Enemy.prototype.update = function (dt) {
                     this.moveRight = false;
                 }
             } else {
-                /** Going back right to left, we change sprites */
+                /* Going back right to left, we change sprites */
                 this.x -= this.speed * dt;
                 this.sprite = 'img/enemy-bug-left.png';
                 if (this.x < this.startMove) {
@@ -342,7 +403,7 @@ Enemy.prototype.update = function (dt) {
             break;
 
         case 3:
-            /** Updates the Enemy location, that goes back and forth in the same interval of positions */
+            /* Updates the Enemy location, that goes back and forth in the same interval of positions */
             if (this.moveRight) {
                 this.x += this.speed * dt;
                 this.sprite = 'img/enemy-bug.png';
@@ -351,7 +412,7 @@ Enemy.prototype.update = function (dt) {
                     this.moveRight = false;
                 }
             } else {
-                /** Going back right to left, we change sprites */
+                /* Going back right to left, we change sprites */
                 this.x -= this.speed * dt;
                 this.sprite = 'img/enemy-bug-left.png';
                 if (this.x < this.startMove) {
@@ -363,7 +424,7 @@ Enemy.prototype.update = function (dt) {
 
         case 4:
             if (this.endMove === 404) {
-                /** Updates the Enemy location, that goes back and forth in the same interval of positions */
+                /* Updates the Enemy location, that goes back and forth in the same interval of positions */
                 if (this.moveRight) {
                     this.x += this.speed * dt;
                     this.sprite = 'img/enemy-bug.png';
@@ -372,7 +433,7 @@ Enemy.prototype.update = function (dt) {
                         this.moveRight = false;
                     }
                 } else {
-                    /** Going back right to left, we change sprites */
+                    /* Going back right to left, we change sprites */
                     this.x -= this.speed * dt;
                     this.sprite = 'img/enemy-bug-left.png';
                     if (this.x < this.startMove) {
@@ -382,19 +443,19 @@ Enemy.prototype.update = function (dt) {
                 }
             } else {
                 if (this.moveRight) {
-                    /** Updates the Enemy location, that goes from left to right */
+                    /* Updates the Enemy location, that goes from left to right */
                     this.x += this.speed * dt;
 
-                    /** If the Enemy goes off screen in the right, we reset the position to start again */
+                    /* If the Enemy goes off screen in the right, we reset the position to start again */
                     if (this.x > 909) {
                         this.x = Math.random() * -1200;
                     }
                 } else {
-                    /** Updates the Enemy location, that goes from right to left */
+                    /* Updates the Enemy location, that goes from right to left */
                     this.x -= this.speed * dt;
                     this.sprite = 'img/enemy-bug-left.png';
 
-                    /** If the Enemy goes off screen in the left, we reset the position to start again */
+                    /* If the Enemy goes off screen in the left, we reset the position to start again */
                     if (this.x < -101) {
                         this.x = Math.floor(Math.random() * (1400 - 1000 + 1)) + 1000;
                     }
@@ -404,26 +465,38 @@ Enemy.prototype.update = function (dt) {
     }
 };
 
-/** Draw the enemy on the screen, required method for game */
+/** 
+ * @function Render enemy function
+ * @description Draw the enemy on the screen, required method for game 
+ */
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/** Place all enemy objects in an array called allEnemies */
+/** 
+ * @function
+ * @description Place all enemy objects in an array called allEnemies 
+ */
 var allEnemies = [];
 var enemyHeight = [146, 229, 312, 395, 478];  // only used in level 1
 
-/** Create function to reset the enemies, that will be called when we change levels,
- *  where we draw the enemies of the next level on the canvas.
- *  For each level varys to try different types of movements.
+/** 
+ * @function Reset enemy function
+ * @description Function to reset the enemies, that will be called when we change levels,
+ where we draw the enemies of the next level on the canvas.
+ For each level varys to try different types of movements.
+ * @param {number} level to change as a parameter
  */
 var enemyReset = function (level) {
 
     switch (level) {
         case 1:
-            /** Here we create 10 enemies, 2 for each row, with a random initial left location and a random speed */
-            for (var i = 0; i < 10; i++) {
-                allEnemies.push(new Enemy(-(Math.floor(Math.random() * 400 + 100)), enemyHeight[i % 5], true, 0, 808));
+            /* Here we create 10 enemies, 2 for each row, with a random initial left location and a random speed
+             * If we have nightmare difficulty, there are 3 for each row
+             */
+            var numberEnemies = (DIFFICULTY === 3) ? 15 : 10;
+            for (var i = 0; i < numberEnemies; i++) {
+                allEnemies.push(new Enemy(- randomNumber(500, 100), enemyHeight[i % 5], true, 0, 808));
             }
             break;
 
@@ -432,8 +505,13 @@ var enemyReset = function (level) {
             /*  using the positions that we pass in the parameters as startMove and endMove
              */
             allEnemies.push(new Enemy(404, 63, true, 404, 808));
-            allEnemies.push(new Enemy(0, 146, true, 0, 303));
-            allEnemies.push(new Enemy(202, 229, true, 202, 606));
+            if (DIFFICULTY === 3) {
+                allEnemies.push(new Enemy(0, 146, true, 0, 606));
+                allEnemies.push(new Enemy(0, 229, true, 0, 606));
+            } else {
+                allEnemies.push(new Enemy(0, 146, true, 0, 303));
+                allEnemies.push(new Enemy(202, 229, true, 202, 606));
+            }
             allEnemies.push(new Enemy(202, 312, true, 202, 808));
             allEnemies.push(new Enemy(0, 395, true, 0, 404));
             allEnemies.push(new Enemy(606, 395, true, 606, 808));
@@ -442,88 +520,114 @@ var enemyReset = function (level) {
 
         case 3:
             allEnemies.push(new Enemy(101, -20, true, 101, 808));
-            allEnemies.push(new Enemy(303, 63, true, 303, 606));
-            allEnemies.push(new Enemy(303, 146, true, 303, 606));
+            if (DIFFICULTY === 3) {
+                allEnemies.push(new Enemy(101, 63, true, 101, 606));
+                allEnemies.push(new Enemy(0, 146, true, 0, 606));
+                allEnemies.push(new Enemy(202, 574, true, 202, 505));
+            } else {
+                allEnemies.push(new Enemy(303, 63, true, 303, 606));
+                allEnemies.push(new Enemy(303, 146, true, 303, 606));
+            }
             allEnemies.push(new Enemy(202, 312, true, 202, 808));
             allEnemies.push(new Enemy(202, 395, true, 202, 808));
             allEnemies.push(new Enemy(202, 478, true, 202, 808));
             break;
 
         case 4:
-            /** Here we combine: in rows with obstacles for the bugs (the house and the stone path), 
+            /* Here we combine: in rows with obstacles for the bugs (the house and the stone path), 
              * we create them as level 2, going back and forth.
-             * In the other rows, we create as level 1, but with only 1 bug for row (2 bugs is too difficult).
+             * In the other rows, we create as level 1, but with only 1 bug per row.
+             * For nightmare difficulty, we put 2 bugs per row.
              * But in some row they go left to right, and in some they go right to left.
              */
-            allEnemies.push(new Enemy(0, -20, true, 0, 404));
-            allEnemies.push(new Enemy(808, 63, false, 808, 0));
-            allEnemies.push(new Enemy(0, 146, true, 0, 808));
-            allEnemies.push(new Enemy(808, 229, false, 808, 0));
-            allEnemies.push(new Enemy(0, 312, true, 0, 404));
-            allEnemies.push(new Enemy(0, 395, true, 0, 404));
-            allEnemies.push(new Enemy(0, 478, true, 0, 404));
+            allEnemies.push(new Enemy(0, -20, true, 0, 404));       // back and forth
+            allEnemies.push(new Enemy(808, 63, false, 808, 0));     // right
+            allEnemies.push(new Enemy(0, 146, true, 0, 808));       // left
+            allEnemies.push(new Enemy(808, 229, false, 808, 0));    // right
+            allEnemies.push(new Enemy(0, 312, true, 0, 404));       // back and forth
+            allEnemies.push(new Enemy(0, 395, true, 0, 404));       // back and forth
+            allEnemies.push(new Enemy(0, 478, true, 0, 404));       // back and forth
+            if (DIFFICULTY === 3) {
+                allEnemies.push(new Enemy(808, 63, false, 808, 0));     // right
+                allEnemies.push(new Enemy(0, 146, true, 0, 808));       // left
+                allEnemies.push(new Enemy(808, 229, false, 808, 0));    // right
+            }
             break;
     }
 };
 
 
-/** ------------------ PLAYER ------------------------- */
+/* ------------------ PLAYER ------------------------- */
 
-/** Implement the Player class */
+/** 
+ * @class Create the Player class
+ * @description Implement the Player class
+ * @param {number} x position of the player
+ * @param {number} y position of the player
+ */
 var Player = function (x, y) {
-    /** Setting the Player initial location */
+    /* Setting the Player initial location */
     this.x = x;
     this.y = y;
 
-    /** Loading the image by setting this.sprite */
+    /* Loading the image by setting this.sprite */
     this.sprite = 'img/' + HERO + '.png';
 };
 
-/** Update the player's position and check for any collision */
+/**
+ * @function
+ * @description Update the player's position and check for any collision 
+ */
 Player.prototype.update = function () {
     this.x = this.x;
     this.y = this.y;
     checkCollisions();
 };
 
-/** Draw the player on the screen */
+/**
+ * @function Render player function
+ * @description Draw the player on the screen 
+ */
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-/** handleInput method receives the user input with parameter 'allowedKeys'
+/**
+ * @function Handle input player function
+ * @description handleInput method receives the user input with parameter 'allowedKeys'
  * The Player moves accordingly to that input
+ * @param {string} the key pressed by the user
  */
 Player.prototype.handleInput = function (allowedKeys) {
     this.move();
-    /** If lifes = 0 it means game_over, so we can't move anymore */
+
+    /* If lifes = 0 it means game_over, so we can't move anymore */
     if (currentLifes > 0) {
 
         switch (allowedKeys) {
-
             case 'left':
-                /** We check to avoid player moving off-screen and update previousX */
+                /* We check to avoid player moving off-screen and update previousX */
                 if (this.x > 0) {
                     this.x -= 101;
                 }
                 break;
 
             case 'up':
-                /** We check to avoid player moving off-screen and update previousY */
+                /* We check to avoid player moving off-screen and update previousY */
                 if (this.y > 0) {
                     this.y -= 83;
                 }
                 break;
 
             case 'right':
-                /** We check to avoid player moving off-screen and update previousX */
+                /* We check to avoid player moving off-screen and update previousX */
                 if (this.x < 808) {
                     this.x += 101;
                 }
                 break;
 
             case 'down':
-                /** We check to avoid player moving off-screen and update previousY */
+                /* We check to avoid player moving off-screen and update previousY */
                 if (this.y < 556) {
                     this.y += 83;
                 }
@@ -531,7 +635,7 @@ Player.prototype.handleInput = function (allowedKeys) {
 
             case 'enter':
                 if (nextLevel) {
-                    /** Change to the next level pressing 'enter' key */
+                    /* Change to the next level pressing 'enter' key */
                     changeLevel(currentLevel + 1);
                     nextLevel = false;
                 }
@@ -539,7 +643,7 @@ Player.prototype.handleInput = function (allowedKeys) {
         }
 
     } else {
-        /** The player has 0 lifes, it is game_over. So, if he/she presses Enter --> we reset the game */
+        /* The player has 0 lifes, it is game_over. So, if he/she presses Enter --> we reset the game */
         if (allowedKeys === 'enter') {
             changeLevel(1);
             gameLost = false;
@@ -551,12 +655,15 @@ Player.prototype.handleInput = function (allowedKeys) {
     }
 };
 
-/** Reset the player's position when it collides with a bug, and subtract a life */
+/**
+ * @function Reset player function
+ * @description Reset the player's position when it collides with a bug, and subtract a life 
+ */
 Player.prototype.reset = function () {
     currentLifes = currentLifes - 1;
     document.getElementById('numberLifes').innerHTML = currentLifes.toString();
 
-    /** If after the subtraction of life we have 0 lifes --> it is Game Over */
+    /* If after the subtraction of life we have 0 lifes --> it is Game Over */
     if (currentLifes === 0) {
         player.gameOver();
     } else {
@@ -574,7 +681,9 @@ Player.prototype.move = function () {
     console.log(previousX + ' ' + previousY);
 };
 
-/** Create function to reset the players position to the initial for each level
+/**
+ * @function Change level player function
+ * @description Create function to reset the players position to the initial for each level
  * This function is called when we change level and are initializing the next level
  */
 Player.prototype.changeLevel = function (level) {
@@ -609,35 +718,47 @@ Player.prototype.changeLevel = function (level) {
     }
 };
 
-/** Stops de player when it tries to go over an obstacle (tree, rock, house, chest) */
-/** @todo It doesn't stop properly, it is going one position back */
+/**
+ * @function
+ * @description Stops de player when it tries to go over an obstacle (tree, rock, house, chest) 
+ * @todo It doesn't stop properly, it is going one position back 
+ */
 Player.prototype.stop = function () {
     this.x = previousX;
     this.y = previousY;
 };
 
-/** When we have 0 lifes, it is game over */
+/**
+ * @function
+ * @description When we have 0 lifes, it is game over 
+ */
 Player.prototype.gameOver = function () {
     gameLost = true;
     allEnemies = [];
 };
 
-/** When we open the door in level 4, it is the final state of the game */
+/**
+ * @function
+ * @description When we open the door in level 4, it is the final state of the game 
+ */
 Player.prototype.gameFinal = function () {
     gameWon = true;
     allEnemies = [];
 };
 
-/** Place the player object in a variable called player */
+/**
+ * @function
+ * @description Place the player object in a variable called player 
+ */
 var player = new Player(startX, startY);
 
 
-/** ----------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
+/* ----------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
 
-/** Function to check if the player collides with something */
+/* Function to check if the player collides with something */
 var checkCollisions = function () {
 
-    /** Calculate the central Rectangle to avoid the blank space */
+    /* Calculate the central Rectangle to avoid the blank space */
     var Rectangle = function (left, top) {
         this.left = left + 35;
         this.top = top + 20;
@@ -645,7 +766,7 @@ var checkCollisions = function () {
         this.bottom = this.top + 62;
     };
 
-    /** Check to see if the rectangles overlap */
+    /* Check to see if the rectangles overlap */
     function checkCollision(player, obstacle) {
         return !(
             player.left > obstacle.right ||
@@ -657,37 +778,39 @@ var checkCollisions = function () {
 
     var playerRectangle = new Rectangle(player.x, player.y);
 
-    /** Check collision with enemy bugs */
+    /* Check collision with enemy bugs */
     for (var i = 0; i < allEnemies.length; i++) {
         var enemyRectangle = new Rectangle(allEnemies[i].x, allEnemies[i].y);
         if (checkCollision(playerRectangle, enemyRectangle)) {
-            /** If player collides with bug, reset position of player */
+            /* If player collides with bug, reset position of player */
             player.reset();
         }
     }
 
-    /** Check collision with items */
+    /* Check collision with items */
     for (var j = 0; j < allItems.length; j++) {
         var itemRectangle = new Rectangle(allItems[j].x, allItems[j].y);
         if (checkCollision(playerRectangle, itemRectangle)) {
 
             switch (allItems[j].item) {
-
-                case 'key':     /** If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
+                case 'key':
+                    /* If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
                     currentKeys = currentKeys + 1;
                     document.getElementById('numberKeys').innerHTML = currentKeys.toString();
                     allItems.splice(j, 1);
                     break;
 
-                case 'life':    /** If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
+                case 'life':
+                    /* If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
                     currentLifes = currentLifes + 1;
                     document.getElementById('numberLifes').innerHTML = currentLifes.toString();
                     allItems.splice(j, 1);
                     break;
 
-                case 'chest-green':     /** If it collides with closed chest, check for key */
+                case 'chest-green':
+                    /* If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
-                        /** If we have key, open chest and player stops */
+                        /* If we have key, open chest and player stops */
                         allItems[j].item = 'gem-green';
                         allItems[j].sprite = 'img/chest-open-green.png';
                         allItems[j + 1].item = 'chest-open';
@@ -697,14 +820,15 @@ var checkCollisions = function () {
                         player.stop();
 
                     } else {
-                        /** If we don't have key, player stops */
+                        /* If we don't have key, player stops */
                         player.stop();
                     }
                     break;
 
-                case 'chest-blue':      /** If it collides with closed chest, check for key */
+                case 'chest-blue':
+                    /* If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
-                        /** If we have key, open chest and player stops */
+                        /* If we have key, open chest and player stops */
                         allItems[j].item = 'gem-blue';
                         allItems[j].sprite = 'img/chest-open-blue.png';
                         allItems[j + 1].item = 'chest-open';
@@ -714,12 +838,13 @@ var checkCollisions = function () {
                         player.stop();
 
                     } else {
-                        /** If we don't have key, player stops */
+                        /* If we don't have key, player stops */
                         player.stop();
                     }
                     break;
 
-                case 'gem-green':       /** If it collides with open chest with gem --> pick up gem */
+                case 'gem-green':
+                    /* If it collides with open chest with gem --> pick up gem */
                     hasGreenGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-green.png'>";
                     allItems[j].item = 'chest-open';
@@ -727,7 +852,8 @@ var checkCollisions = function () {
                     player.stop();
                     break;
 
-                case 'gem-blue':        /** If it collides with open chest with gem --> pick up gem */
+                case 'gem-blue':
+                    /* If it collides with open chest with gem --> pick up gem */
                     hasBlueGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-blue.png'>";
                     allItems[j].item = 'chest-open';
@@ -744,7 +870,7 @@ var checkCollisions = function () {
         }
     }
 
-    /** Check collision with objects (tree, house, door and rock) */
+    /* Check collision with objects (tree, house, door and rock) */
     for (var k = 0; k < allObstacles.length; k++) {
         var obstacleRectangle = new Rectangle(allObstacles[k].x, allObstacles[k].y);
 
@@ -752,20 +878,18 @@ var checkCollisions = function () {
 
         if (checkCollision(playerRectangle, obstacleRectangle)) {
 
-            /** Player has found an obstacle that can't be crossed over */
+            /* Player has found an obstacle that can't be crossed over */
             switch (allObstacles[k].item) {
                 case 'tree':
-                    if (hasGreenGem) {
-                        /** If player has gem, it can go over the trees */
-                    } else {
+                    /* If player has gem, it can go over the trees */
+                    if (!hasGreenGem) {
                         player.stop();
                     }
                     break;
 
                 case 'water':
-                    if (hasBlueGem) {
-                        /** If player has gem, it can go over the water */
-                    } else {
+                    /* If player has gem, it can go over the water */
+                    if (!hasBlueGem) {
                         player.stop();
                     }
                     break;
@@ -783,7 +907,7 @@ var checkCollisions = function () {
                     if (currentKeys > 0) {
                         player.stop();
 
-                        /** If we have key and level 4, open door of final level */
+                        /* If we have key and level 4, open door of final level */
                         if (currentLevel === 4) {
                             allObstacles[k].item = 'door-final';
                             allObstacles[k].sprite = 'img/door-tall-final.png';
@@ -791,7 +915,7 @@ var checkCollisions = function () {
                             player.gameFinal();
 
                         } else {
-                            /** If we have key, open door */
+                            /* If we have key, open door */
                             allObstacles[k].item = 'door-open';
                             allObstacles[k].sprite = 'img/door-tall-open.png';
                         }
@@ -804,7 +928,7 @@ var checkCollisions = function () {
                     break;
 
                 case 'door-open':
-                    /** When we open door of level, it shows the message and it puts nextLevel to true,
+                    /* When we open door of level, it shows the message and it puts nextLevel to true,
                      * this way it enables key 'enter' to be used to go to next level.
                      */
                     player.sprite = 'img/' + HERO + '-sad.png';
@@ -836,16 +960,17 @@ var checkCollisions = function () {
 };
 
 
-/** Function to change the level. It is called in handleInput, when player presses 'enter' key, if we have next_level true
- *  First we change player's sprite to the happy one
- *  Then we delete everything in allEnemies, allItems and allObstacles arrays (we don't want the things from the previous level to show)
- *  Then we change the level, and we put the new level onscreen
- *  After we call the 3 functions to reset the player's position, items and enemies position, passing the parameter of the next level
- *  Finally next_level goes to false, because we can't change level again if we don't play all the level.
+/**
+ * @function changeLevel function
+ * @description Function to change the level. It is called in handleInput, when player presses 'enter' key, if we have next_level true
+ * First we change player's sprite to the happy one
+ * Then we delete everything in allEnemies, allItems and allObstacles arrays (we don't want the things from the previous level to show)
+ * Then we change the level, and we put the new level onscreen
+ * After we call the 3 functions to reset the player's position, items and enemies position, passing the parameter of the next level
+ * Finally next_level goes to false, because we can't change level again if we don't play all the level.
  */
 var changeLevel = function (level) {
     player.sprite = 'img/' + HERO + '.png';
-    //document.getElementById('dialog' + currentLevel).hidden = true;
     allEnemies = [];
     allItems = [];
     allObstacles = [];
@@ -858,9 +983,11 @@ var changeLevel = function (level) {
 };
 
 
-/** ---------------------- KEYBOARD INPUT ---------------------------- */
+/* ---------------------- KEYBOARD INPUT ---------------------------- */
 
-/** This listens for key presses and sends the keys to your Player.handleInput() method */
+/** 
+ * @description This listens for key presses and sends the keys to your Player.handleInput() method 
+ */
 document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
@@ -872,3 +999,51 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
+/*
+SoundManager = Class.extend({
+    // your code here
+    clips: {},
+    enabled: true,
+    _context: null,
+    _mainNode: null,
+    
+    init: function() 
+    {
+        try {
+            // attempt to grab the WebKitAudioContect()
+            // http://www.html5rocks.com/en/tutorials/webaudio/intro/
+            this._context = new webkitAudioContect();
+        }
+        catch(e) {
+            // Alert the user if there's a problem
+            alert('Web Audio API is not supported in this browser');
+        }
+        // Create the main Game Node, then connect it to the context's destination
+        this._mainNode = this._context.createGainNode(0);
+        this._mainNode.connect(this._contect.destination);
+    },
+    
+    loadAsync: function(path, callbackFcn)
+    {
+        // Check if the path exists in the clips dictionary,
+        // and call callbackFcn if it is
+        
+        // Otherwise, create a new clip
+        
+        // Fire off an XHR to the given path. Once it has
+        // loaded, decode the audio data, calling 
+        // callbackFcn once it is decoded.
+        
+        // Return the clip's sound.
+        
+    }
+});
+
+// We'll be filling out the Sound class a little bit later in the unit.
+// For now, we'll just use a blank Class to use in our above code.
+Sound = Class.extend({});
+
+var gSM = new SoundManager();
+*/
