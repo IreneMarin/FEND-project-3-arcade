@@ -116,7 +116,7 @@ The project is licensed under the [MIT license](license.txt).
 ### Code
 - Errors:
   - ~~Player.stop: doesn't stop properly, is moving to the previous position~~
-  - Fix dialog's positions
+  - ~~Fix dialog's positions~~
   - ~~dialog.show() doesn't close when changing level~~
   - ~~dialog.show() doesn't work in Mozilla: find alternative~~ 
   - after changing levels, the bugs spend a couple of seconds not moving... no idea what to do here... 
