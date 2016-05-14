@@ -70,8 +70,8 @@ The project is licensed under the [MIT license](license.txt).
  
 ### Start page
 - ~~Create the story~~ 
-- ~~Selector to choose the hero~~
-- ~~Selector to choose the difficulty: easy, normal, hard, nightmare~~
+- Selector to choose the hero
+- Selector to choose the difficulty: easy, normal, hard, nightmare
  
 ### Canvas
 - ~~Create big canvas~~
@@ -91,6 +91,7 @@ The project is licensed under the [MIT license](license.txt).
 - ~~Gems:~~
   - ~~1 blue gem: to walk underwater (in the checkObstacles)~~
   - ~~1 green gem: to walk through trees (in the checkObstacles)~~
+- When picking item, item goes small in hand, and afterwrads dissapears and appears at counter 
 
 ### Items to interact
 - ~~Interact: try to go over door or chest --> checkObstacles --> if key --> do something~~
@@ -114,21 +115,20 @@ The project is licensed under the [MIT license](license.txt).
 
 ### Code
 - Errors:
-  - Player.stop: doesn't stop properly, is moving to the previous position
+  - ~~Player.stop: doesn't stop properly, is moving to the previous position~~
   - Fix dialog's positions
   - ~~dialog.show() doesn't close when changing level~~
   - ~~dialog.show() doesn't work in Mozilla: find alternative~~ 
-  - after changing levels, the bugs spend a couple of seconds not moving
+  - after changing levels, the bugs spend a couple of seconds not moving... no idea what to do here... 
   - ~~Game over: the Enter key doesn't work (it cannot restart)~~
   - ~~Fix checkObstacles function~~
   - ~~Gems: doesn't give power when has_gem~~
   - ~~Change level/state: implement it how?~~
   - ~~Finish level: create last level screen~~
 - Improvements: 
-  - Obstacles & canvas: find a better way to create each level (external json?)
   - Keep DOM Access to a minimum: use a helper method that batch-converts a dataset to HTML
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
   - ~~Go to next level automatically with setTimeout~~
   - ~~JSHint the code~~
   - Implement sounds
-  - Create production code
+  - Change interaction to pick items
