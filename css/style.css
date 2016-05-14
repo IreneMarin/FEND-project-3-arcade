@@ -1,4 +1,3 @@
-/* Share Tech Mono */
 @font-face {
   font-family: 'Share Tech Mono';
   font-style: normal;
@@ -20,7 +19,7 @@ body {
 }
 
 /* Menu */
-#menu {
+.menu {
     width: 909px;
     height: 60px;
     margin: 0 auto;
@@ -29,7 +28,9 @@ body {
     font-size: 50px;
 }
 
-#numberLifes, #numberKeys, #hasGems {
+.numberLifes, 
+.numberKeys, 
+.hasGems {
     padding-left: 10px;
 }
 
@@ -46,7 +47,7 @@ body {
 }
 
 /* Opening screen */
-#opening {
+.opening {
     width: 1209px;
     height: 760px;
     margin: 0 auto;
@@ -92,7 +93,7 @@ body {
 }
 
 /* Dialogs at the end of each level */
-#dialogs {
+.dialogs {
     position: absolute;
     z-index: 99;
     width: 909px;
@@ -101,32 +102,35 @@ body {
     text-align: center;
 }
 
-#dialog1, #dialog2, #dialog3, #dialog4 {
+.dialog1, 
+.dialog2, 
+.dialog3, 
+.dialog4 {
     background: url("../img/speech-bubble-left.png") no-repeat;
     border: none;
-    padding: 22px 15px 0 15px;
-    width: 101px;
-    height: 109px;
+    padding: 25px 15px;
+    width: 75px;
+    height: 60px;
     position: relative;
 }
 
-#dialog1 {
+.dialog1 {
     top: 30px;
     left: 500px;
 }
 
-#dialog2 {
+.dialog2 {
     top: 30px;
     left: 200px;
 }
 
-#dialog3 {
+.dialog3 {
     background: url("../img/speech-bubble-right.png") no-repeat;
     top: 240px;
     left: 720px;
 }
 
-#dialog4 {
+.dialog4 {
     top: 540px;
     left: 700px;
 }

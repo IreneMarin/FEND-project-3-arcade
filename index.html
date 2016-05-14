@@ -7,15 +7,16 @@
 </head>
 <body>
     <!-- Menu during the game, for the stats -->
-    <div id="menu">
-        <div class="items"><img src="img/menu/heart.png"><span id="numberLifes"></span></div>
-        <div class="items"><img src="img/menu/key.png"><span id="numberKeys"></span></div>
-        <div class="items"><span id="hasGems"></span></div>        
-        <div class="level">LVL <span id="numberLevel"></span></div>
+    <div id="menu" class="menu">
+        <div class="items"><img src="img/menu/heart.png"><span id="numberLifes" class="numberLifes"></span></div>
+        <div class="items"><img src="img/menu/key.png"><span id="numberKeys" class="numberKeys"></span></div>
+        <div class="items"><span id="hasGems" class="hasGems"></span></div>        
+        <div class="level">LVL <span id="numberLevel" class="numberLevel"></span></div>
     </div>
     
     <!-- Start screen of the game --> 
-    <div id="opening">
+    <div id="opening" class="opening">
+        
         <img src="img/menu/gems.jpg" class="gems">
         After a month of coding non-stop, you finally finished project 3...
         <br><br>
@@ -24,6 +25,7 @@
         But wait... you forgot where she lives... darn. So let's go search for her house!
         <br>
         <img src="img/menu/gems.jpg" class="gems">
+        
         <div class="choices">
             Choose your hero:<br><br>
             <img id="boy" src="img/menu/char-boy.png" class="player">
@@ -52,17 +54,17 @@
     <div style="clear: both;"></div>
     
     <!-- Dialogs for each level when the player opens de door -->
-    <div id="dialogs">
-        <div id="dialog1">
-            She is not here...
+    <div id="dialogs" class="dialogs">
+        <div id="dialog1" class="dialog1">
+            She is not here ...
         </div>
-        <div id="dialog2">
+        <div id="dialog2" class="dialog2">
             Where is her house?
         </div>
-        <div id="dialog3">
-            I'm getting tired...
+        <div id="dialog3" class="dialog3">
+            I'm getting tired
         </div>
-        <div id="dialog4">
+        <div id="dialog4" class="dialog4">
             Hi, friend!!
         </div>
     </div>

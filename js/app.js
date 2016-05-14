@@ -934,7 +934,7 @@ var checkCollisions = function () {
                     player.sprite = 'img/' + HERO + '-sad.png';
                     document.getElementById('dialog' + currentLevel).hidden = false;
                     nextLevel = true;
-
+                    
                     setTimeout(function () {
                         player.sprite = 'img/' + HERO + '.png';
                         document.getElementById('dialog' + currentLevel).hidden = true;
@@ -951,7 +951,7 @@ var checkCollisions = function () {
                         enemyReset(currentLevel);
                     }, 2000);
 
-                    clearTimeout();
+                    clearTimeout();                    
 
                     break;
             }
