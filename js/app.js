@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 
 /** ----------------- GLOBAL VARIABLES --------------------- */
 /** We define here the variables that we will be using through app.js and engine.js.
@@ -43,23 +43,23 @@ document.getElementById('dialog4').hidden = true;
 
 
 /* Initialize the hero to the player's choosen, if clicked */
-document.getElementById('boy').addEventListener('click', function () { 
-    HERO = 'char-boy'; 
+document.getElementById('boy').addEventListener('click', function () {
+    HERO = 'char-boy';
     document.getElementById('boy').src = 'img/menu/char-boy.png';
     document.getElementById('cat-girl').src = 'img/menu/char-cat-girl-off.png';
     document.getElementById('horn-girl').src = 'img/menu/char-horn-girl-off.png';
     document.getElementById('princess-girl').src = 'img/menu/char-princess-girl-off.png';
 }, false);
 
-document.getElementById('cat-girl').addEventListener('click', function () { 
-    HERO = 'char-cat-girl'; 
+document.getElementById('cat-girl').addEventListener('click', function () {
+    HERO = 'char-cat-girl';
     document.getElementById('boy').src = 'img/menu/char-boy-off.png';
     document.getElementById('cat-girl').src = 'img/menu/char-cat-girl.png';
     document.getElementById('horn-girl').src = 'img/menu/char-horn-girl-off.png';
     document.getElementById('princess-girl').src = 'img/menu/char-princess-girl-off.png';
 }, false);
 
-document.getElementById('horn-girl').addEventListener('click', function () { 
+document.getElementById('horn-girl').addEventListener('click', function () {
     HERO = 'char-horn-girl';
     document.getElementById('boy').src = 'img/menu/char-boy-off.png';
     document.getElementById('cat-girl').src = 'img/menu/char-cat-girl-off.png';
@@ -67,8 +67,8 @@ document.getElementById('horn-girl').addEventListener('click', function () {
     document.getElementById('princess-girl').src = 'img/menu/char-princess-girl-off.png';
 }, false);
 
-document.getElementById('princess-girl').addEventListener('click', function () { 
-    HERO = 'char-princess-girl'; 
+document.getElementById('princess-girl').addEventListener('click', function () {
+    HERO = 'char-princess-girl';
     document.getElementById('boy').src = 'img/menu/char-boy-off.png';
     document.getElementById('cat-girl').src = 'img/menu/char-cat-girl-off.png';
     document.getElementById('horn-girl').src = 'img/menu/char-horn-girl-off.png';
@@ -808,7 +808,6 @@ Player.prototype.gameFinal = function () {
  */
 var player = new Player(startX, startY);
 
-
 /* ----------------- COLLISIONS & COLLECTIBLE ITEMS ---------------------- */
 
 /* Function to check if the player collides with something */
@@ -1055,51 +1054,3 @@ document.addEventListener('keyup', function (e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
-
-/*
-SoundManager = Class.extend({
-    // your code here
-    clips: {},
-    enabled: true,
-    _context: null,
-    _mainNode: null,
-    
-    init: function() 
-    {
-        try {
-            // attempt to grab the WebKitAudioContect()
-            // http://www.html5rocks.com/en/tutorials/webaudio/intro/
-            this._context = new webkitAudioContect();
-        }
-        catch(e) {
-            // Alert the user if there's a problem
-            alert('Web Audio API is not supported in this browser');
-        }
-        // Create the main Game Node, then connect it to the context's destination
-        this._mainNode = this._context.createGainNode(0);
-        this._mainNode.connect(this._contect.destination);
-    },
-    
-    loadAsync: function(path, callbackFcn)
-    {
-        // Check if the path exists in the clips dictionary,
-        // and call callbackFcn if it is
-        
-        // Otherwise, create a new clip
-        
-        // Fire off an XHR to the given path. Once it has
-        // loaded, decode the audio data, calling 
-        // callbackFcn once it is decoded.
-        
-        // Return the clip's sound.
-        
-    }
-});
-
-// We'll be filling out the Sound class a little bit later in the unit.
-// For now, we'll just use a blank Class to use in our above code.
-Sound = Class.extend({});
-
-var gSM = new SoundManager();
-*/
