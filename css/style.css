@@ -72,7 +72,10 @@ body {
     cursor: pointer;
 }
 
-.difficulty {
+.easy,
+.normal,
+.hard,
+.nightmare {
     border-radius: 6px;
     padding: 7px 0 5px;
     letter-spacing: -2px;
@@ -82,6 +85,39 @@ body {
     box-shadow: 2px 2px 0px #000;
     text-align: center;
     cursor: pointer;
+}
+
+.easy {
+    background: #285c1c;
+}
+
+.easy.active {
+    background: #57c63f;
+}
+
+.normal {
+    background: #856e32;
+}
+
+.normal.active {
+    background: #f6cd5c;
+}
+
+.hard {
+    background: #6b1e1e;
+}
+
+.hard.active {
+    background: #d73e3e;
+}
+
+.nightmare {
+    background: #363636; 
+    color: #878787;
+}
+
+.nightmare.active {
+    color: #fff;
 }
 
 .instructions {

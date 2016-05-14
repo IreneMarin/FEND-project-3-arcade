@@ -41,17 +41,73 @@ document.getElementById('dialog2').hidden = true;
 document.getElementById('dialog3').hidden = true;
 document.getElementById('dialog4').hidden = true;
 
+
 /* Initialize the hero to the player's choosen, if clicked */
-document.getElementById('boy').addEventListener('click', function () { HERO = 'char-boy'; }, false);
-document.getElementById('cat-girl').addEventListener('click', function () { HERO = 'char-cat-girl'; }, false);
-document.getElementById('horn-girl').addEventListener('click', function () { HERO = 'char-horn-girl'; }, false);
-document.getElementById('princess-girl').addEventListener('click', function () { HERO = 'char-princess-girl'; }, false);
+document.getElementById('boy').addEventListener('click', function () { 
+    HERO = 'char-boy'; 
+    document.getElementById('boy').src = 'img/menu/char-boy.png';
+    document.getElementById('cat-girl').src = 'img/menu/char-cat-girl-off.png';
+    document.getElementById('horn-girl').src = 'img/menu/char-horn-girl-off.png';
+    document.getElementById('princess-girl').src = 'img/menu/char-princess-girl-off.png';
+}, false);
+
+document.getElementById('cat-girl').addEventListener('click', function () { 
+    HERO = 'char-cat-girl'; 
+    document.getElementById('boy').src = 'img/menu/char-boy-off.png';
+    document.getElementById('cat-girl').src = 'img/menu/char-cat-girl.png';
+    document.getElementById('horn-girl').src = 'img/menu/char-horn-girl-off.png';
+    document.getElementById('princess-girl').src = 'img/menu/char-princess-girl-off.png';
+}, false);
+
+document.getElementById('horn-girl').addEventListener('click', function () { 
+    HERO = 'char-horn-girl';
+    document.getElementById('boy').src = 'img/menu/char-boy-off.png';
+    document.getElementById('cat-girl').src = 'img/menu/char-cat-girl-off.png';
+    document.getElementById('horn-girl').src = 'img/menu/char-horn-girl.png';
+    document.getElementById('princess-girl').src = 'img/menu/char-princess-girl-off.png';
+}, false);
+
+document.getElementById('princess-girl').addEventListener('click', function () { 
+    HERO = 'char-princess-girl'; 
+    document.getElementById('boy').src = 'img/menu/char-boy-off.png';
+    document.getElementById('cat-girl').src = 'img/menu/char-cat-girl-off.png';
+    document.getElementById('horn-girl').src = 'img/menu/char-horn-girl-off.png';
+    document.getElementById('princess-girl').src = 'img/menu/char-princess-girl.png';
+}, false);
+
 
 /* Initialize the difficulty to the player's choosen, if clicked */
-document.getElementById('easy').addEventListener('click', function () { DIFFICULTY = 0; }, false);
-document.getElementById('normal').addEventListener('click', function () { DIFFICULTY = 1; }, false);
-document.getElementById('hard').addEventListener('click', function () { DIFFICULTY = 2; }, false);
-document.getElementById('nightmare').addEventListener('click', function () { DIFFICULTY = 3; }, false);
+document.getElementById('easy').addEventListener('click', function () {
+    DIFFICULTY = 0;
+    document.getElementById('easy').className = 'easy active';
+    document.getElementById('normal').className = 'normal';
+    document.getElementById('hard').className = 'hard';
+    document.getElementById('nightmare').className = 'nightmare';
+}, false);
+
+document.getElementById('normal').addEventListener('click', function () {
+    DIFFICULTY = 1;
+    document.getElementById('easy').className = 'easy';
+    document.getElementById('normal').className = 'normal active';
+    document.getElementById('hard').className = 'hard';
+    document.getElementById('nightmare').className = 'nightmare';
+}, false);
+
+document.getElementById('hard').addEventListener('click', function () {
+    DIFFICULTY = 2;
+    document.getElementById('easy').className = 'easy';
+    document.getElementById('normal').className = 'normal';
+    document.getElementById('hard').className = 'hard active';
+    document.getElementById('nightmare').className = 'nightmare';
+}, false);
+
+document.getElementById('nightmare').addEventListener('click', function () {
+    DIFFICULTY = 3;
+    document.getElementById('easy').className = 'easy';
+    document.getElementById('normal').className = 'normal';
+    document.getElementById('hard').className = 'hard';
+    document.getElementById('nightmare').className = 'nightmare active';
+}, false);
 
 
 /* Useful function to create random numbers */
@@ -934,7 +990,7 @@ var checkCollisions = function () {
                     player.sprite = 'img/' + HERO + '-sad.png';
                     document.getElementById('dialog' + currentLevel).hidden = false;
                     nextLevel = true;
-                    
+
                     setTimeout(function () {
                         player.sprite = 'img/' + HERO + '.png';
                         document.getElementById('dialog' + currentLevel).hidden = true;
@@ -951,7 +1007,7 @@ var checkCollisions = function () {
                         enemyReset(currentLevel);
                     }, 2000);
 
-                    clearTimeout();                    
+                    clearTimeout();
 
                     break;
             }
