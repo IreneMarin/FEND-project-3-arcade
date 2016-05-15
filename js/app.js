@@ -628,6 +628,13 @@ var Player = function (x, y) {
 
     /* Loading the image by setting this.sprite */
     this.sprite = 'img/' + HERO + '.png';
+
+    this.audio = {
+        muted: false,
+        bug: new Audio('audio/bug.wav'),
+        door: new Audio('audio/door.wav'),
+        item: new Audio('audio/item.wav')
+    }
 };
 
 /**
@@ -646,6 +653,22 @@ Player.prototype.update = function () {
  */
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.playSFX = function (SFX) {
+    if (!this.audio.muted) {
+        switch (SFX) {
+            case 'bug':
+                this.audio.bug.play();
+                break;
+            case 'door':
+                this.audio.door.play();
+                break;
+            case 'item':
+                this.audio.item.play();
+                break;
+        }
+    }
 };
 
 /**
@@ -696,6 +719,10 @@ Player.prototype.handleInput = function (allowedKeys) {
                     nextLevel = false;
                 }
                 break;
+                
+            case 'M':
+                // Toggle muted
+                player.audio.muted = !player.audio.muted;
         }
 
     } else {
@@ -838,6 +865,7 @@ var checkCollisions = function () {
         var enemyRectangle = new Rectangle(allEnemies[i].x, allEnemies[i].y);
         if (checkCollision(playerRectangle, enemyRectangle)) {
             /* If player collides with bug, reset position of player */
+            player.playSFX('bug');
             player.reset();
         }
     }
@@ -850,6 +878,7 @@ var checkCollisions = function () {
             switch (allItems[j].item) {
                 case 'key':
                     /* If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
+                    player.playSFX('item');
                     currentKeys = currentKeys + 1;
                     document.getElementById('numberKeys').innerHTML = currentKeys.toString();
                     allItems.splice(j, 1);
@@ -857,6 +886,7 @@ var checkCollisions = function () {
 
                 case 'life':
                     /* If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
+                    player.playSFX('item');
                     currentLifes = currentLifes + 1;
                     document.getElementById('numberLifes').innerHTML = currentLifes.toString();
                     allItems.splice(j, 1);
@@ -900,6 +930,7 @@ var checkCollisions = function () {
 
                 case 'gem-green':
                     /* If it collides with open chest with gem --> pick up gem */
+                    player.playSFX('item');
                     hasGreenGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-green.png'>";
                     allItems[j].item = 'chest-open';
@@ -909,6 +940,7 @@ var checkCollisions = function () {
 
                 case 'gem-blue':
                     /* If it collides with open chest with gem --> pick up gem */
+                    player.playSFX('item');
                     hasBlueGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-blue.png'>";
                     allItems[j].item = 'chest-open';
@@ -960,6 +992,7 @@ var checkCollisions = function () {
 
                 case 'door':
                     if (currentKeys > 0) {
+                        player.playSFX('door');
                         player.stop();
 
                         /* If we have key and level 4, open door of final level */
