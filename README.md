@@ -108,10 +108,9 @@ The project is licensed under the [MIT license](license.txt).
   - ~~level 3~~ 
   - ~~level 4~~ 
 - Sound:
-  - when collision with bug
+  - ~~when collision with bug~~
   - when collision with nature
   - ~~when pick up item~~
-  - when game over
 
 ### Code
 - Errors:
