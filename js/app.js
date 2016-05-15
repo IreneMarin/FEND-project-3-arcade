@@ -633,7 +633,9 @@ var Player = function (x, y) {
         muted: false,
         bug: new Audio('audio/bug.wav'),
         door: new Audio('audio/door.wav'),
-        item: new Audio('audio/item.wav')
+        key: new Audio('audio/key.wav'),
+        heart: new Audio('audio/heart.wav'),
+        gem: new Audio('audio/gem.wav')
     }
 };
 
@@ -655,17 +657,23 @@ Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.playSFX = function (SFX) {
+Player.prototype.playSound = function (sound) {
     if (!this.audio.muted) {
-        switch (SFX) {
+        switch (sound) {
             case 'bug':
                 this.audio.bug.play();
                 break;
             case 'door':
                 this.audio.door.play();
                 break;
-            case 'item':
-                this.audio.item.play();
+            case 'key':
+                this.audio.key.play();
+                break;
+            case 'heart':
+                this.audio.heart.play();
+                break;
+            case 'gem':
+                this.audio.gem.play();
                 break;
         }
     }
@@ -719,7 +727,7 @@ Player.prototype.handleInput = function (allowedKeys) {
                     nextLevel = false;
                 }
                 break;
-                
+
             case 'M':
                 // Toggle muted
                 player.audio.muted = !player.audio.muted;
@@ -761,7 +769,7 @@ Player.prototype.reset = function () {
 Player.prototype.move = function () {
     previousX = this.x;
     previousY = this.y;
-    console.log(previousX + ' ' + previousY);
+    //console.log(previousX + ' ' + previousY);
 };
 
 /**
@@ -865,7 +873,7 @@ var checkCollisions = function () {
         var enemyRectangle = new Rectangle(allEnemies[i].x, allEnemies[i].y);
         if (checkCollision(playerRectangle, enemyRectangle)) {
             /* If player collides with bug, reset position of player */
-            player.playSFX('bug');
+            player.playSound('bug');
             player.reset();
         }
     }
@@ -878,7 +886,7 @@ var checkCollisions = function () {
             switch (allItems[j].item) {
                 case 'key':
                     /* If it collides with a key --> pick up key, delete key from the array to make it dissapear from canvas */
-                    player.playSFX('item');
+                    player.playSound('key');
                     currentKeys = currentKeys + 1;
                     document.getElementById('numberKeys').innerHTML = currentKeys.toString();
                     allItems.splice(j, 1);
@@ -886,7 +894,7 @@ var checkCollisions = function () {
 
                 case 'life':
                     /* If it collides with a heart --> pick up heart, delete heart from the array to make it dissapear from canvas */
-                    player.playSFX('item');
+                    player.playSound('heart');
                     currentLifes = currentLifes + 1;
                     document.getElementById('numberLifes').innerHTML = currentLifes.toString();
                     allItems.splice(j, 1);
@@ -896,6 +904,7 @@ var checkCollisions = function () {
                     /* If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
                         /* If we have key, open chest and player stops */
+                        player.playSound('door');
                         allItems[j].item = 'gem-green';
                         allItems[j].sprite = 'img/chest-open-green.png';
                         allItems[j + 1].item = 'chest-open';
@@ -914,6 +923,7 @@ var checkCollisions = function () {
                     /* If it collides with closed chest, check for key */
                     if (currentKeys > 0) {
                         /* If we have key, open chest and player stops */
+                        player.playSound('door');
                         allItems[j].item = 'gem-blue';
                         allItems[j].sprite = 'img/chest-open-blue.png';
                         allItems[j + 1].item = 'chest-open';
@@ -930,7 +940,7 @@ var checkCollisions = function () {
 
                 case 'gem-green':
                     /* If it collides with open chest with gem --> pick up gem */
-                    player.playSFX('item');
+                    player.playSound('gem');
                     hasGreenGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-green.png'>";
                     allItems[j].item = 'chest-open';
@@ -940,7 +950,7 @@ var checkCollisions = function () {
 
                 case 'gem-blue':
                     /* If it collides with open chest with gem --> pick up gem */
-                    player.playSFX('item');
+                    player.playSound('gem');
                     hasBlueGem = true;
                     document.getElementById('hasGems').innerHTML += "<img src='img/menu/gem-blue.png'>";
                     allItems[j].item = 'chest-open';
@@ -992,7 +1002,7 @@ var checkCollisions = function () {
 
                 case 'door':
                     if (currentKeys > 0) {
-                        player.playSFX('door');
+                        player.playSound('door');
                         player.stop();
 
                         /* If we have key and level 4, open door of final level */
