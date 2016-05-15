@@ -43,7 +43,8 @@ You will be provided visual assets and a game loop engine; using these tools you
 
 Game engine.js and resources.js by Udacity
 
-Game sounds by <a href='http://www.freesound.org/people/fins/' target='_blank'>Fins</a>, <a href='http://www.freesound.org/people/baidonovan/' target='_blank'>Baidonovan</a> and <a href='http://www.freesound.org/people/LittleRobotSoundFactory/' target='_blank'>LittleRobotSoundFactory</a> (freesound.org)
+Game sounds by <a href='http://www.freesound.org/people/fins/' target='_blank'>Fins</a>, <a href='http://www.freesound.org/people/baidonovan/' target='_blank'>Baidonovan</a>,
+<a href='http://www.freesound.org/people/Seidhepriest/' target='_blank'>Seidhepriest</a> and <a href='http://www.freesound.org/people/LittleRobotSoundFactory/' target='_blank'>LittleRobotSoundFactory</a> (freesound.org)
 
 ----------------------
 
