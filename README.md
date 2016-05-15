@@ -109,7 +109,7 @@ The project is licensed under the [MIT license](license.txt).
 - Sound:
   - when collision with bug
   - when collision with nature
-  - when pick up item
+  - ~~when pick up item~~
   - when game over
 
 ### Code
@@ -125,7 +125,7 @@ The project is licensed under the [MIT license](license.txt).
   - ~~Change level/state: implement it how?~~
   - ~~Finish level: create last level screen~~
 - Improvements: 
-  - Implement sounds
+  - ~~Implement sounds~~
   - Keep DOM Access to a minimum: use a helper method that batch-converts a dataset to HTML
   - Enemy.update: simplify code (too many repeated if's --> put in functions?) 
   - ~~Go to next level automatically with setTimeout~~
