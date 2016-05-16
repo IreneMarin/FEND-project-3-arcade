@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Effective JavaScript Frogger</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    <!-- Start screen of the game --> 
+    <!-- Start screen of the game -->
     <div id="opening" class="opening">
-        <img src="img/menu/gems.jpg" class="gems">
-        After a month of coding non-stop, you finally finished project 3...
-        <br><br>
-        Now it is time to have some beers with your friend, who has waited patiently without bugging you, and celebrate it!
-        <br><br>
-        But wait... you forgot where she lives... darn. So let's go search for her house!
-        <br>
-        <img src="img/menu/gems.jpg" class="gems">
-        
+        <div class="story">
+            After a month of coding non-stop, you finally finished project 3...
+            <br><br> 
+            Now it is time to have some beers with your friend, who has waited patiently without bugging you, and
+            celebrate it!
+            <br><br> 
+            But wait... you forgot where she lives... darn. So let's go search for her house!
+        </div>
         <div class="choices">
             Choose your hero:<br><br>
             <img id="boy" src="img/menu/char-boy.png" class="player">
@@ -36,14 +37,13 @@
             To move your character,<br>use the keyboard arrows.
             <br>
             <img src="img/menu/arrows-blue.jpg">
-            <br><br>
-            To start the game,<br>press Enter.
+            <br><br> To start the game,<br>press Enter.
             <br>
             <img src="img/menu/enter-blue.jpg">
         </div>
     </div>
     <div style="clear: both;"></div>
-    
+
     <!-- Dialogs for each level when the player opens de door -->
     <div id="dialogs" class="dialogs">
         <div id="dialog1" class="dialog1">
@@ -59,17 +59,18 @@
             Hi, friend!!
         </div>
     </div>
-    
+
     <!-- Menu during the game, for the stats -->
     <div id="menu" class="menu">
         <div class="items"><img src="img/menu/heart.png"><span id="numberLifes" class="numberLifes"></span></div>
         <div class="items"><img src="img/menu/key.png"><span id="numberKeys" class="numberKeys"></span></div>
-        <div class="items"><span id="hasGems" class="hasGems"></span></div>        
+        <div class="items"><span id="hasGems" class="hasGems"></span></div>
         <div class="level">LVL <span id="numberLevel" class="numberLevel"></span></div>
     </div>
-    
+
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
 </body>
+
 </html>

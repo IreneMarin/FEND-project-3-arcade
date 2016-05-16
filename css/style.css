@@ -50,9 +50,16 @@ body {
 .opening {
     width: 1209px;
     height: 760px;
-    margin: 0 auto;
+    margin: 30px auto;
     text-align: left;
-    font-size: 32px;
+    font-size: 32px;    
+    background: url(../img/menu/gems.jpg) no-repeat top;
+    padding-top: 70px;
+}
+
+.story {
+    background: url(../img/menu/gems.jpg) no-repeat bottom;
+    padding-bottom: 70px;
 }
 
 .gems {
@@ -64,7 +71,7 @@ body {
     width: 35%;
     font-size: 26px;
     text-align: left;
-    padding-top: 10px;
+    padding-top: 40px;
 }
 
 .player {
@@ -125,7 +132,7 @@ body {
     width: 29%;
     font-size: 24px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 40px;
 }
 
 /* Dialogs at the end of each level */
